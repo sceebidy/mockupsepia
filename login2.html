@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1200" />
+<title>SEPIA — Masuk</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f9fafb;
+    color: #1a1a1a;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .nav-brand {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #1a1a1a;
+  }
+  .nav-right {
+    font-size: 13px;
+    color: #888;
+  }
+  .nav-right a {
+    color: #1a5c2e;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .page {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+  }
+
+  .login-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 900px;
+    width: 100%;
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+  }
+
+  /* LEFT PANEL */
+  .left-panel {
+    background: #1a5c2e;
+    padding: 52px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .left-brand {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #fff;
+    margin-bottom: 40px;
+  }
+  .left-headline {
+    font-size: 28px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  .left-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.65;
+    margin-bottom: 40px;
+  }
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+  }
+  .feature-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .left-footer {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 40px;
+  }
+
+  /* RIGHT PANEL */
+  .right-panel {
+    padding: 52px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .form-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #1a1a1a;
+  }
+  .form-sub {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 32px;
+  }
+  .form-sub a {
+    color: #1a5c2e;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .field {
+    margin-bottom: 18px;
+  }
+  .field label {
+    display: block;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 7px;
+    font-weight: 500;
+  }
+  .field input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background: #fafafa;
+    color: #1a1a1a;
+    outline: none;
+    transition: border 0.15s;
+  }
+  .field input:focus {
+    border-color: #1a5c2e;
+    background: #fff;
+  }
+
+  .field-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+  }
+  .field-row label { margin-bottom: 0; font-size: 12px; color: #555; font-weight: 500; }
+  .forgot { font-size: 12px; color: #1a5c2e; text-decoration: none; }
+
+  .hint {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 6px;
+  }
+  .hint span { color: #1a5c2e; font-weight: 500; }
+
+  .btn-submit {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    background: #1a5c2e;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 8px;
+    letter-spacing: 0.01em;
+  }
+  .btn-submit:hover { background: #14482a; }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0;
+    font-size: 12px;
+    color: #ccc;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+  }
+
+  .btn-guest {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    background: #fff;
+    color: #555;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .error-msg {
+    display: none;
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #b91c1c;
+    font-size: 13px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  .success-msg {
+    display: none;
+    background: #f0f7f2;
+    border: 1px solid #86efac;
+    color: #1a5c2e;
+    font-size: 13px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+
+  footer {
+    border-top: 1px solid #f0f0f0;
+    padding: 14px 48px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #aaa;
+    background: #fff;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">SEPIA</div>
+  <div class="nav-right">Belum punya akun? <a href="#">Daftar gratis</a></div>
+</nav>
+
+<div class="page">
+  <div class="login-wrap">
+
+    <div class="left-panel">
+      <div>
+        <div class="left-brand">SEPIA</div>
+        <div class="left-headline">Analisis hukum jadi lebih cepat &amp; terstruktur</div>
+        <div class="left-sub">Ekstrak kronologi, aktor, pasal, dan fakta penting dari dokumen hukum secara otomatis menggunakan AI.</div>
+        <div class="feature-list">
+          <div class="feature-item"><div class="feature-check">✓</div>Ekstraksi otomatis dari URL atau teks</div>
+          <div class="feature-item"><div class="feature-check">✓</div>Identifikasi aktor: tersangka, korban, saksi</div>
+          <div class="feature-item"><div class="feature-check">✓</div>Kronologi kejadian terstruktur</div>
+          <div class="feature-item"><div class="feature-check">✓</div>Pasal yang disangkakan & kerugian negara</div>
+          <div class="feature-item"><div class="feature-check">✓</div>Powered by Gemini · Qwen · Llama</div>
+        </div>
+      </div>
+      <div class="left-footer">SEPIA v1.0 — © 2026</div>
+    </div>
+
+    <div class="right-panel">
+      <div class="form-title">Masuk ke SEPIA</div>
+      <div class="form-sub">Belum punya akun? <a href="#">Daftar sekarang</a></div>
+
+      <div id="error-msg" class="error-msg">Username atau password salah. Coba lagi.</div>
+      <div id="success-msg" class="success-msg">✓ Berhasil masuk! Mengalihkan ke dashboard...</div>
+
+      <div class="field">
+        <label>Username</label>
+        <input type="text" id="username" placeholder="Masukkan username kamu" />
+        <div class="hint">Akun demo: <span>cristiano</span></div>
+      </div>
+
+      <div class="field">
+        <div class="field-row">
+          <label>Password</label>
+          <a href="#" class="forgot">Lupa password?</a>
+        </div>
+        <input type="password" id="password" placeholder="Masukkan password kamu" />
+        <div class="hint">Password demo: <span>ronaldo</span></div>
+      </div>
+
+      <button class="btn-submit" onclick="window.location.href='mainpage.html'">
+  Masuk
+</button>
+
+      <div class="divider">atau</div>
+
+      <button class="btn-guest">Lanjut sebagai tamu</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span>SEPIA © 2026</span>
+  <span>Powered by Gemini · Qwen · Llama</span>
+</footer>
+
+<script>
+function doLogin() {
+  const u = document.getElementById('username').value.trim();
+  const p = document.getElementById('password').value.trim();
+  const err = document.getElementById('error-msg');
+  const ok = document.getElementById('success-msg');
+  err.style.display = 'none';
+  ok.style.display = 'none';
+  if (u === 'cristiano' && p === 'ronaldo') {
+    ok.style.display = 'block';
+    setTimeout(() => { window.location.href = 'sepia_laporan.html'; }, 1800);
+  } else {
+    err.style.display = 'block';
+  }
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+</script>
+</body>
+</html>

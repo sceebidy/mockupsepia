@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1200" />
+<title>SEPIA — Laporan Terstruktur</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #1a5c2e;
+    --green-light: #f0f7f2;
+    --green-mid: #e1f0e7;
+    --text: #1a1a1a;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+    --bg: #ffffff;
+    --bg-secondary: #f9fafb;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #ffffff;
+    color: var(--text);
+    width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    background: #fff;
+  }
+  .nav-brand {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    padding: 14px 24px;
+    border-right: 1px solid var(--border);
+    color: var(--text);
+  }
+  .nav-links { display: flex; }
+  .nav-link {
+    padding: 14px 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+  }
+  .nav-link.active {
+    color: var(--green);
+    border-bottom: 2px solid var(--green);
+    font-weight: 500;
+    background: var(--green-light);
+  }
+  .nav-link.soon { color: #d1d5db; }
+  .soon-badge {
+    font-size: 10px;
+    background: var(--green-light);
+    color: var(--green);
+    padding: 1px 7px;
+    border-radius: 20px;
+    margin-left: 4px;
+  }
+  .nav-ver {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--text-muted);
+    padding-right: 24px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* CONTENT */
+  .content { padding: 40px 48px; }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--green);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--green);
+  }
+  h1 {
+    font-size: 36px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  h1 .accent { color: var(--green); }
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 36px;
+    max-width: 500px;
+  }
+
+  /* TWO COLUMN */
+  .two-col {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 20px;
+  }
+  .left-col { display: flex; flex-direction: column; gap: 16px; }
+
+  /* CARDS */
+  .card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    background: #fff;
+  }
+  .card-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .field-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  textarea {
+    width: 100%;
+    min-height: 130px;
+    padding: 12px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg-secondary);
+    color: var(--text);
+    resize: none;
+    line-height: 1.6;
+  }
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 14px;
+    padding: 11px 18px;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+  }
+
+  .extract-list { display: flex; flex-direction: column; }
+  .extract-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .extract-item:last-child { border-bottom: none; }
+  .arrow { color: var(--green); font-size: 12px; }
+
+  /* STRUCT CARD */
+  .struct-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .struct-section {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .struct-header {
+    background: var(--bg-secondary);
+    padding: 8px 14px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .struct-body { padding: 14px; }
+
+  /* META */
+  .meta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .meta-row:last-child { margin-bottom: 0; }
+  .m-label { font-size: 11px; color: var(--text-muted); margin-bottom: 3px; }
+  .m-val { font-size: 13px; font-weight: 500; color: var(--text); }
+  .m-val.red { color: #b91c1c; }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: #fffbeb;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+  }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #d97706; }
+
+  /* AKTOR */
+  .aktor-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .aktor-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 11px;
+  }
+  .aktor-name { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .role-badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 5px;
+  }
+  .role-badge.tersangka { background: #fef2f2; color: #b91c1c; }
+  .role-badge.korban    { background: var(--green-light); color: var(--green); }
+  .role-badge.saksi     { background: #fffbeb; color: #92400e; }
+  .role-badge.penyidik  { background: #eff6ff; color: #1e40af; }
+  .aktor-desc { font-size: 11px; color: var(--text-muted); line-height: 1.45; }
+
+  /* KRONOLOGI */
+  .kron-item {
+    display: flex;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .kron-item:last-child { border-bottom: none; }
+  .kron-date { font-size: 11px; color: var(--text-muted); min-width: 76px; padding-top: 2px; font-family: 'DM Mono', monospace; }
+  .kron-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); margin-top: 4px; flex-shrink: 0; }
+  .kron-text { font-size: 12px; color: var(--text); line-height: 1.55; }
+
+  /* PASAL */
+  .pasal-list { display: flex; flex-wrap: wrap; gap: 7px; }
+  .pasal-tag {
+    font-size: 12px;
+    padding: 5px 13px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    background: var(--bg-secondary);
+  }
+  .pasal-tag.utama { border-color: var(--green); color: var(--green); background: var(--green-light); }
+
+  /* FOOTER */
+  footer {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding: 16px 48px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">SEPIA</div>
+  <div class="nav-links">
+    <div class="nav-link active">Laporan</div>
+    <div class="nav-link">Personalisasi</div>
+    <div class="nav-link">Forecasting</div>
+    <div class="nav-link soon">Analisis <span class="soon-badge">Soon</span></div>
+  </div>
+  <div class="nav-ver">v 1.0</div>
+</nav>
+
+<div class="content">
+  <div class="eyebrow">01 — Ekstraksi &amp; Strukturisasi</div>
+  <h1>Laporan <span class="accent">Terstruktur</span></h1>
+  <p class="subtitle">Input URL berita atau tempel teks dokumen — Llama AI akan mengekstrak kronologi, aktor, pasal, dan fakta penting secara otomatis</p>
+
+  <div class="two-col">
+    <div class="left-col">
+      <div class="card">
+        <div class="card-label">Input Sumber</div>
+        <div class="field-label">URL Berita atau Teks Dokumen</div>
+        <textarea>Kejaksaan Agung menetapkan tiga tersangka dalam kasus korupsi pengadaan sistem IT di Kementerian Komunikasi senilai Rp 179 miliar. Mantan Direktur Jenderal, kontraktor swasta, dan pejabat teknis diduga melakukan markup anggaran secara sistematis sejak 2022. Kerugian negara diperkirakan mencapai Rp 89,4 miliar.</textarea>
+        <button class="btn">⚡ Proses dengan Llama AI</button>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Yang akan diekstrak</div>
+        <div class="extract-list">
+          <div class="extract-item"><span class="arrow">→</span> Judul &amp; ringkasan kasus</div>
+          <div class="extract-item"><span class="arrow">→</span> Kronologi kejadian</div>
+          <div class="extract-item"><span class="arrow">→</span> Aktor: tersangka, korban, saksi</div>
+          <div class="extract-item"><span class="arrow">→</span> Lokasi, tanggal, kategori kasus</div>
+          <div class="extract-item"><span class="arrow">→</span> Pasal yang disangkakan</div>
+          <div class="extract-item"><span class="arrow">→</span> Kerugian finansial (jika ada)</div>
+          <div class="extract-item"><span class="arrow">→</span> Status terkini kasus</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-card">
+      <div class="card-label">Struktur Laporan</div>
+
+      <div class="struct-section">
+        <div class="struct-header">Ringkasan Kasus</div>
+        <div class="struct-body">
+          <div class="meta-row">
+            <div><div class="m-label">Judul</div><div class="m-val" style="font-size:12px;">Korupsi Pengadaan IT Kementerian Kominfo</div></div>
+            <div><div class="m-label">Kategori</div><div class="m-val">Korupsi &amp; Penggelapan</div></div>
+          </div>
+          <div class="meta-row">
+            <div><div class="m-label">Kerugian Negara</div><div class="m-val red">Rp 89,4 Miliar</div></div>
+            <div><div class="m-label">Status</div><div><span class="status-badge"><span class="status-dot"></span>Penyidikan</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="struct-section">
+        <div class="struct-header">Aktor Terlibat</div>
+        <div class="struct-body">
+          <div class="aktor-grid">
+            <div class="aktor-card">
+              <div class="aktor-name">Budi Hartono</div>
+              <div class="role-badge tersangka">Tersangka</div>
+              <div class="aktor-desc">Mantan Dirjen Aptika, pengambil keputusan pengadaan</div>
+            </div>
+            <div class="aktor-card">
+              <div class="aktor-name">PT Solusi Prima</div>
+              <div class="role-badge tersangka">Tersangka</div>
+              <div class="aktor-desc">Kontraktor swasta pemenang tender, diduga markup biaya</div>
+            </div>
+            <div class="aktor-card">
+              <div class="aktor-name">Eko Prasetyo</div>
+              <div class="role-badge tersangka">Tersangka</div>
+              <div class="aktor-desc">Pejabat teknis, penandatangan berita acara fiktif</div>
+            </div>
+            <div class="aktor-card">
+              <div class="aktor-name">Negara / APBN</div>
+              <div class="role-badge korban">Korban</div>
+              <div class="aktor-desc">Kerugian senilai Rp 89,4 miliar dari anggaran negara</div>
+            </div>
+            <div class="aktor-card">
+              <div class="aktor-name">Rina Susanti</div>
+              <div class="role-badge saksi">Saksi</div>
+              <div class="aktor-desc">Staf keuangan, pelapor awal ke KPK</div>
+            </div>
+            <div class="aktor-card">
+              <div class="aktor-name">Tim Kejagung</div>
+              <div class="role-badge penyidik">Penyidik</div>
+              <div class="aktor-desc">Kejaksaan Agung, penanggungjawab penyidikan</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="struct-section">
+        <div class="struct-header">Kronologi Kejadian</div>
+        <div class="struct-body">
+          <div class="kron-item"><div class="kron-date">Mar 2022</div><div class="kron-dot"></div><div class="kron-text">Pengadaan sistem IT senilai Rp 179 M disetujui oleh Dirjen Aptika</div></div>
+          <div class="kron-item"><div class="kron-date">Jun 2022</div><div class="kron-dot"></div><div class="kron-text">Tender dimenangi PT Solusi Prima dengan harga jauh di atas pasaran</div></div>
+          <div class="kron-item"><div class="kron-date">Des 2022</div><div class="kron-dot"></div><div class="kron-text">Berita acara serah terima ditandatangani meski pekerjaan belum selesai</div></div>
+          <div class="kron-item"><div class="kron-date">Feb 2023</div><div class="kron-dot"></div><div class="kron-text">Staf keuangan melaporkan kejanggalan ke KPK secara anonim</div></div>
+          <div class="kron-item"><div class="kron-date">Okt 2023</div><div class="kron-dot"></div><div class="kron-text">Kejaksaan Agung mulai penyelidikan berdasarkan laporan KPK</div></div>
+          <div class="kron-item"><div class="kron-date">Jan 2024</div><div class="kron-dot"></div><div class="kron-text">Tiga tersangka resmi ditetapkan dan dilakukan penahanan</div></div>
+        </div>
+      </div>
+
+      <div class="struct-section">
+        <div class="struct-header">Pasal yang Disangkakan</div>
+        <div class="struct-body">
+          <div class="pasal-list">
+            <span class="pasal-tag utama">Ps. 2 ayat (1) UU Tipikor</span>
+            <span class="pasal-tag utama">Ps. 3 UU Tipikor</span>
+            <span class="pasal-tag">Ps. 55 KUHP (turut serta)</span>
+            <span class="pasal-tag">Ps. 18 UU Tipikor (uang pengganti)</span>
+            <span class="pasal-tag">Ps. 374 KUHP (penggelapan jabatan)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>SEPIA</span>
+  <span>Powered by Gemini · Qwen · Llama — © 2026</span>
+</footer>
+
+</body>
+</html>
