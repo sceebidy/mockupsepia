@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1200" />
+<title>SEPIA — Analisis Kasus</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #1a5c2e; --green-2: #2e8a4a; --green-light: #f0f7f2;
+    --green-border: #b6d9c3; --text: #1a1a1a; --text-muted: #6b7280;
+    --border: #e5e7eb; --bg: #ffffff; --bg-secondary: #f9fafb;
+    --radius: 12px; --radius-sm: 7px;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg-secondary); color: var(--text); min-height: 100vh; }
+
+  /* NAV */
+  .topnav { display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 52px; border-bottom: 1px solid var(--border); background: #fff; position: sticky; top: 0; z-index: 10; }
+  .topnav-left { display: flex; align-items: center; gap: 16px; }
+  .nav-brand { font-size: 15px; font-weight: 700; letter-spacing: 0.1em; color: var(--green); }
+  .nav-back { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-muted); border-left: 1px solid var(--border); padding-left: 16px; text-decoration: none; }
+  .nav-back:hover { color: var(--green); }
+  .nav-sibling { display: flex; align-items: center; gap: 8px; }
+  .nav-sibling a { font-size: 13px; padding: 6px 14px; border-radius: 20px; text-decoration: none; border: 1px solid var(--border); color: var(--text-muted); }
+  .nav-sibling a:hover { border-color: var(--green); color: var(--green); }
+  .nav-sibling a.active { background: var(--green); color: #fff; border-color: var(--green); }
+  .topnav-right { display: flex; align-items: center; gap: 10px; }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--green); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .export-btn { padding: 7px 16px; font-size: 12px; background: var(--green); color: #fff; border: none; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; }
+
+  /* PAGE HEADER */
+  .page-header { background: var(--green); padding: 36px 40px 28px; color: #fff; }
+  .page-header-top { display: flex; align-items: flex-start; justify-content: space-between; }
+  .page-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
+  .page-title { font-size: 28px; font-weight: 600; line-height: 1.2; margin-bottom: 6px; }
+  .page-meta { font-size: 13px; color: rgba(255,255,255,0.65); }
+  .page-stats { display: flex; gap: 32px; }
+  .page-stat { text-align: center; }
+  .page-stat-val { font-size: 24px; font-weight: 600; }
+  .page-stat-label { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+  /* CONTENT */
+  .content { padding: 28px 40px; max-width: 1200px; margin: 0 auto; }
+
+  /* CARDS */
+  .analisis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+  .analisis-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  .analisis-grid.full { grid-template-columns: 1fr; }
+  .a-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .a-card-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--bg-secondary); }
+  .a-card-title { font-size: 12px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 7px; }
+  .a-card-icon { width: 22px; height: 22px; border-radius: 6px; background: var(--green-light); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .a-card-badge { font-size: 10px; padding: 3px 9px; border-radius: 20px; background: var(--green-light); color: var(--green); font-weight: 500; }
+  .a-card-body { padding: 16px 18px; }
+
+  /* SCORE */
+  .score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .score-label { font-size: 12px; color: var(--text-muted); width: 130px; flex-shrink: 0; }
+  .score-track { flex: 1; height: 8px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
+  .score-fill { height: 100%; border-radius: 4px; }
+  .score-val { font-size: 11px; font-weight: 600; width: 32px; text-align: right; font-family: 'DM Mono', monospace; }
+
+  /* RISK */
+  .risk-high { background: #fef2f2; color: #b91c1c; border: 1px solid #fca5a5; }
+  .risk-med { background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; }
+  .risk-low { background: var(--green-light); color: var(--green); border: 1px solid var(--green-border); }
+  .risk-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; display: inline-flex; align-items: center; gap: 5px; }
+  .risk-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .risk-dot.high { background: #b91c1c; }
+  .risk-dot.med { background: #d97706; }
+  .risk-dot.low { background: var(--green); }
+
+  /* TIMELINE */
+  .timeline { display: flex; flex-direction: column; }
+  .tl-item { display: flex; gap: 14px; padding: 10px 0; position: relative; }
+  .tl-item:not(:last-child)::after { content: ''; position: absolute; left: 10px; top: 28px; bottom: -2px; width: 1px; background: var(--border); }
+  .tl-left { flex-shrink: 0; padding-top: 3px; }
+  .tl-dot { width: 20px; height: 20px; border-radius: 50%; background: var(--green-light); border: 2px solid var(--green); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--green); font-weight: 700; }
+  .tl-dot.done { background: var(--green); color: #fff; }
+  .tl-right { flex: 1; padding-bottom: 6px; }
+  .tl-date { font-size: 10px; color: var(--text-muted); font-family: 'DM Mono', monospace; margin-bottom: 2px; }
+  .tl-event { font-size: 13px; color: var(--text); font-weight: 500; margin-bottom: 2px; }
+  .tl-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  /* TABLE */
+  .etable { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .etable th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); background: var(--bg-secondary); }
+  .etable td { padding: 10px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text); }
+  .etable tr:last-child td { border-bottom: none; }
+  .etable tr:hover td { background: var(--green-light); }
+  .role-pill { font-size: 10px; padding: 2px 9px; border-radius: 20px; display: inline-block; }
+  .role-pill.tersangka { background: #fef2f2; color: #b91c1c; }
+  .role-pill.korban { background: var(--green-light); color: var(--green); }
+  .role-pill.saksi { background: #fffbeb; color: #92400e; }
+  .role-pill.penyidik { background: #eff6ff; color: #1e40af; }
+
+  /* AI SUMMARY */
+  .ai-summary { border-left: 3px solid var(--green); background: var(--green-light); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 14px 16px; }
+  .ai-summary-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); margin-bottom: 6px; }
+  .ai-summary-text { font-size: 13px; color: var(--text); line-height: 1.7; }
+
+  /* PASAL */
+  .pasal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .pasal-item { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+  .pasal-item.utama { border-color: var(--green); background: var(--green-light); }
+  .pasal-code { font-size: 12px; font-weight: 600; color: var(--green); margin-bottom: 2px; }
+  .pasal-item:not(.utama) .pasal-code { color: var(--text); }
+  .pasal-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="topnav-left">
+    <div class="nav-brand">SEPIA</div>
+    <a class="nav-back" href="mainpage.html">← Kembali ke Dashboard</a>
+    <div class="nav-sibling">
+      <a href="analisis.html" class="active">🔍 Analisis</a>
+      <a href="distribusi.html">📊 Distribusi</a>
+    </div>
+  </div>
+  <div class="topnav-right">
+    <button class="export-btn">📤 Ekspor Laporan</button>
+    <div class="avatar">CR</div>
+  </div>
+</div>
+
+<div class="page-header">
+  <div class="page-header-top">
+    <div>
+      <div class="page-eyebrow">Hasil Pemrosesan AI · 15 Mar 2026</div>
+      <div class="page-title">Korupsi Pengadaan IT<br>Kementerian Kominfo</div>
+      <div class="page-meta">Dianalisis dari 4 sumber · Llama 3 · Gemini 1.5 Pro</div>
+    </div>
+    <div class="page-stats">
+      <div class="page-stat"><div class="page-stat-val">6</div><div class="page-stat-label">Aktor</div></div>
+      <div class="page-stat"><div class="page-stat-val">6</div><div class="page-stat-label">Kronologi</div></div>
+      <div class="page-stat"><div class="page-stat-val">5</div><div class="page-stat-label">Pasal</div></div>
+      <div class="page-stat"><div class="page-stat-val" style="color:#fcd34d;">89.4M</div><div class="page-stat-label">Kerugian</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- AI SUMMARY -->
+  <div style="margin-bottom:18px;">
+    <div class="ai-summary">
+      <div class="ai-summary-label">✦ Ringkasan AI</div>
+      <div class="ai-summary-text">Berdasarkan analisis 4 sumber, kasus ini melibatkan <strong>skema korupsi sistematis</strong> dalam pengadaan IT senilai Rp 179 miliar di Kementerian Kominfo. Tiga tersangka utama diduga berkolusi untuk melakukan markup anggaran sejak 2022. Tingkat risiko dinilai <strong>sangat tinggi</strong> dengan kerugian negara terverifikasi sebesar Rp 89,4 miliar.</div>
+    </div>
+  </div>
+
+  <!-- 3 CARDS ROW -->
+  <div class="analisis-grid three" style="margin-bottom:18px;">
+    <div class="a-card">
+      <div class="a-card-header">
+        <div class="a-card-title"><div class="a-card-icon">⚠</div>Skor Risiko</div>
+        <span class="risk-badge risk-high"><span class="risk-dot high"></span>Tinggi</span>
+      </div>
+      <div class="a-card-body">
+        <div style="text-align:center;margin-bottom:14px;">
+          <div style="font-size:42px;font-weight:700;color:#b91c1c;line-height:1;">87</div>
+          <div style="font-size:11px;color:var(--text-muted);">dari 100</div>
+        </div>
+        <div class="score-row"><div class="score-label">Kerugian negara</div><div class="score-track"><div class="score-fill" style="width:89%;background:#b91c1c;"></div></div><div class="score-val" style="color:#b91c1c;">89%</div></div>
+        <div class="score-row"><div class="score-label">Jumlah tersangka</div><div class="score-track"><div class="score-fill" style="width:60%;background:#d97706;"></div></div><div class="score-val" style="color:#d97706;">60%</div></div>
+        <div class="score-row"><div class="score-label">Kompleksitas kasus</div><div class="score-track"><div class="score-fill" style="width:75%;background:var(--green);"></div></div><div class="score-val" style="color:var(--green);">75%</div></div>
+        <div class="score-row"><div class="score-label">Bukti teridentifikasi</div><div class="score-track"><div class="score-fill" style="width:92%;background:var(--green);"></div></div><div class="score-val" style="color:var(--green);">92%</div></div>
+      </div>
+    </div>
+
+    <div class="a-card">
+      <div class="a-card-header">
+        <div class="a-card-title"><div class="a-card-icon">📋</div>Status Perkara</div>
+        <span class="risk-badge risk-med"><span class="risk-dot med"></span>Penyidikan</span>
+      </div>
+      <div class="a-card-body">
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-left"><div class="tl-dot done">✓</div></div><div class="tl-right"><div class="tl-date">Mar 2022</div><div class="tl-event">Pengadaan disetujui</div><div class="tl-desc">Dirjen Aptika mengesahkan anggaran Rp 179M</div></div></div>
+          <div class="tl-item"><div class="tl-left"><div class="tl-dot done">✓</div></div><div class="tl-right"><div class="tl-date">Des 2022</div><div class="tl-event">Kontrak diselesaikan</div><div class="tl-desc">BA serah terima ditandatangani secara fiktif</div></div></div>
+          <div class="tl-item"><div class="tl-left"><div class="tl-dot done">✓</div></div><div class="tl-right"><div class="tl-date">Feb 2023</div><div class="tl-event">Pelaporan ke KPK</div><div class="tl-desc">Staf keuangan melapor secara anonim</div></div></div>
+          <div class="tl-item"><div class="tl-left"><div class="tl-dot">→</div></div><div class="tl-right"><div class="tl-date">Jan 2024</div><div class="tl-event">Penetapan tersangka</div><div class="tl-desc">3 tersangka resmi ditahan Kejagung</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="a-card">
+      <div class="a-card-header">
+        <div class="a-card-title"><div class="a-card-icon">⚖</div>Pasal Disangkakan</div>
+        <span class="a-card-badge">5 pasal</span>
+      </div>
+      <div class="a-card-body">
+        <div class="pasal-grid">
+          <div class="pasal-item utama"><div class="pasal-code">Ps. 2 (1)</div><div class="pasal-desc">UU Tipikor — korupsi merugikan negara</div></div>
+          <div class="pasal-item utama"><div class="pasal-code">Ps. 3</div><div class="pasal-desc">UU Tipikor — penyalahgunaan wewenang</div></div>
+          <div class="pasal-item"><div class="pasal-code">Ps. 55 KUHP</div><div class="pasal-desc">Turut serta melakukan tindak pidana</div></div>
+          <div class="pasal-item"><div class="pasal-code">Ps. 18</div><div class="pasal-desc">UU Tipikor — uang pengganti kerugian</div></div>
+          <div class="pasal-item" style="grid-column:span 2;"><div class="pasal-code">Ps. 374 KUHP</div><div class="pasal-desc">Penggelapan dalam jabatan publik</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AKTOR TABLE -->
+  <div class="analisis-grid full">
+    <div class="a-card">
+      <div class="a-card-header">
+        <div class="a-card-title"><div class="a-card-icon">👤</div>Daftar Aktor Terlibat</div>
+        <span class="a-card-badge">6 entitas</span>
+      </div>
+      <div class="a-card-body" style="padding:0;">
+        <table class="etable">
+          <thead><tr><th>Nama / Entitas</th><th>Peran</th><th>Jabatan</th><th>Keterlibatan</th><th>Risiko</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:500;">Budi Hartono</td><td><span class="role-pill tersangka">Tersangka</span></td><td>Mantan Dirjen Aptika</td><td>Pengambil keputusan pengadaan</td><td><span class="risk-badge risk-high" style="font-size:10px;padding:2px 8px;"><span class="risk-dot high"></span>Tinggi</span></td></tr>
+            <tr><td style="font-weight:500;">PT Solusi Prima</td><td><span class="role-pill tersangka">Tersangka</span></td><td>Kontraktor Swasta</td><td>Pemenang tender, markup biaya</td><td><span class="risk-badge risk-high" style="font-size:10px;padding:2px 8px;"><span class="risk-dot high"></span>Tinggi</span></td></tr>
+            <tr><td style="font-weight:500;">Eko Prasetyo</td><td><span class="role-pill tersangka">Tersangka</span></td><td>Pejabat Teknis</td><td>Penandatangan BA fiktif</td><td><span class="risk-badge risk-med" style="font-size:10px;padding:2px 8px;"><span class="risk-dot med"></span>Sedang</span></td></tr>
+            <tr><td style="font-weight:500;">Negara / APBN</td><td><span class="role-pill korban">Korban</span></td><td>—</td><td>Kerugian Rp 89,4 miliar</td><td>—</td></tr>
+            <tr><td style="font-weight:500;">Rina Susanti</td><td><span class="role-pill saksi">Saksi</span></td><td>Staf Keuangan</td><td>Pelapor awal ke KPK</td><td><span class="risk-badge risk-low" style="font-size:10px;padding:2px 8px;"><span class="risk-dot low"></span>Rendah</span></td></tr>
+            <tr><td style="font-weight:500;">Tim Kejagung</td><td><span class="role-pill penyidik">Penyidik</span></td><td>Kejaksaan Agung RI</td><td>Penanggung jawab penyidikan</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SWOT -->
+  <div class="analisis-grid full" style="margin-top:18px;">
+    <div class="a-card">
+      <div class="a-card-header">
+        <div class="a-card-title"><div class="a-card-icon">⊞</div>Analisis SWOT Kasus</div>
+        <span class="a-card-badge">AI Generated</span>
+      </div>
+      <div class="a-card-body" style="padding:0;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+
+          <div style="padding:18px 20px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+              <div style="width:28px;height:28px;border-radius:8px;background:#f0f7f2;display:flex;align-items:center;justify-content:center;font-size:13px;">💪</div>
+              <div><div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:0.06em;">STRENGTH</div><div style="font-size:10px;color:var(--text-muted);">Kekuatan Penuntutan</div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:var(--green);font-weight:700;flex-shrink:0;">S1</span><span>Bukti digital berupa dokumen pengadaan dan berita acara fiktif tersedia lengkap dan dapat diverifikasi</span></div>
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:var(--green);font-weight:700;flex-shrink:0;">S2</span><span>Terdapat saksi internal (staf keuangan) yang bersedia memberikan keterangan kepada penyidik</span></div>
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:var(--green);font-weight:700;flex-shrink:0;">S3</span><span>Audit BPK telah mengkonfirmasi adanya selisih anggaran senilai Rp 89,4 miliar</span></div>
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:var(--green);font-weight:700;flex-shrink:0;">S4</span><span>Tiga tersangka telah ditahan dan tidak dapat mempengaruhi jalannya penyidikan</span></div>
+            </div>
+          </div>
+
+          <div style="padding:18px 20px;border-bottom:1px solid var(--border);">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+              <div style="width:28px;height:28px;border-radius:8px;background:#fef2f2;display:flex;align-items:center;justify-content:center;font-size:13px;">⚠️</div>
+              <div><div style="font-size:11px;font-weight:700;color:#b91c1c;letter-spacing:0.06em;">WEAKNESS</div><div style="font-size:10px;color:var(--text-muted);">Kelemahan Kasus</div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#b91c1c;font-weight:700;flex-shrink:0;">W1</span><span>Pelapor utama (Rina Susanti) melaporkan secara anonim, validasi identitas masih perlu dikuatkan</span></div>
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#b91c1c;font-weight:700;flex-shrink:0;">W2</span><span>Jejak aliran dana ke rekening pihak ketiga belum sepenuhnya tertelusuri oleh PPATK</span></div>
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#b91c1c;font-weight:700;flex-shrink:0;">W3</span><span>Dokumen teknis spesifikasi sistem yang diklaim diserahkan sulit diverifikasi oleh ahli independen</span></div>
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#b91c1c;font-weight:700;flex-shrink:0;">W4</span><span>Proses penyidikan berlangsung lambat akibat kompleksitas dokumen lintas kementerian</span></div>
+            </div>
+          </div>
+
+          <div style="padding:18px 20px;border-right:1px solid var(--border);">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+              <div style="width:28px;height:28px;border-radius:8px;background:#eff6ff;display:flex;align-items:center;justify-content:center;font-size:13px;">🎯</div>
+              <div><div style="font-size:11px;font-weight:700;color:#1e40af;letter-spacing:0.06em;">OPPORTUNITY</div><div style="font-size:10px;color:var(--text-muted);">Peluang Penguatan</div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#1e40af;font-weight:700;flex-shrink:0;">O1</span><span>Kolaborasi dengan KPK memungkinkan akses ke data pengawasan pengadaan nasional yang lebih luas</span></div>
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#1e40af;font-weight:700;flex-shrink:0;">O2</span><span>Momentum reformasi birokrasi membuka peluang penerapan sistem e-procurement yang lebih transparan</span></div>
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#1e40af;font-weight:700;flex-shrink:0;">O3</span><span>Testimoni Rina Susanti dapat diperkuat dengan bukti forensik digital dari email dan sistem keuangan</span></div>
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#1e40af;font-weight:700;flex-shrink:0;">O4</span><span>Tuntutan publik yang tinggi terhadap transparansi mendukung percepatan penyelesaian perkara</span></div>
+            </div>
+          </div>
+
+          <div style="padding:18px 20px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+              <div style="width:28px;height:28px;border-radius:8px;background:#fffbeb;display:flex;align-items:center;justify-content:center;font-size:13px;">🔥</div>
+              <div><div style="font-size:11px;font-weight:700;color:#92400e;letter-spacing:0.06em;">THREAT</div><div style="font-size:10px;color:var(--text-muted);">Ancaman & Hambatan</div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#92400e;font-weight:700;flex-shrink:0;">T1</span><span>Kemungkinan intervensi politik dari pihak yang memiliki kepentingan atas jalannya perkara ini</span></div>
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#92400e;font-weight:700;flex-shrink:0;">T2</span><span>Potensi intimidasi terhadap saksi kunci yang belum mendapatkan perlindungan resmi dari LPSK</span></div>
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#92400e;font-weight:700;flex-shrink:0;">T3</span><span>Tersangka memiliki kuasa hukum kuat yang dapat mengajukan praperadilan untuk menggugurkan status tersangka</span></div>
+              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#92400e;font-weight:700;flex-shrink:0;">T4</span><span>Risiko barang bukti digital hilang atau dimanipulasi jika server belum disita secara menyeluruh</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
