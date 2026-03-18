@@ -2,187 +2,797 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=1200" />
-<title>SEPIA — Distribusi & Rekomendasi</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<meta name="viewport" content="width=1280" />
+<title>SEPIA — Distribusi Laporan</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --green: #1a5c2e; --green-light: #f0f7f2; --green-border: #b6d9c3;
-    --text: #1a1a1a; --text-muted: #6b7280; --border: #e5e7eb;
-    --bg: #ffffff; --bg-secondary: #f9fafb; --radius: 12px; --radius-sm: 7px;
-  }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg-secondary); color: var(--text); min-height: 100vh; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green: #1a5c2e; --green-2: #2e7d4a; --green-light: #f0f7f2;
+  --green-mid: #ddeee4; --green-border: #b6d9c3;
+  --text: #1a1a1a; --text-muted: #6b7280; --border: #e5e7eb;
+  --bg: #ffffff; --bg-secondary: #f9fafb; --bg-tertiary: #f3f4f6;
+  --red: #b91c1c; --amber: #d97706; --blue: #1e6fa3;
+  --nav-width: 220px;
+}
+body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
 
-  /* NAV */
-  .topnav { display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 52px; border-bottom: 1px solid var(--border); background: #fff; position: sticky; top: 0; z-index: 10; }
-  .topnav-left { display: flex; align-items: center; gap: 16px; }
-  .nav-brand { font-size: 15px; font-weight: 700; letter-spacing: 0.1em; color: var(--green); }
-  .nav-back { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-muted); border-left: 1px solid var(--border); padding-left: 16px; text-decoration: none; }
-  .nav-back:hover { color: var(--green); }
-  .nav-sibling { display: flex; align-items: center; gap: 8px; }
-  .nav-sibling a { font-size: 13px; padding: 6px 14px; border-radius: 20px; text-decoration: none; border: 1px solid var(--border); color: var(--text-muted); }
-  .nav-sibling a:hover { border-color: var(--green); color: var(--green); }
-  .nav-sibling a.active { background: var(--green); color: #fff; border-color: var(--green); }
-  .topnav-right { display: flex; align-items: center; gap: 10px; }
-  .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--green); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
-  .export-btn { padding: 7px 16px; font-size: 12px; background: var(--green); color: #fff; border: none; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; }
+/* ── SIDENAV ── */
+.sidenav { width: var(--nav-width); background: var(--green); display: flex; flex-direction: column; flex-shrink: 0; }
+.sidenav-brand { padding: 22px 20px 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.brand-logo { font-size: 18px; font-weight: 700; letter-spacing: 0.14em; color: #fff; }
+.brand-sub { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+.sidenav-section { padding: 18px 12px 8px; }
+.sidenav-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); padding: 0 8px; margin-bottom: 6px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 2px; text-decoration: none; transition: background 0.12s; border: 1px solid transparent; color: rgba(255,255,255,0.72); font-size: 13px; font-weight: 500; }
+.nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-item.active { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.18); color: #fff; }
+.nav-item .nav-icon { width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: rgba(255,255,255,0.1); }
+.nav-item.active .nav-icon { background: rgba(255,255,255,0.2); }
+.nav-item-text { flex: 1; }
+.nav-item-badge { font-size: 10px; background: rgba(255,255,255,0.2); color: #fff; padding: 2px 7px; border-radius: 20px; }
+.sidenav-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 10px 12px; }
+.sidenav-bottom { margin-top: auto; padding: 14px 12px; border-top: 1px solid rgba(255,255,255,0.1); }
+.user-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; cursor: pointer; }
+.user-row:hover { background: rgba(255,255,255,0.1); }
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.2); color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.user-name { font-size: 12px; font-weight: 500; color: #fff; }
+.user-role { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 1px; }
 
-  /* PAGE HEADER */
-  .page-header { background: var(--green); padding: 36px 40px 28px; color: #fff; }
-  .page-header-top { display: flex; align-items: flex-start; justify-content: space-between; }
-  .page-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
-  .page-title { font-size: 28px; font-weight: 600; line-height: 1.2; margin-bottom: 6px; }
-  .page-meta { font-size: 13px; color: rgba(255,255,255,0.65); }
-  .page-desc { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 10px; max-width: 560px; line-height: 1.6; }
+/* ── MAIN ── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
 
-  /* CONTENT */
-  .content { padding: 28px 40px; max-width: 1200px; margin: 0 auto; }
+/* ── TOPBAR ── */
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 56px; background: #fff; border-bottom: 1px solid var(--border); flex-shrink: 0; z-index: 10; }
+.topbar-left { display: flex; align-items: center; gap: 10px; }
+.back-btn { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 20px; font-size: 12px; color: var(--text-muted); text-decoration: none; transition: all 0.12s; background: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.back-btn:hover { border-color: var(--green-border); color: var(--green); background: var(--green-light); }
+.topbar-divider { width: 1px; height: 20px; background: var(--border); }
+.page-title { font-size: 15px; font-weight: 600; }
+.page-breadcrumb { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+.topbar-right { display: flex; align-items: center; gap: 8px; }
+.tb-btn { padding: 7px 14px; font-size: 12px; border: 1px solid var(--border); border-radius: 20px; background: #fff; color: var(--text-muted); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.12s; }
+.tb-btn:hover { border-color: var(--green-border); color: var(--green); background: var(--green-light); }
+.tb-btn.amber { background: var(--amber); color: #fff; border-color: var(--amber); }
+.tb-btn.amber:hover { background: #b45309; }
 
-  /* NOTE */
-  .info-note { background: var(--green-light); border: 1px solid var(--green-border); border-radius: var(--radius-sm); padding: 12px 16px; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; }
-  .info-note-text { font-size: 12px; color: var(--green); line-height: 1.6; }
+/* ── DIST BANNER ── */
+.dist-banner {
+  background: var(--amber);
+  padding: 16px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0; position: relative; overflow: hidden;
+}
+.dist-banner::after {
+  content: 'DISTRIBUSI';
+  position: absolute; right: 200px; top: 50%; transform: translateY(-50%);
+  font-size: 64px; font-weight: 900; letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.06); pointer-events: none;
+  font-family: 'DM Serif Display', serif;
+}
+.banner-left { display: flex; align-items: center; gap: 14px; z-index: 1; }
+.banner-emoji { width: 46px; height: 46px; border-radius: 12px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.banner-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+.banner-meta { font-size: 11px; color: rgba(255,255,255,0.75); display: flex; align-items: center; gap: 10px; }
+.banner-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.5); }
+.banner-right { z-index: 1; display: flex; gap: 8px; align-items: center; }
+.stat-pill {
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 10px; padding: 8px 16px; text-align: center;
+}
+.stat-pill-val { font-size: 20px; font-weight: 700; color: #fff; font-family: 'DM Mono', monospace; line-height: 1; }
+.stat-pill-lbl { font-size: 10px; color: rgba(255,255,255,0.65); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ── LAYOUT ── */
+.body-layout { flex: 1; display: flex; overflow: hidden; }
+
+/* LEFT: email list */
+.email-sidebar {
+  width: 340px; flex-shrink: 0;
+  background: #fff; border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.sidebar-head {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.sidebar-head-title { font-size: 13px; font-weight: 600; }
+.sidebar-count { font-size: 11px; color: var(--text-muted); background: var(--bg-tertiary); border: 1px solid var(--border); border-radius: 20px; padding: 2px 9px; }
+.sidebar-filter { display: flex; gap: 5px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+.fchip { font-size: 11px; padding: 4px 11px; border: 1px solid var(--border); border-radius: 20px; background: #fff; color: var(--text-muted); cursor: pointer; transition: all 0.12s; }
+.fchip.active, .fchip:hover { border-color: var(--amber); color: var(--amber); background: #fffbeb; }
+.email-list { flex: 1; overflow-y: auto; padding: 8px; }
+.email-list::-webkit-scrollbar { width: 4px; }
+.email-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+.email-item {
+  padding: 12px 13px; border-radius: 10px; cursor: pointer;
+  border: 1.5px solid transparent; margin-bottom: 5px;
+  transition: all 0.12s; position: relative;
+  animation: slideIn 0.3s ease both;
+}
+.email-item:hover { background: var(--bg-secondary); border-color: var(--border); }
+.email-item.selected { background: #fffbeb; border-color: #fcd34d; }
+@keyframes slideIn { from { opacity:0; transform:translateX(-8px); } to { opacity:1; transform:translateX(0); } }
+.email-item:nth-child(1){animation-delay:0.04s}
+.email-item:nth-child(2){animation-delay:0.08s}
+.email-item:nth-child(3){animation-delay:0.12s}
+.email-item:nth-child(4){animation-delay:0.16s}
+.email-item:nth-child(5){animation-delay:0.20s}
+.email-item:nth-child(6){animation-delay:0.24s}
+
+.email-item-top { display: flex; align-items: center; gap: 9px; margin-bottom: 6px; }
+.inst-avatar {
+  width: 34px; height: 34px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.inst-name { font-size: 12px; font-weight: 600; flex: 1; }
+.email-status-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.dot-pending  { background: #fbbf24; }
+.dot-sent     { background: #22c55e; }
+.dot-draft    { background: #94a3b8; }
+
+.email-subject { font-size: 11px; color: var(--text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
+.email-to      { font-size: 10px; color: var(--text-muted); font-family: 'DM Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.email-item-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 7px; }
+.email-label { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+.lbl-polres    { background: #dbeafe; color: #1d4ed8; }
+.lbl-kejaksaan { background: #fef9c3; color: #a16207; }
+.lbl-pengadilan{ background: #f3e8ff; color: #6d28d9; }
+.lbl-kpk       { background: #fee2e2; color: #b91c1c; }
+.lbl-kejagung  { background: #fce7f3; color: #9d174d; }
+.lbl-bpk       { background: #ecfdf5; color: #166534; }
+.email-time { font-size: 10px; color: var(--text-muted); }
+
+/* RIGHT: email preview */
+.email-preview {
+  flex: 1; overflow-y: auto; background: var(--bg-secondary);
+  display: flex; flex-direction: column;
+}
+.email-preview::-webkit-scrollbar { width: 5px; }
+.email-preview::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+.preview-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; background: #fff; border-bottom: 1px solid var(--border);
+  flex-shrink: 0; position: sticky; top: 0; z-index: 5;
+}
+.preview-title { font-size: 14px; font-weight: 600; }
+.preview-actions { display: flex; gap: 7px; }
+.pv-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  border: 1.5px solid var(--border); background: #fff; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all 0.12s; color: var(--text-muted);
+}
+.pv-btn:hover { border-color: var(--green-border); color: var(--green); background: var(--green-light); }
+.pv-btn.send-btn {
+  background: var(--green); color: #fff; border-color: var(--green);
+}
+.pv-btn.send-btn:hover { background: #14482a; border-color: #14482a; }
+.pv-btn.sent-state {
+  background: #f0fdf4; color: #16a34a; border-color: #86efac;
+  cursor: default;
+}
+
+.email-card {
+  margin: 20px 24px; background: #fff; border: 1.5px solid var(--border);
+  border-radius: 14px; overflow: hidden; flex-shrink: 0;
+}
+
+/* EDIT MODE overlay */
+.email-card.editing { border-color: #fcd34d; box-shadow: 0 0 0 3px rgba(252,211,77,0.15); }
+
+.email-card-header {
+  padding: 20px 24px 16px; border-bottom: 1px solid var(--border);
+}
+.email-header-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+.inst-avatar-lg {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.email-inst-name { font-size: 14px; font-weight: 700; color: var(--text); }
+.email-inst-addr { font-size: 12px; color: var(--text-muted); margin-top: 2px; font-family: 'DM Mono', monospace; }
+
+.email-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.email-meta-row { display: flex; flex-direction: column; gap: 2px; }
+.meta-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; }
+
+/* EDITABLE FIELDS */
+.meta-value {
+  font-size: 12px; color: var(--text); font-weight: 500;
+  padding: 5px 8px; border-radius: 6px; border: 1.5px solid transparent;
+  background: transparent; font-family: 'DM Sans', sans-serif;
+  width: 100%; transition: all 0.12s; outline: none;
+}
+.meta-value:focus { border-color: #fcd34d; background: #fffbeb; }
+.meta-value[readonly] { cursor: default; }
+
+.subject-row { margin-top: 10px; }
+.subject-input {
+  width: 100%; font-size: 14px; font-weight: 600; color: var(--text);
+  padding: 6px 8px; border-radius: 7px; border: 1.5px solid transparent;
+  background: transparent; font-family: 'DM Sans', sans-serif;
+  outline: none; transition: all 0.12s;
+}
+.subject-input:focus { border-color: #fcd34d; background: #fffbeb; }
+.subject-input[readonly] { cursor: default; }
+
+.email-body-section { padding: 20px 24px; }
+.email-body-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 10px; font-weight: 600; }
+
+.email-body-text {
+  font-size: 13px; line-height: 1.75; color: var(--text);
+  width: 100%; min-height: 280px; border: 1.5px solid transparent;
+  border-radius: 10px; padding: 14px 16px; background: var(--bg-secondary);
+  font-family: 'DM Sans', sans-serif; resize: vertical; outline: none;
+  transition: all 0.12s;
+}
+.email-body-text:focus { border-color: #fcd34d; background: #fffbeb; }
+.email-body-text[readonly] { cursor: default; resize: none; }
+
+.email-card-footer {
+  padding: 14px 24px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg-secondary);
+}
+.attachment-row { display: flex; align-items: center; gap: 8px; }
+.attach-chip {
+  display: flex; align-items: center; gap: 6px; padding: 5px 11px;
+  border: 1px solid var(--border); border-radius: 8px; background: #fff;
+  font-size: 11px; color: var(--text-muted);
+}
+.footer-right { display: flex; align-items: center; gap: 8px; }
+.edit-indicator {
+  font-size: 11px; color: var(--amber); font-weight: 500;
+  display: none; align-items: center; gap: 5px;
+}
+.edit-indicator.visible { display: flex; }
+
+/* SENT OVERLAY */
+.sent-overlay {
+  margin: 0 24px 20px; background: #f0fdf4; border: 1.5px solid #86efac;
+  border-radius: 12px; padding: 14px 18px;
+  display: none; align-items: center; gap: 12px;
+  animation: popIn 0.25s ease;
+}
+.sent-overlay.visible { display: flex; }
+@keyframes popIn { from{opacity:0;transform:scale(0.97)} to{opacity:1;transform:scale(1)} }
+.sent-icon { font-size: 22px; flex-shrink: 0; }
+.sent-title { font-size: 13px; font-weight: 600; color: #166534; }
+.sent-sub { font-size: 11px; color: #15803d; margin-top: 2px; }
+.sent-time { margin-left: auto; font-size: 11px; font-family: 'DM Mono', monospace; color: #16a34a; }
+
+/* FAB */
+.fab-sendall {
+  position: absolute; bottom: 28px; right: 28px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 24px; background: var(--green); color: #fff;
+  border: none; border-radius: 40px; font-size: 14px; font-weight: 600;
+  font-family: 'DM Sans', sans-serif; cursor: pointer;
+  box-shadow: 0 6px 28px rgba(26,92,46,0.35);
+  transition: all 0.15s; z-index: 50;
+}
+.fab-sendall:hover { background: #14482a; transform: translateY(-2px); box-shadow: 0 10px 36px rgba(26,92,46,0.4); }
 </style>
 </head>
 <body>
 
-<div class="topnav">
-  <div class="topnav-left">
-    <div class="nav-brand">SEPIA</div>
-    <a class="nav-back" href="mainpage.html">← Kembali ke Dashboard</a>
-    <div class="nav-sibling">
-      <a href="analisis.html">🔍 Analisis</a>
-      <a href="distribusi.html" class="active">📊 Distribusi</a>
+<!-- SIDENAV -->
+<nav class="sidenav">
+  <div class="sidenav-brand">
+    <div class="brand-logo">SEPIA</div>
+    <div class="brand-sub">Sistem Analitik Hukum</div>
+  </div>
+  <div class="sidenav-section">
+    <div class="sidenav-label">Menu Utama</div>
+    <a class="nav-item" href="#"><div class="nav-icon">📊</div><div class="nav-item-text">Dashboard</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">📋</div><div class="nav-item-text">RKI</div><span class="nav-item-badge">3</span></a>
+    <a class="nav-item active" href="#"><div class="nav-icon">🗄️</div><div class="nav-item-text">Data Pool</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">🎨</div><div class="nav-item-text">Personalisasi</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">📅</div><div class="nav-item-text">Daily Report</div><span class="nav-item-badge">!</span></a>
+  </div>
+  <div class="sidenav-divider"></div>
+  <div class="sidenav-section">
+    <div class="sidenav-label">Sistem</div>
+    <a class="nav-item" href="#"><div class="nav-icon">⚙️</div><div class="nav-item-text">Settings</div></a>
+  </div>
+  <div class="sidenav-bottom">
+    <div class="user-row">
+      <div class="user-avatar">CR</div>
+      <div><div class="user-name">C. Rasyid</div><div class="user-role">Analis Senior</div></div>
     </div>
   </div>
-  <div class="topnav-right">
-    <button class="export-btn">📤 Ekspor Semua</button>
-    <div class="avatar">CR</div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="back-btn" onclick="history.back()">← Kembali</button>
+      <div class="topbar-divider"></div>
+      <div class="page-title">Distribusi Laporan</div>
+      <div class="page-breadcrumb">
+        <span style="opacity:0.5">Korupsi IT Kemenkominfo</span>
+        <span style="opacity:0.4">›</span>
+        <span style="color:var(--text)">Distribusi</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="tb-btn">⬇ Ekspor Semua</button>
+      <button class="tb-btn amber" onclick="sendAll()">📤 Kirim Semua</button>
+    </div>
   </div>
+
+  <!-- DIST BANNER -->
+  <div class="dist-banner">
+    <div class="banner-left">
+      <div class="banner-emoji">📤</div>
+      <div>
+        <div class="banner-title">Distribusi Laporan — Korupsi IT Kemenkominfo</div>
+        <div class="banner-meta">
+          <span>6 instansi tujuan</span>
+          <span class="banner-dot"></span>
+          <span>Email di-generate otomatis · 18 Mar 2024</span>
+          <span class="banner-dot"></span>
+          <span>Lampiran: Ringkasan Analisis + SWOT</span>
+        </div>
+      </div>
+    </div>
+    <div class="banner-right">
+      <div class="stat-pill">
+        <div class="stat-pill-val" id="sentCount">0</div>
+        <div class="stat-pill-lbl">Terkirim</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-pill-val">6</div>
+        <div class="stat-pill-lbl">Total</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY LAYOUT -->
+  <div class="body-layout">
+
+    <!-- EMAIL SIDEBAR -->
+    <div class="email-sidebar">
+      <div class="sidebar-head">
+        <span class="sidebar-head-title">Daftar Email</span>
+        <span class="sidebar-count">6 draft</span>
+      </div>
+      <div class="sidebar-filter">
+        <div class="fchip active">Semua</div>
+        <div class="fchip">Belum Kirim</div>
+        <div class="fchip">Terkirim</div>
+      </div>
+      <div class="email-list" id="emailList"></div>
+    </div>
+
+    <!-- EMAIL PREVIEW -->
+    <div class="email-preview" id="emailPreview">
+      <!-- filled by JS -->
+    </div>
+
+  </div>
+
+  <!-- FAB -->
+  <button class="fab-sendall" onclick="sendAll()">📤 Kirim Semua Sekarang</button>
+
 </div>
 
-<div class="page-header">
-  <div class="page-header-top">
-    <div>
-      <div class="page-eyebrow">Rekomendasi Tindakan · 15 Mar 2026</div>
-      <div class="page-title">Distribusi Rekomendasi<br>ke Instansi Terkait</div>
-      <div class="page-meta">Korupsi IT Kominfo · 3 instansi · Dihasilkan SEPIA AI</div>
-      <div class="page-desc">Rekomendasi tindakan yang dihasilkan AI untuk setiap instansi berdasarkan hasil analisis kasus. Tinjau isi surat lalu pilih Edit atau Kirim langsung.</div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;">
-      <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:14px 20px;text-align:center;">
-        <div style="font-size:28px;font-weight:600;">3</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px;">Instansi</div>
+<script>
+const emails = [
+  {
+    id: 0,
+    inst: 'Polres Jakarta Pusat',
+    icon: '🚔',
+    iconBg: '#dbeafe',
+    label: 'lbl-polres',
+    labelText: 'Polres',
+    to: 'pidum.polresjp@polri.go.id',
+    cc: 'wakapolres.jp@polri.go.id',
+    from: 'sepia-system@bpk.go.id',
+    subject: '[LAPORAN ANALISIS] Kasus Korupsi Pengadaan BTS 4G Kemenkominfo — Mohon Koordinasi Penangkapan DPO',
+    body: `Yth.
+Kepala Satuan Reserse Kriminal
+Polres Jakarta Pusat
+
+Dengan hormat,
+
+Bersama surat elektronik ini, kami dari Tim Analis SEPIA — Sistem Analitik Hukum menyampaikan laporan hasil analisis prediktif terkait kasus dugaan korupsi pengadaan Base Transceiver Station (BTS) 4G pada Kementerian Komunikasi dan Informatika (Kemenkominfo) Tahun Anggaran 2021–2022, dengan estimasi kerugian negara sebesar Rp 179.000.000.000,- (seratus tujuh puluh sembilan miliar rupiah).
+
+Berdasarkan hasil analisis terhadap 7 sumber dokumen resmi, kami menemukan hal-hal berikut yang memerlukan koordinasi segera:
+
+1. Satu tersangka utama atas nama D. Wibowo (DW) saat ini berstatus DPO dan diduga berada di wilayah hukum Jakarta Pusat berdasarkan data kependudukan terakhir.
+2. Terdapat indikasi perpindahan aset bergerak di wilayah Jakarta Pusat yang perlu segera diamankan.
+3. Dua saksi kunci berada di wilayah Anda dan memerlukan perlindungan serta pemeriksaan lanjutan.
+
+Kami mohon kesediaan Polres Jakarta Pusat untuk berkoordinasi dengan Kejaksaan Negeri Jakarta Pusat guna mempercepat penangkapan DPO tersebut.
+
+Laporan lengkap beserta lampiran analisis SWOT dan peta aktor terlampir dalam surat ini.
+
+Hormat kami,
+C. Rasyid
+Analis Senior — Tim SEPIA
+Badan Pengawas Keuangan RI`,
+    sent: false,
+    time: 'Baru dibuat'
+  },
+  {
+    id: 1,
+    inst: 'Kejaksaan Negeri Jakarta Pusat',
+    icon: '⚖️',
+    iconBg: '#fef9c3',
+    label: 'lbl-kejaksaan',
+    labelText: 'Kejaksaan',
+    to: 'pidana.kejnjp@kejaksaan.go.id',
+    cc: 'kajari.jakpus@kejaksaan.go.id',
+    from: 'sepia-system@bpk.go.id',
+    subject: '[LAPORAN ANALISIS] Penguatan Dakwaan Kasus BTS Kemenkominfo — Rekomendasi Pasal Tambahan',
+    body: `Yth.
+Kepala Seksi Pidana Khusus
+Kejaksaan Negeri Jakarta Pusat
+
+Dengan hormat,
+
+Merujuk pada perkara Nomor PDM-37/JKT/02/2024 yang saat ini dalam proses persidangan, Tim Analis SEPIA menyampaikan laporan analisis prediktif dengan temuan-temuan yang kami rekomendasikan untuk memperkuat konstruksi dakwaan.
+
+Temuan utama analisis kami:
+
+1. PASAL TAMBAHAN YANG DIREKOMENDASIKAN
+   Berdasarkan pola transaksi keuangan yang teridentifikasi, kami merekomendasikan penambahan dakwaan Pasal 3 UU No. 8 Tahun 2010 (TPPU) terhadap seluruh terdakwa, mengingat adanya indikasi pencucian uang melalui tiga rekening perusahaan cangkang.
+
+2. JUSTICE COLLABORATOR
+   Terdakwa R. Santoso (RS) menunjukkan sinyal kooperatif. Kami merekomendasikan pendekatan formal untuk penawaran status Justice Collaborator guna membuka fakta persidangan yang lebih luas, termasuk kemungkinan keterlibatan pejabat setingkat eselon I.
+
+3. ESTIMASI KERUGIAN FINAL
+   Berdasarkan penelusuran dokumen kontrak dan audit BPK, estimasi kerugian negara yang sebenarnya adalah Rp 211.000.000.000,- (dua ratus sebelas miliar rupiah), melebihi angka dakwaan awal.
+
+Dokumen pendukung, termasuk ringkasan forensik keuangan, terlampir.
+
+Hormat kami,
+C. Rasyid
+Analis Senior — Tim SEPIA`,
+    sent: false,
+    time: 'Baru dibuat'
+  },
+  {
+    id: 2,
+    inst: 'Pengadilan Tipikor Jakarta',
+    icon: '🏛️',
+    iconBg: '#f3e8ff',
+    label: 'lbl-pengadilan',
+    labelText: 'Pengadilan',
+    to: 'humas.tipikor.jkt@mahkamahagung.go.id',
+    cc: 'panitera.tipikor.jkt@mahkamahagung.go.id',
+    from: 'sepia-system@bpk.go.id',
+    subject: '[NOTIFIKASI ANALISIS] Keterangan Ahli Tambahan — Perkara Korupsi BTS Kemenkominfo',
+    body: `Yth.
+Ketua Pengadilan Tindak Pidana Korupsi
+Jakarta Pusat
+
+Dengan hormat,
+
+Melalui surat elektronik ini, Tim SEPIA — Sistem Analitik Hukum menyampaikan notifikasi bahwa terdapat keterangan ahli tambahan yang relevan untuk perkara dugaan korupsi pengadaan BTS 4G Kemenkominfo yang saat ini dalam proses persidangan di Pengadilan Tipikor Jakarta.
+
+Hal-hal yang kami sampaikan:
+
+1. KETERSEDIAAN SAKSI AHLI
+   Tim kami dapat menyediakan tenaga ahli di bidang analisis forensik keuangan digital untuk memberikan keterangan dalam persidangan, apabila diperlukan oleh Majelis Hakim.
+
+2. DOKUMEN AUTENTIKASI
+   Terdapat pertanyaan mengenai otentisitas salinan digital dokumen kontrak yang menjadi barang bukti. Kami memiliki hasil analisis metadata yang dapat dijadikan rujukan.
+
+3. ESTIMASI NILAI ASET YANG DAPAT DISITA
+   Berdasarkan penelusuran kami, terdapat aset senilai Rp 40.000.000.000,- yang dapat diupayakan penyitaannya sebelum persidangan tahap berikutnya.
+
+Kami memohon kiranya Majelis Hakim berkenan mempertimbangkan informasi ini dalam proses pembuktian.
+
+Hormat kami,
+C. Rasyid
+Analis Senior — Tim SEPIA`,
+    sent: false,
+    time: 'Baru dibuat'
+  },
+  {
+    id: 3,
+    inst: 'Komisi Pemberantasan Korupsi',
+    icon: '🔍',
+    iconBg: '#fee2e2',
+    label: 'lbl-kpk',
+    labelText: 'KPK',
+    to: 'pengaduan@kpk.go.id',
+    cc: 'deputi.penindakan@kpk.go.id',
+    from: 'sepia-system@bpk.go.id',
+    subject: '[LAPORAN ANALISIS SEPIA] Koordinasi Penanganan Kasus Korupsi BTS 4G Kemenkominfo — Potensi Tersangka Baru',
+    body: `Yth.
+Deputi Bidang Penindakan dan Eksekusi
+Komisi Pemberantasan Korupsi RI
+Jakarta
+
+Dengan hormat,
+
+Berdasarkan hasil analisis prediktif Tim SEPIA terhadap kasus korupsi pengadaan BTS 4G Kemenkominfo (Perkara PDM-37/JKT/02/2024), kami menyampaikan temuan-temuan berikut yang kami pandang memerlukan perhatian KPK:
+
+TEMUAN KRITIS:
+
+1. POTENSI TERSANGKA TAMBAHAN (Probabilitas 74%)
+   Analisis pola transaksi keuangan mengindikasikan keterlibatan setidaknya dua pihak tambahan yang belum ditetapkan sebagai tersangka, termasuk seorang oknum di lingkungan Kemenkominfo setingkat Direktur Jenderal.
+
+2. ASET OFFSHORE (Singapura)
+   Terdapat indikasi kuat perpindahan dana ke rekening di Singapura atas nama perusahaan yang terafiliasi dengan tersangka DW. Kami merekomendasikan aktivasi Mutual Legal Assistance (MLA) dengan pihak berwenang Singapura sesegera mungkin.
+
+3. KOORDINASI DENGAN PPATK
+   Kami telah mengidentifikasi 7 rekening yang perlu ditelusuri aliran dananya. Laporan lengkap kami lampirkan dalam surat ini.
+
+4. PEMBLOKIRAN ASET TAMBAHAN
+   Selain Rp 40 M yang sudah diajukan, kami mengidentifikasi aset berupa properti di Jakarta Selatan dan kendaraan mewah senilai total Rp 12 M yang belum terblokir.
+
+Kami siap berkoordinasi langsung dengan tim KPK.
+
+Hormat kami,
+C. Rasyid
+Analis Senior — Tim SEPIA`,
+    sent: false,
+    time: 'Baru dibuat'
+  },
+  {
+    id: 4,
+    inst: 'Kejaksaan Agung RI',
+    icon: '🏢',
+    iconBg: '#fce7f3',
+    label: 'lbl-kejagung',
+    labelText: 'Kejagung',
+    to: 'intelijen@kejaksaan.go.id',
+    cc: 'jaksa.agung.muda@kejaksaan.go.id',
+    from: 'sepia-system@bpk.go.id',
+    subject: '[LAPORAN STRATEGIS SEPIA] Analisis Menyeluruh — Kasus Korupsi BTS Kemenkominfo Rp 179 M',
+    body: `Yth.
+Jaksa Agung Muda Bidang Tindak Pidana Khusus
+Kejaksaan Agung Republik Indonesia
+
+Dengan hormat,
+
+Dalam rangka mendukung penanganan perkara korupsi pengadaan BTS 4G Kemenkominfo secara komprehensif, Tim Analis SEPIA menyampaikan laporan strategis hasil analisis prediktif berbasis 7 sumber dokumen resmi.
+
+RINGKASAN EKSEKUTIF:
+
+Kasus ini memiliki tingkat risiko 8,4/10 berdasarkan model analitik SEPIA v2.1. Prediksi vonis berkisar antara 12–15 tahun penjara untuk dua terdakwa yang telah dalam tahanan, dengan potensi kerugian negara final sebesar Rp 211 Miliar.
+
+REKOMENDASI STRATEGIS UTAMA:
+
+1. PERCEPATAN PENERBITAN RED NOTICE untuk DPO D. Wibowo melalui jalur Interpol, mengingat indikasi keberadaannya di luar yurisdiksi ASEAN.
+
+2. EKSPANSI CAKUPAN PERKARA dengan membuka penyelidikan terhadap dua pejabat tambahan yang teridentifikasi dalam analisis pola komunikasi.
+
+3. PEMISAHAN BERKAS PERKARA untuk tersangka DPO guna mencegah penghambatan proses persidangan dua terdakwa yang telah dalam tahanan.
+
+4. KOORDINASI LINTAS LEMBAGA antara Kejagung, KPK, Polri, dan PPATK untuk maksimalisasi pemulihan aset negara.
+
+Laporan lengkap beserta seluruh lampiran dokumen pendukung terlampir dalam email ini.
+
+Hormat kami,
+C. Rasyid
+Analis Senior — Tim SEPIA
+Badan Pengawas Keuangan RI`,
+    sent: false,
+    time: 'Baru dibuat'
+  },
+  {
+    id: 5,
+    inst: 'BPK Perwakilan DKI Jakarta',
+    icon: '📋',
+    iconBg: '#ecfdf5',
+    label: 'lbl-bpk',
+    labelText: 'BPK',
+    to: 'perwakilan.dki@bpk.go.id',
+    cc: 'kepala.perwakilan.dki@bpk.go.id',
+    from: 'sepia-system@bpk.go.id',
+    subject: '[TEMBUSAN INTERNAL] Laporan Analisis SEPIA — Tindak Lanjut Temuan Audit BTS Kemenkominfo',
+    body: `Yth.
+Kepala Perwakilan BPK Provinsi DKI Jakarta
+
+Dengan hormat,
+
+Sebagai tembusan internal dan tindak lanjut atas Laporan Hasil Pemeriksaan (LHP) BPK yang menjadi salah satu dasar analisis kami, Tim SEPIA menyampaikan laporan hasil analisis prediktif kasus korupsi BTS 4G Kemenkominfo.
+
+KETERKAITAN DENGAN LHP BPK:
+
+Temuan audit BPK yang menyebutkan selisih nilai kontrak 62% di atas harga pasar wajar telah kami jadikan basis utama dalam konstruksi analisis ini. Temuan tersebut terbukti memiliki signifikansi hukum yang sangat kuat dan menjadi salah satu bukti kunci dalam persidangan.
+
+PERKEMBANGAN TERKINI:
+
+1. LHP BPK telah dikutip langsung dalam surat dakwaan Kejaksaan Agung (PDM-37/JKT/02/2024).
+2. Tim pengacara terdakwa berupaya mempersoalkan metodologi audit. Kami merekomendasikan BPK mempersiapkan keterangan ahli untuk merespons hal tersebut.
+3. Estimasi kerugian negara dalam analisis kami (Rp 211 M) lebih tinggi dari angka audit awal, berdasarkan penelusuran kontrak tambahan yang belum diaudit sebelumnya.
+
+SARAN TINDAK LANJUT:
+
+Kami menyarankan BPK Perwakilan DKI Jakarta untuk melakukan audit lanjutan terhadap proyek-proyek pengadaan IT Kemenkominfo lainnya dalam periode yang sama guna mengidentifikasi potensi penyimpangan serupa.
+
+Hormat kami,
+C. Rasyid
+Analis Senior — Tim SEPIA`,
+    sent: false,
+    time: 'Baru dibuat'
+  }
+];
+
+let currentId = 0;
+let editingId = null;
+let sentCount = 0;
+
+function renderSidebar() {
+  const list = document.getElementById('emailList');
+  list.innerHTML = emails.map((e,i) => `
+    <div class="email-item ${i===currentId?'selected':''}" onclick="selectEmail(${i})" id="item-${i}">
+      <div class="email-item-top">
+        <div class="inst-avatar" style="background:${e.iconBg}">${e.icon}</div>
+        <div class="inst-name">${e.inst}</div>
+        <div class="email-status-dot ${e.sent?'dot-sent':'dot-pending'}"></div>
       </div>
-      <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:14px 20px;text-align:center;">
-        <div style="font-size:28px;font-weight:600;">0</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px;">Terkirim</div>
+      <div class="email-subject">${e.subject.replace(/^\[.*?\] /,'')}</div>
+      <div class="email-to">→ ${e.to}</div>
+      <div class="email-item-foot">
+        <span class="email-label ${e.label}">${e.labelText}</span>
+        <span class="email-time">${e.sent?'✓ Terkirim':e.time}</span>
       </div>
     </div>
-  </div>
-</div>
+  `).join('');
+}
 
-<div class="content">
+function selectEmail(id) {
+  currentId = id;
+  editingId = null;
+  renderSidebar();
+  renderPreview();
+}
 
-  <div class="info-note">
-    <span style="font-size:14px;flex-shrink:0;">💡</span>
-    <div class="info-note-text"><strong>Catatan:</strong> Seluruh rekomendasi di bawah dihasilkan secara otomatis oleh SEPIA AI berdasarkan analisis dokumen. Konten bersifat <em>dummy</em> dan perlu ditinjau oleh petugas berwenang sebelum dikirimkan. Gunakan tombol <strong>Edit Surat</strong> untuk menyesuaikan isi.</div>
-  </div>
+function renderPreview() {
+  const e = emails[currentId];
+  const isEditing = editingId === currentId;
+  const ro = !isEditing ? 'readonly' : '';
 
-  <!-- GRID 3 KOLOM -->
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;">
+  document.getElementById('emailPreview').innerHTML = `
+    <div class="preview-topbar">
+      <div class="preview-title">${e.inst}</div>
+      <div class="preview-actions">
+        ${e.sent
+          ? `<button class="pv-btn sent-state">✓ Terkirim</button>`
+          : `
+            <button class="pv-btn" onclick="toggleEdit(${e.id})" id="editBtn-${e.id}">
+              ${isEditing ? '✕ Batal Edit' : '✏️ Edit'}
+            </button>
+            ${isEditing
+              ? `<button class="pv-btn" onclick="saveEdit(${e.id})" style="border-color:var(--amber);color:var(--amber);">💾 Simpan</button>`
+              : ''}
+            <button class="pv-btn send-btn" onclick="sendEmail(${e.id})">📤 Kirim Sekarang</button>
+          `
+        }
+      </div>
+    </div>
 
-    <!-- DIV 1: POLRES -->
-    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;">
-      <div style="background:var(--green);padding:18px 20px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:17px;">🚔</div>
+    ${e.sent ? `
+    <div class="sent-overlay visible" style="margin:20px 24px 0;">
+      <div class="sent-icon">✅</div>
+      <div>
+        <div class="sent-title">Email berhasil dikirim</div>
+        <div class="sent-sub">Terkirim ke ${e.to}</div>
+      </div>
+      <div class="sent-time">${e.sentTime || ''}</div>
+    </div>` : ''}
+
+    <div class="email-card ${isEditing?'editing':''}" id="emailCard-${e.id}">
+      <div class="email-card-header">
+        <div class="email-header-row">
+          <div class="inst-avatar-lg" style="background:${e.iconBg}">${e.icon}</div>
           <div>
-            <div style="font-size:14px;font-weight:600;color:#fff;">Polres Jakarta Pusat</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.7);">Rekomendasi Tindakan Lapangan</div>
+            <div class="email-inst-name">${e.inst}</div>
+            <div class="email-inst-addr">${e.to}</div>
           </div>
         </div>
-        <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border-radius:6px;padding:7px 10px;">
-          <span style="font-size:11px;color:rgba(255,255,255,0.6);">Kepada:</span>
-          <span style="font-size:11px;color:#fff;font-family:'DM Mono',monospace;">kapolres.jakpus@polri.go.id</span>
-        </div>
-      </div>
-      <div style="padding:18px 20px;flex:1;border-bottom:1px solid var(--border);">
-        <div style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Isi Rekomendasi</div>
-        <div style="font-size:13px;color:var(--text);line-height:1.75;">
-          Yth. Kepala Polres Jakarta Pusat,<br><br>
-          Berdasarkan hasil analisis kasus korupsi pengadaan sistem IT Kementerian Kominfo, kami merekomendasikan agar Satuan Reserse Kriminal segera melakukan <strong>penggeledahan lanjutan</strong> terhadap kantor PT Solusi Prima di Jl. Sudirman No. 47 untuk menyita server dan dokumen kontrak fisik yang belum diamankan.<br><br>
-          Selain itu, diperlukan <strong>penempatan personel pengamanan</strong> di kediaman Rina Susanti sebagai saksi kunci yang berpotensi mendapat intimidasi dari pihak tersangka.<br><br>
-          Koordinasikan temuan lapangan dengan Tim Penyidik Kejagung paling lambat 20 Maret 2026.
-        </div>
-      </div>
-      <div style="padding:12px 20px;display:flex;gap:8px;background:var(--bg-secondary);">
-        <button style="flex:1;padding:10px;font-size:13px;font-weight:500;border:1.5px solid var(--border);border-radius:8px;background:#fff;color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;">✏️ Edit Surat</button>
-        <button style="flex:1;padding:10px;font-size:13px;font-weight:500;border:none;border-radius:8px;background:var(--green);color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;">📤 Kirim</button>
-      </div>
-    </div>
-
-    <!-- DIV 2: JAKSA -->
-    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;">
-      <div style="background:#1e3a5f;padding:18px 20px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:17px;">⚖️</div>
-          <div>
-            <div style="font-size:14px;font-weight:600;color:#fff;">Kejaksaan Negeri Jakarta Pusat</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.7);">Rekomendasi Penuntutan</div>
+        <div class="email-meta-grid">
+          <div class="email-meta-row">
+            <span class="meta-label">Kepada (To)</span>
+            <input class="meta-value" id="to-${e.id}" value="${e.to}" ${ro} />
+          </div>
+          <div class="email-meta-row">
+            <span class="meta-label">Tembusan (CC)</span>
+            <input class="meta-value" id="cc-${e.id}" value="${e.cc}" ${ro} />
+          </div>
+          <div class="email-meta-row">
+            <span class="meta-label">Dari (From)</span>
+            <input class="meta-value" id="from-${e.id}" value="${e.from}" ${ro} />
+          </div>
+          <div class="email-meta-row">
+            <span class="meta-label">Tanggal</span>
+            <input class="meta-value" value="18 Maret 2024, 09.42 WIB" readonly />
           </div>
         </div>
-        <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border-radius:6px;padding:7px 10px;">
-          <span style="font-size:11px;color:rgba(255,255,255,0.6);">Kepada:</span>
-          <span style="font-size:11px;color:#fff;font-family:'DM Mono',monospace;">kajari.jakpus@kejaksaan.go.id</span>
+        <div class="subject-row">
+          <div class="meta-label" style="margin-bottom:6px">Subjek</div>
+          <input class="subject-input" id="subj-${e.id}" value="${e.subject}" ${ro} />
         </div>
       </div>
-      <div style="padding:18px 20px;flex:1;border-bottom:1px solid var(--border);">
-        <div style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Isi Rekomendasi</div>
-        <div style="font-size:13px;color:var(--text);line-height:1.75;">
-          Yth. Kepala Kejaksaan Negeri Jakarta Pusat,<br><br>
-          Merujuk pada perkembangan penyidikan kasus Tipikor IT Kominfo, kami merekomendasikan agar Jaksa Penuntut Umum menyiapkan <strong>dakwaan berlapis</strong> menggunakan Pasal 2 ayat (1) jo. Pasal 3 UU Tipikor sebagai dakwaan primer, dengan ancaman hukuman maksimal 20 tahun penjara.<br><br>
-          Diperlukan juga pengajuan <strong>permohonan pemblokiran aset</strong> atas nama ketiga tersangka kepada PPATK untuk mencegah pemindahan kekayaan yang diduga hasil tindak pidana.<br><br>
-          Sidang pembacaan dakwaan diperkirakan dapat dijadwalkan pada April 2026.
-        </div>
+
+      <div class="email-body-section">
+        <div class="email-body-label">Isi Surat</div>
+        <textarea class="email-body-text" id="body-${e.id}" ${ro}>${e.body}</textarea>
       </div>
-      <div style="padding:12px 20px;display:flex;gap:8px;background:var(--bg-secondary);">
-        <button style="flex:1;padding:10px;font-size:13px;font-weight:500;border:1.5px solid var(--border);border-radius:8px;background:#fff;color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;">✏️ Edit Surat</button>
-        <button style="flex:1;padding:10px;font-size:13px;font-weight:500;border:none;border-radius:8px;background:#1e3a5f;color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;">📤 Kirim</button>
+
+      <div class="email-card-footer">
+        <div class="attachment-row">
+          <div class="attach-chip">📎 Ringkasan_Analisis_BTS_Kemenkominfo.pdf</div>
+          <div class="attach-chip">📊 SWOT_Kasus_BTS.pdf</div>
+        </div>
+        <div class="footer-right">
+          <div class="edit-indicator ${isEditing?'visible':''}">✏️ Mode Edit Aktif</div>
+        </div>
       </div>
     </div>
+  `;
+}
 
-    <!-- DIV 3: PERUSAHAAN -->
-    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;">
-      <div style="background:#4a1d1d;padding:18px 20px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:17px;">🏢</div>
-          <div>
-            <div style="font-size:14px;font-weight:600;color:#fff;">PT Solusi Prima & Mitra</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.7);">Surat Peringatan & Pembekuan</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border-radius:6px;padding:7px 10px;">
-          <span style="font-size:11px;color:rgba(255,255,255,0.6);">Kepada:</span>
-          <span style="font-size:11px;color:#fff;font-family:'DM Mono',monospace;">legal@solusiprima.co.id</span>
-        </div>
-      </div>
-      <div style="padding:18px 20px;flex:1;border-bottom:1px solid var(--border);">
-        <div style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Isi Rekomendasi</div>
-        <div style="font-size:13px;color:var(--text);line-height:1.75;">
-          Kepada Direksi PT Solusi Prima,<br><br>
-          Sehubungan dengan penetapan perusahaan sebagai tersangka korporasi dalam kasus korupsi pengadaan IT Kementerian Kominfo, kami merekomendasikan kepada instansi berwenang untuk segera menerbitkan <strong>surat pembekuan operasional sementara</strong> terhadap seluruh kontrak pemerintah yang masih aktif.<br><br>
-          Perusahaan diwajibkan menyerahkan <strong>seluruh dokumen tender, invoice, dan laporan keuangan</strong> tahun 2021–2024 kepada penyidik Kejagung dalam waktu 7x24 jam sejak surat ini diterima.<br><br>
-          Kegagalan memenuhi kewajiban ini dapat dikenakan sanksi tambahan sesuai Pasal 20 UU Tipikor.
-        </div>
-      </div>
-      <div style="padding:12px 20px;display:flex;gap:8px;background:var(--bg-secondary);">
-        <button style="flex:1;padding:10px;font-size:13px;font-weight:500;border:1.5px solid var(--border);border-radius:8px;background:#fff;color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;">✏️ Edit Surat</button>
-        <button style="flex:1;padding:10px;font-size:13px;font-weight:500;border:none;border-radius:8px;background:#4a1d1d;color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;">📤 Kirim</button>
-      </div>
-    </div>
+function toggleEdit(id) {
+  if (editingId === id) {
+    editingId = null;
+  } else {
+    editingId = id;
+  }
+  renderPreview();
+  // focus body
+  if (editingId === id) {
+    setTimeout(() => {
+      const b = document.getElementById('body-'+id);
+      if(b) b.focus();
+    }, 50);
+  }
+}
 
-  </div>
-</div>
+function saveEdit(id) {
+  const e = emails[id];
+  e.to      = document.getElementById('to-'+id).value;
+  e.cc      = document.getElementById('cc-'+id).value;
+  e.from    = document.getElementById('from-'+id).value;
+  e.subject = document.getElementById('subj-'+id).value;
+  e.body    = document.getElementById('body-'+id).value;
+  editingId = null;
+  renderSidebar();
+  renderPreview();
+}
+
+function sendEmail(id) {
+  const e = emails[id];
+  if (e.sent) return;
+  e.sent = true;
+  const now = new Date();
+  e.sentTime = now.toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit'}) + ' WIB';
+  e.time = 'Terkirim';
+  sentCount++;
+  document.getElementById('sentCount').textContent = sentCount;
+  editingId = null;
+  renderSidebar();
+  renderPreview();
+}
+
+function sendAll() {
+  emails.forEach((e,i) => {
+    if (!e.sent) {
+      setTimeout(() => sendEmail(i), i * 180);
+    }
+  });
+}
+
+// init
+renderSidebar();
+renderPreview();
+</script>
 </body>
 </html>

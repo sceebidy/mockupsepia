@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1280" />
+<title>SEPIA — Data Pool</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green: #1a5c2e; --green-2: #2e7d4a; --green-light: #f0f7f2;
+  --green-mid: #ddeee4; --green-border: #b6d9c3;
+  --text: #1a1a1a; --text-muted: #6b7280; --border: #e5e7eb;
+  --bg: #ffffff; --bg-secondary: #f9fafb; --bg-tertiary: #f3f4f6;
+  --nav-width: 220px;
+}
+body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
+
+.sidenav { width: var(--nav-width); background: var(--green); display: flex; flex-direction: column; flex-shrink: 0; }
+.sidenav-brand { padding: 22px 20px 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.brand-logo { font-size: 18px; font-weight: 700; letter-spacing: 0.14em; color: #fff; }
+.brand-sub { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+.sidenav-section { padding: 18px 12px 8px; }
+.sidenav-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); padding: 0 8px; margin-bottom: 6px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 2px; text-decoration: none; transition: background 0.12s; border: 1px solid transparent; color: rgba(255,255,255,0.72); font-size: 13px; font-weight: 500; }
+.nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-item.active { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.18); color: #fff; }
+.nav-item .nav-icon { width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: rgba(255,255,255,0.1); }
+.nav-item.active .nav-icon { background: rgba(255,255,255,0.2); }
+.nav-item-text { flex: 1; }
+.nav-item-badge { font-size: 10px; background: rgba(255,255,255,0.2); color: #fff; padding: 2px 7px; border-radius: 20px; }
+.sidenav-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 10px 12px; }
+.sidenav-bottom { margin-top: auto; padding: 14px 12px; border-top: 1px solid rgba(255,255,255,0.1); }
+.user-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; cursor: pointer; }
+.user-row:hover { background: rgba(255,255,255,0.1); }
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.2); color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.user-name { font-size: 12px; font-weight: 500; color: #fff; }
+.user-role { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 56px; background: #fff; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.topbar-left { display: flex; align-items: center; gap: 12px; }
+.page-title { font-size: 15px; font-weight: 600; }
+.page-breadcrumb { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+.topbar-right { display: flex; align-items: center; gap: 8px; }
+.tb-btn { padding: 7px 14px; font-size: 12px; border: 1px solid var(--border); border-radius: 20px; background: #fff; color: var(--text-muted); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.12s; }
+.tb-btn:hover { border-color: var(--green-border); color: var(--green); background: var(--green-light); }
+.tb-btn.primary { background: var(--green); color: #fff; border-color: var(--green); }
+.tb-btn.primary:hover { background: #14482a; }
+
+.content { flex: 1; overflow-y: auto; padding: 28px; }
+.page-hero { margin-bottom: 24px; }
+.page-hero-title { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.page-hero-sub { font-size: 13px; color: var(--text-muted); }
+.page-hero-sub span { color: var(--green); font-weight: 500; }
+
+.folder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+.folder-card {
+  background: #fff; border: 1.5px solid var(--border); border-radius: 14px;
+  overflow: hidden; text-decoration: none; display: block;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  cursor: pointer;
+}
+.folder-card.live:hover { border-color: var(--green-border); box-shadow: 0 6px 24px rgba(26,92,46,0.1); transform: translateY(-2px); }
+.folder-card.mock { cursor: default; }
+
+.folder-stripe { height: 4px; }
+.folder-body { padding: 20px 22px 18px; }
+.folder-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+.folder-emoji { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+.folder-arrow { font-size: 16px; color: var(--text-muted); margin-top: 6px; opacity: 0; transition: opacity 0.15s, transform 0.15s; }
+.folder-card.live:hover .folder-arrow { opacity: 1; transform: translateX(3px); }
+.folder-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; line-height: 1.35; }
+.folder-desc { font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
+.folder-footer { display: flex; align-items: center; justify-content: space-between; }
+.folder-count { font-size: 11px; color: var(--text-muted); }
+.folder-count-num { font-size: 14px; font-weight: 600; color: var(--text); font-family: 'DM Mono', monospace; }
+.folder-tag { font-size: 10px; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border); color: var(--text-muted); background: var(--bg-secondary); }
+</style>
+</head>
+<body>
+
+<nav class="sidenav">
+  <div class="sidenav-brand">
+    <div class="brand-logo">SEPIA</div>
+    <div class="brand-sub">Sistem Analitik Hukum</div>
+  </div>
+  <div class="sidenav-section">
+    <div class="sidenav-label">Menu Utama</div>
+    <a class="nav-item" href="dashboard.html"><div class="nav-icon">📊</div><div class="nav-item-text">Dashboard</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">📋</div><div class="nav-item-text">RKI</div><span class="nav-item-badge">3</span></a>
+    <a class="nav-item active" href="#"><div class="nav-icon">🗄️</div><div class="nav-item-text">Data Pool</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">🎨</div><div class="nav-item-text">Personalisasi</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">📅</div><div class="nav-item-text">Daily Report</div><span class="nav-item-badge">!</span></a>
+  </div>
+  <div class="sidenav-divider"></div>
+  <div class="sidenav-section">
+    <div class="sidenav-label">Sistem</div>
+    <a class="nav-item" href="#"><div class="nav-icon">⚙️</div><div class="nav-item-text">Settings</div></a>
+  </div>
+  <div class="sidenav-bottom">
+    <div class="user-row">
+      <div class="user-avatar">CR</div>
+      <div><div class="user-name">C. Rasyid</div><div class="user-role">Analis Senior</div></div>
+    </div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="page-title">Data Pool</div>
+      <div class="page-breadcrumb">
+        <span>SEPIA</span><span style="opacity:0.4">›</span><span style="color:var(--text)">Repositori Sumber</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="tb-btn primary">+ Buat Folder Baru</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="page-hero">
+      <div class="page-hero-title">Semua Folder Kasus</div>
+      <div class="page-hero-sub"><span>6 folder aktif</span> · 31 sumber tersimpan</div>
+    </div>
+
+    <div class="folder-grid">
+
+      <a class="folder-card live" href="folderdetail.html">
+        <div class="folder-stripe" style="background:#1a5c2e"></div>
+        <div class="folder-body">
+          <div class="folder-top">
+            <div class="folder-emoji" style="background:#f0f7f2">🏛️</div>
+            <div class="folder-arrow">→</div>
+          </div>
+          <div class="folder-name">Korupsi IT Kemenkominfo</div>
+          <div class="folder-desc">Pengadaan perangkat IT senilai Rp 179 M — tersangka Budi Hartono & PT Solusi Prima</div>
+          <div class="folder-footer">
+            <div class="folder-count"><span class="folder-count-num">7</span> sumber</div>
+            <span class="folder-tag" style="background:#f0f7f2;color:#1a5c2e;border-color:#b6d9c3">Aktif</span>
+          </div>
+        </div>
+      </a>
+
+      <div class="folder-card mock" onclick="toast()">
+        <div class="folder-stripe" style="background:#d97706"></div>
+        <div class="folder-body">
+          <div class="folder-top"><div class="folder-emoji" style="background:#fffbeb">🌾</div></div>
+          <div class="folder-name">Dana Desa Sumut — 12 Desa</div>
+          <div class="folder-desc">Dugaan penggelapan dana desa di 12 kecamatan wilayah Tapanuli Utara dan sekitarnya</div>
+          <div class="folder-footer">
+            <div class="folder-count"><span class="folder-count-num">4</span> sumber</div>
+            <span class="folder-tag">Penyidikan</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="folder-card mock" onclick="toast()">
+        <div class="folder-stripe" style="background:#9d174d"></div>
+        <div class="folder-body">
+          <div class="folder-top"><div class="folder-emoji" style="background:#fce7f3">🛢️</div></div>
+          <div class="folder-name">TPPU Ekspor Ilegal Sawit</div>
+          <div class="folder-desc">Tindak pidana pencucian uang terkait ekspor CPO ilegal senilai Rp 430 M melalui perusahaan cangkang</div>
+          <div class="folder-footer">
+            <div class="folder-count"><span class="folder-count-num">6</span> sumber</div>
+            <span class="folder-tag" style="background:#fce7f3;color:#9d174d;border-color:#f9a8d4">Penuntutan</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="folder-card mock" onclick="toast()">
+        <div class="folder-stripe" style="background:#1e6fa3"></div>
+        <div class="folder-body">
+          <div class="folder-top"><div class="folder-emoji" style="background:#eff6ff">⛏️</div></div>
+          <div class="folder-name">Suap Perizinan Tambang Kalsel</div>
+          <div class="folder-desc">Kasus gratifikasi dan suap terkait perizinan tambang batu bara di Kalimantan Selatan</div>
+          <div class="folder-footer">
+            <div class="folder-count"><span class="folder-count-num">5</span> sumber</div>
+            <span class="folder-tag" style="background:#eff6ff;color:#1e40af;border-color:#bfdbfe">Inkracht</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="folder-card mock" onclick="toast()">
+        <div class="folder-stripe" style="background:#065f46"></div>
+        <div class="folder-body">
+          <div class="folder-top"><div class="folder-emoji" style="background:#ecfdf5">🏫</div></div>
+          <div class="folder-name">Gratifikasi Disdik Jawa Barat</div>
+          <div class="folder-desc">Penerimaan gratifikasi oleh pejabat dinas pendidikan terkait pengadaan seragam sekolah</div>
+          <div class="folder-footer">
+            <div class="folder-count"><span class="folder-count-num">4</span> sumber</div>
+            <span class="folder-tag">Penyidikan</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="folder-card mock" onclick="toast()">
+        <div class="folder-stripe" style="background:#6b7280"></div>
+        <div class="folder-body">
+          <div class="folder-top"><div class="folder-emoji" style="background:#f3f4f6">🏥</div></div>
+          <div class="folder-name">Korupsi Pengadaan Alkes RSUD</div>
+          <div class="folder-desc">Dugaan markup pengadaan alat kesehatan di RSUD tipe B wilayah Jawa Tengah tahun 2022</div>
+          <div class="folder-footer">
+            <div class="folder-count"><span class="folder-count-num">5</span> sumber</div>
+            <span class="folder-tag">Baru</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function toast() {
+  let t = document.getElementById('_t');
+  if (!t) {
+    t = document.createElement('div'); t.id = '_t';
+    t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:10px 22px;border-radius:30px;font-size:12px;font-family:"DM Sans",sans-serif;z-index:9999;opacity:0;transition:opacity 0.2s;pointer-events:none;white-space:nowrap';
+    t.textContent = '🗄️  Folder ini hanya mockup';
+    document.body.appendChild(t);
+  }
+  t.style.opacity = '1';
+  clearTimeout(t._x);
+  t._x = setTimeout(() => t.style.opacity = '0', 2000);
+}
+</script>
+</body>
+</html>

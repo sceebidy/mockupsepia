@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1280" />
+<title>SEPIA — Data Kasus</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green: #1a5c2e; --green-2: #2e7d4a; --green-light: #f0f7f2;
+  --green-mid: #ddeee4; --green-border: #b6d9c3;
+  --text: #1a1a1a; --text-muted: #6b7280; --border: #e5e7eb;
+  --bg: #ffffff; --bg-secondary: #f9fafb; --bg-tertiary: #f3f4f6;
+  --red: #b91c1c; --amber: #d97706; --blue: #1e6fa3;
+  --nav-width: 220px;
+}
+body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
+
+/* ── SIDENAV ── */
+.sidenav { width: var(--nav-width); background: var(--green); display: flex; flex-direction: column; flex-shrink: 0; }
+.sidenav-brand { padding: 22px 20px 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.brand-logo { font-size: 18px; font-weight: 700; letter-spacing: 0.14em; color: #fff; }
+.brand-sub { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+.sidenav-section { padding: 18px 12px 8px; }
+.sidenav-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); padding: 0 8px; margin-bottom: 6px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 2px; text-decoration: none; transition: background 0.12s; border: 1px solid transparent; color: rgba(255,255,255,0.72); font-size: 13px; font-weight: 500; }
+.nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-item.active { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.18); color: #fff; }
+.nav-item .nav-icon { width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: rgba(255,255,255,0.1); }
+.nav-item.active .nav-icon { background: rgba(255,255,255,0.2); }
+.nav-item-text { flex: 1; }
+.nav-item-badge { font-size: 10px; background: rgba(255,255,255,0.2); color: #fff; padding: 2px 7px; border-radius: 20px; }
+.sidenav-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 10px 12px; }
+.sidenav-bottom { margin-top: auto; padding: 14px 12px; border-top: 1px solid rgba(255,255,255,0.1); }
+.user-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; cursor: pointer; }
+.user-row:hover { background: rgba(255,255,255,0.1); }
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.2); color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.user-name { font-size: 12px; font-weight: 500; color: #fff; }
+.user-role { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+
+/* ── MAIN ── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+
+/* ── TOPBAR ── */
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 56px; background: #fff; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.topbar-left { display: flex; align-items: center; gap: 10px; }
+.back-btn { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 20px; font-size: 12px; color: var(--text-muted); text-decoration: none; transition: all 0.12s; background: #fff; cursor: pointer; }
+.back-btn:hover { border-color: var(--green-border); color: var(--green); background: var(--green-light); }
+.topbar-divider { width: 1px; height: 20px; background: var(--border); }
+.page-title { font-size: 15px; font-weight: 600; }
+.page-breadcrumb { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+.topbar-right { display: flex; align-items: center; gap: 8px; }
+.tb-btn { padding: 7px 14px; font-size: 12px; border: 1px solid var(--border); border-radius: 20px; background: #fff; color: var(--text-muted); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.12s; }
+.tb-btn:hover { border-color: var(--green-border); color: var(--green); background: var(--green-light); }
+
+/* ── FOLDER BANNER ── */
+.folder-banner { background: var(--green); padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.banner-left { display: flex; align-items: center; gap: 14px; }
+.banner-emoji { width: 48px; height: 48px; border-radius: 12px; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.banner-title { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+.banner-meta { font-size: 11px; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 10px; }
+.banner-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.4); }
+
+/* ── CONTENT SCROLL AREA ── */
+.content-scroll { flex: 1; overflow-y: auto; padding: 22px 28px 100px; }
+.content-scroll::-webkit-scrollbar { width: 5px; }
+.content-scroll::-webkit-scrollbar-track { background: transparent; }
+.content-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+/* ── SECTION HEADER ── */
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.section-heading { font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 7px; }
+.section-heading-count { font-size: 11px; color: var(--text-muted); font-weight: 400; background: var(--bg-tertiary); border: 1px solid var(--border); border-radius: 20px; padding: 2px 9px; }
+.filter-row { display: flex; align-items: center; gap: 6px; }
+.filter-chip { font-size: 11px; padding: 4px 11px; border: 1px solid var(--border); border-radius: 20px; background: #fff; color: var(--text-muted); cursor: pointer; transition: all 0.12s; }
+.filter-chip:hover, .filter-chip.active { border-color: var(--green-border); color: var(--green); background: var(--green-light); }
+
+/* ── ADD DATA BOX ── */
+.add-data-box {
+  background: var(--green);
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.add-data-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.add-data-box:hover { opacity: 0.92; transform: translateY(-1px); }
+.add-data-icon-wrap {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: rgba(255,255,255,0.18);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+  border: 1.5px dashed rgba(255,255,255,0.4);
+}
+.add-data-text { flex: 1; }
+.add-data-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.add-data-sub { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+.add-data-types { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.type-pill {
+  font-size: 10px; padding: 3px 10px; border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85);
+  letter-spacing: 0.03em; font-weight: 500;
+}
+.add-data-cta {
+  flex-shrink: 0;
+  display: flex; align-items: center; gap: 8px;
+}
+.add-data-btn {
+  padding: 9px 20px; border-radius: 20px;
+  background: #fff; color: var(--green);
+  border: none; font-size: 12px; font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer; transition: background 0.12s;
+  white-space: nowrap;
+}
+.add-data-btn:hover { background: #f0f7f2; }
+
+/* ── DATA LIST ── */
+.data-list { display: flex; flex-direction: column; gap: 7px; }
+
+.data-item {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  transition: border-color 0.12s, box-shadow 0.12s;
+  cursor: pointer;
+  animation: slideIn 0.25s ease both;
+}
+.data-item:hover {
+  border-color: var(--green-border);
+  box-shadow: 0 2px 10px rgba(26,92,46,0.07);
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.data-item:nth-child(1) { animation-delay: 0.04s; }
+.data-item:nth-child(2) { animation-delay: 0.08s; }
+.data-item:nth-child(3) { animation-delay: 0.12s; }
+.data-item:nth-child(4) { animation-delay: 0.16s; }
+.data-item:nth-child(5) { animation-delay: 0.20s; }
+.data-item:nth-child(6) { animation-delay: 0.24s; }
+.data-item:nth-child(7) { animation-delay: 0.28s; }
+
+.data-type-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0; font-weight: 700;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.05em;
+}
+.type-link  { background: #eff6ff; color: #1d4ed8; }
+.type-doc   { background: #eff6ff; color: #2563eb; }
+.type-pdf   { background: #fef2f2; color: #dc2626; }
+.type-txt   { background: #f3f4f6; color: #374151; }
+.type-news  { background: #fefce8; color: #a16207; }
+
+.data-main { flex: 1; min-width: 0; }
+.data-title { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
+.data-meta { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+.data-meta-dot { width: 2px; height: 2px; border-radius: 50%; background: var(--text-muted); opacity: 0.4; }
+.data-source-url { font-family: 'DM Mono', monospace; font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 280px; color: var(--text-muted); }
+
+.data-badge {
+  font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 20px;
+  letter-spacing: 0.04em; text-transform: uppercase; flex-shrink: 0;
+}
+.badge-link  { background: #dbeafe; color: #1d4ed8; }
+.badge-doc   { background: #dbeafe; color: #1e40af; }
+.badge-pdf   { background: #fee2e2; color: #b91c1c; }
+.badge-txt   { background: #f3f4f6; color: #374151; }
+.badge-news  { background: #fef9c3; color: #a16207; }
+
+.data-size { font-size: 11px; color: var(--text-muted); font-family: 'DM Mono', monospace; flex-shrink: 0; }
+
+.data-actions { display: flex; align-items: center; gap: 4px; opacity: 0; transition: opacity 0.12s; }
+.data-item:hover .data-actions { opacity: 1; }
+.action-btn {
+  width: 28px; height: 28px; border-radius: 7px;
+  border: 1px solid var(--border); background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; cursor: pointer; transition: all 0.12s; color: var(--text-muted);
+}
+.action-btn:hover { border-color: var(--green-border); background: var(--green-light); color: var(--green); }
+.action-btn.del:hover { border-color: #fca5a5; background: #fef2f2; color: var(--red); }
+
+/* ── CHECKBOX ── */
+.data-checkbox { width: 17px; height: 17px; border-radius: 5px; border: 1.5px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.12s; }
+.data-item:hover .data-checkbox { border-color: var(--green-border); }
+.data-checkbox.checked { background: var(--green); border-color: var(--green); color: #fff; font-size: 10px; }
+
+/* ── FLOATING ANALYZE BUTTON ── */
+.fab-analyze {
+  position: absolute;
+  bottom: 28px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 24px;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 6px 28px rgba(26,92,46,0.35), 0 2px 8px rgba(26,92,46,0.2);
+  transition: all 0.15s;
+  z-index: 50;
+  text-decoration: none;
+}
+.fab-analyze:hover {
+  background: #14482a;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(26,92,46,0.4), 0 4px 12px rgba(26,92,46,0.25);
+}
+.fab-analyze:active { transform: translateY(0); }
+.fab-badge {
+  background: rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 2px 9px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ── STATS ROW ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.stat-card {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.stat-icon { font-size: 18px; }
+.stat-val { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1; }
+.stat-lbl { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+/* ── DIVIDER LABEL ── */
+.list-divider {
+  display: flex; align-items: center; gap: 10px;
+  margin: 16px 0 10px; font-size: 11px; color: var(--text-muted); font-weight: 500;
+}
+.list-divider::before, .list-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+</style>
+</head>
+<body>
+
+<!-- SIDENAV -->
+<nav class="sidenav">
+  <div class="sidenav-brand">
+    <div class="brand-logo">SEPIA</div>
+    <div class="brand-sub">Sistem Analitik Hukum</div>
+  </div>
+  <div class="sidenav-section">
+    <div class="sidenav-label">Menu Utama</div>
+    <a class="nav-item" href="#"><div class="nav-icon">📊</div><div class="nav-item-text">Dashboard</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">📋</div><div class="nav-item-text">RKI</div><span class="nav-item-badge">3</span></a>
+    <a class="nav-item active" href="#"><div class="nav-icon">🗄️</div><div class="nav-item-text">Data Pool</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">🎨</div><div class="nav-item-text">Personalisasi</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">📅</div><div class="nav-item-text">Daily Report</div><span class="nav-item-badge">!</span></a>
+  </div>
+  <div class="sidenav-divider"></div>
+  <div class="sidenav-section">
+    <div class="sidenav-label">Sistem</div>
+    <a class="nav-item" href="#"><div class="nav-icon">⚙️</div><div class="nav-item-text">Settings</div></a>
+  </div>
+  <div class="sidenav-bottom">
+    <div class="user-row">
+      <div class="user-avatar">CR</div>
+      <div><div class="user-name">C. Rasyid</div><div class="user-role">Analis Senior</div></div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="back-btn" onclick="history.back()">← Kembali</button>
+      <div class="topbar-divider"></div>
+      <div class="page-title">Data Kasus</div>
+      <div class="page-breadcrumb">
+        <span style="opacity:0.5">Data Pool</span>
+        <span style="opacity:0.4">›</span>
+        <span style="opacity:0.5">Korupsi IT Kemenkominfo</span>
+        <span style="opacity:0.4">›</span>
+        <span style="color:var(--text)">Data</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="tb-btn">⬇ Ekspor</button>
+      <button class="tb-btn">🗑 Hapus Terpilih</button>
+    </div>
+  </div>
+
+  <!-- CONTENT SCROLL -->
+  <div class="content-scroll">
+
+    <!-- STATS ROW -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon">📎</div>
+        <div><div class="stat-val">7</div><div class="stat-lbl">Total Sumber</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🔗</div>
+        <div><div class="stat-val">3</div><div class="stat-lbl">Tautan Berita</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📄</div>
+        <div><div class="stat-val">2</div><div class="stat-lbl">Dokumen</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📦</div>
+        <div><div class="stat-val">4.2 MB</div><div class="stat-lbl">Ukuran Total</div></div>
+      </div>
+    </div>
+
+    <!-- ADD DATA BOX -->
+    <div class="add-data-box">
+      <div class="add-data-icon-wrap">➕</div>
+      <div class="add-data-text">
+        <div class="add-data-title">Tambah Sumber Data Baru</div>
+        <div class="add-data-sub">Unggah dokumen, paste URL berita, atau impor file untuk memperkaya analisis kasus ini.</div>
+        <div class="add-data-types">
+          <span class="type-pill">🔗 URL / Berita</span>
+          <span class="type-pill">📄 DOC / DOCX</span>
+          <span class="type-pill">📕 PDF</span>
+          <span class="type-pill">📝 TXT</span>
+          <span class="type-pill">📊 XLSX</span>
+        </div>
+      </div>
+      <div class="add-data-cta">
+        <button class="add-data-btn">+ Tambah Data</button>
+      </div>
+    </div>
+
+    <!-- DATA LIST -->
+    <div class="section-header">
+      <div class="section-heading">
+        Sumber yang Diunggah
+        <span class="section-heading-count">7 item</span>
+      </div>
+      <div class="filter-row">
+        <div class="filter-chip active">Semua</div>
+        <div class="filter-chip">Berita</div>
+        <div class="filter-chip">Dokumen</div>
+        <div class="filter-chip">PDF</div>
+        <div class="filter-chip">Teks</div>
+      </div>
+    </div>
+
+    <!-- LIST LABEL: BERITA ONLINE -->
+    <div class="list-divider">Berita & Tautan Online</div>
+
+    <div class="data-list">
+
+      <!-- ITEM 1 - Link Berita -->
+      <div class="data-item">
+        <div class="data-checkbox checked">✓</div>
+        <div class="data-type-icon type-news">LINK</div>
+        <div class="data-main">
+          <div class="data-title">Kejagung Tetapkan 3 Tersangka Korupsi Proyek BTS Kemenkominfo Rp 179 Miliar</div>
+          <div class="data-meta">
+            <span class="data-source-url">kompas.com/nasional/2024/02/07/kemenkominfo-tersangka-korupsi...</span>
+            <span class="data-meta-dot"></span>
+            <span>7 Feb 2024</span>
+          </div>
+        </div>
+        <div class="data-badge badge-news">Berita</div>
+        <div class="data-size">—</div>
+        <div class="data-actions">
+          <button class="action-btn" title="Buka">↗</button>
+          <button class="action-btn del" title="Hapus">✕</button>
+        </div>
+      </div>
+
+      <!-- ITEM 2 - Link Berita -->
+      <div class="data-item">
+        <div class="data-checkbox checked">✓</div>
+        <div class="data-type-icon type-news">LINK</div>
+        <div class="data-main">
+          <div class="data-title">Sidang Korupsi Kominfo: Terdakwa Mengaku Terima Fee 5% dari Nilai Kontrak</div>
+          <div class="data-meta">
+            <span class="data-source-url">tempo.co/hukum/sidang-korupsi-kominfo-fee-kontrak-2024</span>
+            <span class="data-meta-dot"></span>
+            <span>12 Mar 2024</span>
+          </div>
+        </div>
+        <div class="data-badge badge-news">Berita</div>
+        <div class="data-size">—</div>
+        <div class="data-actions">
+          <button class="action-btn" title="Buka">↗</button>
+          <button class="action-btn del" title="Hapus">✕</button>
+        </div>
+      </div>
+
+      <!-- ITEM 3 - Link Berita -->
+      <div class="data-item">
+        <div class="data-checkbox checked">✓</div>
+        <div class="data-type-icon type-news">LINK</div>
+        <div class="data-main">
+          <div class="data-title">KPK Minta Pengadilan Blokir Aset Senilai Rp 40 M Milik Tersangka Utama Proyek BTS</div>
+          <div class="data-meta">
+            <span class="data-source-url">cnnindonesia.com/nasional/kpk-blokir-aset-tersangka-bts-2024</span>
+            <span class="data-meta-dot"></span>
+            <span>19 Mar 2024</span>
+          </div>
+        </div>
+        <div class="data-badge badge-news">Berita</div>
+        <div class="data-size">—</div>
+        <div class="data-actions">
+          <button class="action-btn" title="Buka">↗</button>
+          <button class="action-btn del" title="Hapus">✕</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- LIST LABEL: DOKUMEN -->
+    <div class="list-divider">Dokumen & File</div>
+
+    <div class="data-list">
+
+      <!-- ITEM 4 - PDF -->
+      <div class="data-item">
+        <div class="data-checkbox checked">✓</div>
+        <div class="data-type-icon type-pdf">PDF</div>
+        <div class="data-main">
+          <div class="data-title">Surat Dakwaan Terdakwa — Kejaksaan Agung RI — Nomor: PDM-37/JKT/02/2024</div>
+          <div class="data-meta">
+            <span>surat_dakwaan_bts_kemenkominfo.pdf</span>
+            <span class="data-meta-dot"></span>
+            <span>Diunggah 5 hari lalu</span>
+          </div>
+        </div>
+        <div class="data-badge badge-pdf">PDF</div>
+        <div class="data-size">1.4 MB</div>
+        <div class="data-actions">
+          <button class="action-btn" title="Pratinjau">👁</button>
+          <button class="action-btn del" title="Hapus">✕</button>
+        </div>
+      </div>
+
+      <!-- ITEM 5 - DOC -->
+      <div class="data-item">
+        <div class="data-checkbox checked">✓</div>
+        <div class="data-type-icon type-doc">DOC</div>
+        <div class="data-main">
+          <div class="data-title">Laporan Audit BPK — Proyek Pengadaan BTS 4G Kemenkominfo Tahun Anggaran 2022</div>
+          <div class="data-meta">
+            <span>laporan_audit_bpk_bts_2022.docx</span>
+            <span class="data-meta-dot"></span>
+            <span>Diunggah 5 hari lalu</span>
+          </div>
+        </div>
+        <div class="data-badge badge-doc">DOC</div>
+        <div class="data-size">2.1 MB</div>
+        <div class="data-actions">
+          <button class="action-btn" title="Pratinjau">👁</button>
+          <button class="action-btn del" title="Hapus">✕</button>
+        </div>
+      </div>
+
+      <!-- ITEM 6 - PDF -->
+      <div class="data-item">
+        <div class="data-checkbox">  </div>
+        <div class="data-type-icon type-pdf">PDF</div>
+        <div class="data-main">
+          <div class="data-title">Dokumen Kontrak Pengadaan — PT. Moratelindo & Kemenkominfo — Paket 1 Wilayah Timur</div>
+          <div class="data-meta">
+            <span>kontrak_moratelindo_paket1.pdf</span>
+            <span class="data-meta-dot"></span>
+            <span>Diunggah 6 hari lalu</span>
+          </div>
+        </div>
+        <div class="data-badge badge-pdf">PDF</div>
+        <div class="data-size">543 KB</div>
+        <div class="data-actions">
+          <button class="action-btn" title="Pratinjau">👁</button>
+          <button class="action-btn del" title="Hapus">✕</button>
+        </div>
+      </div>
+
+      <!-- ITEM 7 - TXT -->
+      <div class="data-item">
+        <div class="data-checkbox">  </div>
+        <div class="data-type-icon type-txt">TXT</div>
+        <div class="data-main">
+          <div class="data-title">Catatan Kronologi Kasus — Rekap Internal Tim Analis SEPIA</div>
+          <div class="data-meta">
+            <span>kronologi_kasus_bts_internal.txt</span>
+            <span class="data-meta-dot"></span>
+            <span>Diunggah 3 hari lalu</span>
+          </div>
+        </div>
+        <div class="data-badge badge-txt">TXT</div>
+        <div class="data-size">18 KB</div>
+        <div class="data-actions">
+          <button class="action-btn" title="Pratinjau">👁</button>
+          <button class="action-btn del" title="Hapus">✕</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- END CONTENT SCROLL -->
+
+  <!-- FAB ANALYZE BUTTON -->
+  <a class="fab-analyze" href="analisis.html">
+    ▶ Analisis Sekarang
+    <span class="fab-badge">7 sumber</span>
+  </a>
+
+</div>
+
+</body>
+</html>

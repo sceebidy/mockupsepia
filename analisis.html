@@ -2,297 +2,685 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=1200" />
-<title>SEPIA — Analisis Kasus</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<meta name="viewport" content="width=1280" />
+<title>SEPIA — Hasil Analisis</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --green: #1a5c2e; --green-2: #2e8a4a; --green-light: #f0f7f2;
-    --green-border: #b6d9c3; --text: #1a1a1a; --text-muted: #6b7280;
-    --border: #e5e7eb; --bg: #ffffff; --bg-secondary: #f9fafb;
-    --radius: 12px; --radius-sm: 7px;
-  }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg-secondary); color: var(--text); min-height: 100vh; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green: #1a5c2e; --green-2: #2e7d4a; --green-light: #f0f7f2;
+  --green-mid: #ddeee4; --green-border: #b6d9c3;
+  --text: #1a1a1a; --text-muted: #6b7280; --border: #e5e7eb;
+  --bg: #ffffff; --bg-secondary: #f9fafb; --bg-tertiary: #f3f4f6;
+  --red: #b91c1c; --amber: #d97706; --blue: #1e6fa3;
+  --nav-width: 220px;
 
-  /* NAV */
-  .topnav { display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 52px; border-bottom: 1px solid var(--border); background: #fff; position: sticky; top: 0; z-index: 10; }
-  .topnav-left { display: flex; align-items: center; gap: 16px; }
-  .nav-brand { font-size: 15px; font-weight: 700; letter-spacing: 0.1em; color: var(--green); }
-  .nav-back { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-muted); border-left: 1px solid var(--border); padding-left: 16px; text-decoration: none; }
-  .nav-back:hover { color: var(--green); }
-  .nav-sibling { display: flex; align-items: center; gap: 8px; }
-  .nav-sibling a { font-size: 13px; padding: 6px 14px; border-radius: 20px; text-decoration: none; border: 1px solid var(--border); color: var(--text-muted); }
-  .nav-sibling a:hover { border-color: var(--green); color: var(--green); }
-  .nav-sibling a.active { background: var(--green); color: #fff; border-color: var(--green); }
-  .topnav-right { display: flex; align-items: center; gap: 10px; }
-  .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--green); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
-  .export-btn { padding: 7px 16px; font-size: 12px; background: var(--green); color: #fff; border: none; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; }
+  /* SWOT colors */
+  --s-bg: #f0fdf4; --s-border: #86efac; --s-text: #166534; --s-accent: #16a34a;
+  --w-bg: #fff7ed; --w-border: #fdba74; --w-text: #9a3412; --w-accent: #ea580c;
+  --o-bg: #eff6ff; --o-border: #93c5fd; --o-text: #1e40af; --o-accent: #2563eb;
+  --t-bg: #fef2f2; --t-border: #fca5a5; --t-text: #991b1b; --t-accent: #dc2626;
+}
 
-  /* PAGE HEADER */
-  .page-header { background: var(--green); padding: 36px 40px 28px; color: #fff; }
-  .page-header-top { display: flex; align-items: flex-start; justify-content: space-between; }
-  .page-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
-  .page-title { font-size: 28px; font-weight: 600; line-height: 1.2; margin-bottom: 6px; }
-  .page-meta { font-size: 13px; color: rgba(255,255,255,0.65); }
-  .page-stats { display: flex; gap: 32px; }
-  .page-stat { text-align: center; }
-  .page-stat-val { font-size: 24px; font-weight: 600; }
-  .page-stat-label { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
 
-  /* CONTENT */
-  .content { padding: 28px 40px; max-width: 1200px; margin: 0 auto; }
+/* ── SIDENAV ── */
+.sidenav { width: var(--nav-width); background: var(--green); display: flex; flex-direction: column; flex-shrink: 0; }
+.sidenav-brand { padding: 22px 20px 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.brand-logo { font-size: 18px; font-weight: 700; letter-spacing: 0.14em; color: #fff; }
+.brand-sub { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+.sidenav-section { padding: 18px 12px 8px; }
+.sidenav-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); padding: 0 8px; margin-bottom: 6px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 2px; text-decoration: none; transition: background 0.12s; border: 1px solid transparent; color: rgba(255,255,255,0.72); font-size: 13px; font-weight: 500; }
+.nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-item.active { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.18); color: #fff; }
+.nav-item .nav-icon { width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: rgba(255,255,255,0.1); }
+.nav-item.active .nav-icon { background: rgba(255,255,255,0.2); }
+.nav-item-text { flex: 1; }
+.nav-item-badge { font-size: 10px; background: rgba(255,255,255,0.2); color: #fff; padding: 2px 7px; border-radius: 20px; }
+.sidenav-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 10px 12px; }
+.sidenav-bottom { margin-top: auto; padding: 14px 12px; border-top: 1px solid rgba(255,255,255,0.1); }
+.user-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; cursor: pointer; }
+.user-row:hover { background: rgba(255,255,255,0.1); }
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.2); color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.user-name { font-size: 12px; font-weight: 500; color: #fff; }
+.user-role { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 1px; }
 
-  /* CARDS */
-  .analisis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
-  .analisis-grid.three { grid-template-columns: 1fr 1fr 1fr; }
-  .analisis-grid.full { grid-template-columns: 1fr; }
-  .a-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-  .a-card-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--bg-secondary); }
-  .a-card-title { font-size: 12px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 7px; }
-  .a-card-icon { width: 22px; height: 22px; border-radius: 6px; background: var(--green-light); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 11px; }
-  .a-card-badge { font-size: 10px; padding: 3px 9px; border-radius: 20px; background: var(--green-light); color: var(--green); font-weight: 500; }
-  .a-card-body { padding: 16px 18px; }
+/* ── MAIN ── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
 
-  /* SCORE */
-  .score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .score-label { font-size: 12px; color: var(--text-muted); width: 130px; flex-shrink: 0; }
-  .score-track { flex: 1; height: 8px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
-  .score-fill { height: 100%; border-radius: 4px; }
-  .score-val { font-size: 11px; font-weight: 600; width: 32px; text-align: right; font-family: 'DM Mono', monospace; }
+/* ── TOPBAR ── */
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 56px; background: #fff; border-bottom: 1px solid var(--border); flex-shrink: 0; z-index: 10; }
+.topbar-left { display: flex; align-items: center; gap: 10px; }
+.back-btn { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 20px; font-size: 12px; color: var(--text-muted); text-decoration: none; transition: all 0.12s; background: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.back-btn:hover { border-color: var(--green-border); color: var(--green); background: var(--green-light); }
+.topbar-divider { width: 1px; height: 20px; background: var(--border); }
+.page-title { font-size: 15px; font-weight: 600; }
+.page-breadcrumb { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+.topbar-right { display: flex; align-items: center; gap: 8px; }
+.tb-btn { padding: 7px 14px; font-size: 12px; border: 1px solid var(--border); border-radius: 20px; background: #fff; color: var(--text-muted); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.12s; }
+.tb-btn:hover { border-color: var(--green-border); color: var(--green); background: var(--green-light); }
 
-  /* RISK */
-  .risk-high { background: #fef2f2; color: #b91c1c; border: 1px solid #fca5a5; }
-  .risk-med { background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; }
-  .risk-low { background: var(--green-light); color: var(--green); border: 1px solid var(--green-border); }
-  .risk-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; display: inline-flex; align-items: center; gap: 5px; }
-  .risk-dot { width: 6px; height: 6px; border-radius: 50%; }
-  .risk-dot.high { background: #b91c1c; }
-  .risk-dot.med { background: #d97706; }
-  .risk-dot.low { background: var(--green); }
+/* ai badge in topbar */
+.ai-badge { display: flex; align-items: center; gap: 6px; padding: 5px 12px; background: var(--green-light); border: 1px solid var(--green-border); border-radius: 20px; font-size: 11px; font-weight: 500; color: var(--green); }
+.ai-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-2); animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.5; transform:scale(0.8); } }
 
-  /* TIMELINE */
-  .timeline { display: flex; flex-direction: column; }
-  .tl-item { display: flex; gap: 14px; padding: 10px 0; position: relative; }
-  .tl-item:not(:last-child)::after { content: ''; position: absolute; left: 10px; top: 28px; bottom: -2px; width: 1px; background: var(--border); }
-  .tl-left { flex-shrink: 0; padding-top: 3px; }
-  .tl-dot { width: 20px; height: 20px; border-radius: 50%; background: var(--green-light); border: 2px solid var(--green); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--green); font-weight: 700; }
-  .tl-dot.done { background: var(--green); color: #fff; }
-  .tl-right { flex: 1; padding-bottom: 6px; }
-  .tl-date { font-size: 10px; color: var(--text-muted); font-family: 'DM Mono', monospace; margin-bottom: 2px; }
-  .tl-event { font-size: 13px; color: var(--text); font-weight: 500; margin-bottom: 2px; }
-  .tl-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+/* ── RESULT BANNER ── */
+.result-banner {
+  background: var(--green);
+  padding: 16px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+  position: relative; overflow: hidden;
+}
+.result-banner::after {
+  content: 'ANALISIS';
+  position: absolute; right: 220px; top: 50%; transform: translateY(-50%);
+  font-size: 72px; font-weight: 900; letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.04); pointer-events: none;
+  font-family: 'DM Serif Display', serif;
+}
+.banner-left { display: flex; align-items: center; gap: 14px; z-index: 1; }
+.banner-emoji { width: 46px; height: 46px; border-radius: 12px; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.banner-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+.banner-meta { font-size: 11px; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 10px; }
+.banner-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.4); }
+.banner-right { display: flex; align-items: center; gap: 8px; z-index: 1; }
+.score-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px; padding: 8px 16px;
+}
+.score-label { font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.08em; }
+.score-val { font-size: 22px; font-weight: 700; color: #fff; font-family: 'DM Mono', monospace; line-height: 1; }
+.score-unit { font-size: 11px; color: rgba(255,255,255,0.5); align-self: flex-end; margin-bottom: 2px; }
 
-  /* TABLE */
-  .etable { width: 100%; border-collapse: collapse; font-size: 12px; }
-  .etable th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); background: var(--bg-secondary); }
-  .etable td { padding: 10px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text); }
-  .etable tr:last-child td { border-bottom: none; }
-  .etable tr:hover td { background: var(--green-light); }
-  .role-pill { font-size: 10px; padding: 2px 9px; border-radius: 20px; display: inline-block; }
-  .role-pill.tersangka { background: #fef2f2; color: #b91c1c; }
-  .role-pill.korban { background: var(--green-light); color: var(--green); }
-  .role-pill.saksi { background: #fffbeb; color: #92400e; }
-  .role-pill.penyidik { background: #eff6ff; color: #1e40af; }
+/* ── SCROLL AREA ── */
+.content-scroll { flex: 1; overflow-y: auto; padding: 22px 28px 100px; display: flex; flex-direction: column; gap: 20px; }
+.content-scroll::-webkit-scrollbar { width: 5px; }
+.content-scroll::-webkit-scrollbar-track { background: transparent; }
+.content-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
 
-  /* AI SUMMARY */
-  .ai-summary { border-left: 3px solid var(--green); background: var(--green-light); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 14px 16px; }
-  .ai-summary-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); margin-bottom: 6px; }
-  .ai-summary-text { font-size: 13px; color: var(--text); line-height: 1.7; }
+/* ── SECTION TITLE ── */
+.sec-title {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--text-muted);
+  display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+}
+.sec-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  /* PASAL */
-  .pasal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .pasal-item { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
-  .pasal-item.utama { border-color: var(--green); background: var(--green-light); }
-  .pasal-code { font-size: 12px; font-weight: 600; color: var(--green); margin-bottom: 2px; }
-  .pasal-item:not(.utama) .pasal-code { color: var(--text); }
-  .pasal-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+/* ── SWOT GRID ── */
+.swot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 10px;
+}
+
+.swot-card {
+  border-radius: 14px;
+  padding: 18px 20px;
+  border: 1.5px solid;
+  animation: fadeUp 0.4s ease both;
+}
+.swot-card:nth-child(1) { background: var(--s-bg); border-color: var(--s-border); animation-delay: 0.05s; }
+.swot-card:nth-child(2) { background: var(--w-bg); border-color: var(--w-border); animation-delay: 0.10s; }
+.swot-card:nth-child(3) { background: var(--o-bg); border-color: var(--o-border); animation-delay: 0.15s; }
+.swot-card:nth-child(4) { background: var(--t-bg); border-color: var(--t-border); animation-delay: 0.20s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.swot-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.swot-letter {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800; font-family: 'DM Serif Display', serif;
+  flex-shrink: 0;
+}
+.swot-card:nth-child(1) .swot-letter { background: var(--s-accent); color: #fff; }
+.swot-card:nth-child(2) .swot-letter { background: var(--w-accent); color: #fff; }
+.swot-card:nth-child(3) .swot-letter { background: var(--o-accent); color: #fff; }
+.swot-card:nth-child(4) .swot-letter { background: var(--t-accent); color: #fff; }
+
+.swot-card-title { font-size: 13px; font-weight: 700; }
+.swot-card:nth-child(1) .swot-card-title { color: var(--s-text); }
+.swot-card:nth-child(2) .swot-card-title { color: var(--w-text); }
+.swot-card:nth-child(3) .swot-card-title { color: var(--o-text); }
+.swot-card:nth-child(4) .swot-card-title { color: var(--t-text); }
+.swot-card-sub { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 1px; }
+
+.swot-items { display: flex; flex-direction: column; gap: 7px; }
+.swot-item {
+  display: flex; align-items: flex-start; gap: 9px;
+  font-size: 12px; line-height: 1.55;
+}
+.swot-item-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+}
+.swot-card:nth-child(1) .swot-item-dot { background: var(--s-accent); }
+.swot-card:nth-child(2) .swot-item-dot { background: var(--w-accent); }
+.swot-card:nth-child(3) .swot-item-dot { background: var(--o-accent); }
+.swot-card:nth-child(4) .swot-item-dot { background: var(--t-accent); }
+
+.swot-card:nth-child(1) .swot-item { color: #14532d; }
+.swot-card:nth-child(2) .swot-item { color: #7c2d12; }
+.swot-card:nth-child(3) .swot-item { color: #1e3a8a; }
+.swot-card:nth-child(4) .swot-item { color: #7f1d1d; }
+
+/* ── 3-COL ROW ── */
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+/* ── ANALYSIS CARD ── */
+.analysis-card {
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  animation: fadeUp 0.4s ease both;
+}
+.analysis-card:nth-child(1) { animation-delay: 0.25s; }
+.analysis-card:nth-child(2) { animation-delay: 0.30s; }
+.analysis-card:nth-child(3) { animation-delay: 0.35s; }
+
+.analysis-card-head {
+  padding: 14px 18px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.analysis-card-icon {
+  width: 34px; height: 34px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center; font-size: 15px;
+}
+.analysis-card-label { font-size: 13px; font-weight: 600; }
+.analysis-card-sublabel { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+.analysis-card-body { padding: 14px 18px; }
+
+/* RISK METER */
+.risk-meter { margin-bottom: 14px; }
+.risk-label-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.risk-name { font-size: 11px; color: var(--text-muted); }
+.risk-pct { font-size: 11px; font-weight: 600; font-family: 'DM Mono', monospace; }
+.risk-bar { height: 6px; background: var(--bg-tertiary); border-radius: 10px; overflow: hidden; }
+.risk-fill { height: 100%; border-radius: 10px; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+
+/* TIMELINE */
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.tl-item { display: flex; gap: 12px; position: relative; padding-bottom: 14px; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 28px; }
+.tl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; border: 2px solid #fff; box-shadow: 0 0 0 2px currentColor; margin-top: 2px; }
+.tl-line { flex: 1; width: 1.5px; background: var(--border); margin-top: 4px; }
+.tl-item:last-child .tl-line { display: none; }
+.tl-content { flex: 1; }
+.tl-date { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text-muted); margin-bottom: 2px; }
+.tl-text { font-size: 12px; color: var(--text); line-height: 1.5; }
+
+/* ACTOR LIST */
+.actor-list { display: flex; flex-direction: column; gap: 8px; }
+.actor-item { display: flex; align-items: center; gap: 10px; }
+.actor-avatar {
+  width: 32px; height: 32px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0; color: #fff;
+}
+.actor-name { font-size: 12px; font-weight: 500; }
+.actor-role { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+.actor-status { margin-left: auto; font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; }
+.status-tersangka { background: #fee2e2; color: #b91c1c; }
+.status-saksi     { background: #fef9c3; color: #a16207; }
+.status-dpo       { background: #fae8ff; color: #86198f; }
+
+/* ── BOTTOM 2-COL ── */
+.two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; }
+
+/* REKOMENDASI */
+.rekomendasi-list { display: flex; flex-direction: column; gap: 8px; }
+.reko-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 14px; border-radius: 10px;
+  border: 1.5px solid var(--border); background: var(--bg-secondary);
+  transition: border-color 0.12s;
+}
+.reko-item:hover { border-color: var(--green-border); background: var(--green-light); }
+.reko-num {
+  width: 26px; height: 26px; border-radius: 7px;
+  background: var(--green); color: #fff;
+  font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-family: 'DM Mono', monospace;
+}
+.reko-title { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.reko-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+.reko-priority { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; margin-top: 5px; display: inline-block; }
+.prio-high   { background: #fee2e2; color: #b91c1c; }
+.prio-med    { background: #fef9c3; color: #a16207; }
+.prio-low    { background: var(--green-light); color: var(--green); }
+
+/* CONFIDENCE METER */
+.confidence-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 0 14px; }
+.conf-ring { position: relative; width: 110px; height: 110px; margin-bottom: 14px; }
+.conf-ring svg { transform: rotate(-90deg); }
+.conf-ring-bg { fill: none; stroke: var(--bg-tertiary); stroke-width: 10; }
+.conf-ring-fill { fill: none; stroke: var(--green); stroke-width: 10; stroke-linecap: round; stroke-dasharray: 283; stroke-dashoffset: 57; transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1); }
+.conf-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.conf-pct { font-size: 22px; font-weight: 800; color: var(--text); font-family: 'DM Mono', monospace; line-height: 1; }
+.conf-sub { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+.conf-labels { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.conf-label-row { display: flex; justify-content: space-between; align-items: center; }
+.conf-label-name { font-size: 11px; color: var(--text-muted); }
+.conf-label-val { font-size: 11px; font-weight: 600; font-family: 'DM Mono', monospace; color: var(--text); }
+.conf-bar-sm { height: 4px; background: var(--bg-tertiary); border-radius: 10px; margin-top: 3px; overflow: hidden; }
+.conf-fill-sm { height: 100%; border-radius: 10px; background: var(--green); }
+
+/* ── FAB ── */
+.fab-distribute {
+  position: absolute; bottom: 28px; right: 28px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 24px;
+  background: var(--amber); color: #fff;
+  border: none; border-radius: 40px;
+  font-size: 14px; font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 6px 28px rgba(217,119,6,0.35), 0 2px 8px rgba(217,119,6,0.2);
+  transition: all 0.15s; z-index: 50; text-decoration: none;
+}
+.fab-distribute:hover {
+  background: #b45309;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(217,119,6,0.4), 0 4px 12px rgba(217,119,6,0.25);
+}
+.fab-icon { font-size: 16px; }
 </style>
 </head>
 <body>
 
-<div class="topnav">
-  <div class="topnav-left">
-    <div class="nav-brand">SEPIA</div>
-    <a class="nav-back" href="mainpage.html">← Kembali ke Dashboard</a>
-    <div class="nav-sibling">
-      <a href="analisis.html" class="active">🔍 Analisis</a>
-      <a href="distribusi.html">📊 Distribusi</a>
+<!-- SIDENAV -->
+<nav class="sidenav">
+  <div class="sidenav-brand">
+    <div class="brand-logo">SEPIA</div>
+    <div class="brand-sub">Sistem Analitik Hukum</div>
+  </div>
+  <div class="sidenav-section">
+    <div class="sidenav-label">Menu Utama</div>
+    <a class="nav-item" href="#"><div class="nav-icon">📊</div><div class="nav-item-text">Dashboard</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">📋</div><div class="nav-item-text">RKI</div><span class="nav-item-badge">3</span></a>
+    <a class="nav-item active" href="#"><div class="nav-icon">🗄️</div><div class="nav-item-text">Data Pool</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">🎨</div><div class="nav-item-text">Personalisasi</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">📅</div><div class="nav-item-text">Daily Report</div><span class="nav-item-badge">!</span></a>
+  </div>
+  <div class="sidenav-divider"></div>
+  <div class="sidenav-section">
+    <div class="sidenav-label">Sistem</div>
+    <a class="nav-item" href="#"><div class="nav-icon">⚙️</div><div class="nav-item-text">Settings</div></a>
+  </div>
+  <div class="sidenav-bottom">
+    <div class="user-row">
+      <div class="user-avatar">CR</div>
+      <div><div class="user-name">C. Rasyid</div><div class="user-role">Analis Senior</div></div>
     </div>
   </div>
-  <div class="topnav-right">
-    <button class="export-btn">📤 Ekspor Laporan</button>
-    <div class="avatar">CR</div>
-  </div>
-</div>
+</nav>
 
-<div class="page-header">
-  <div class="page-header-top">
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="back-btn" onclick="history.back()">← Kembali</button>
+      <div class="topbar-divider"></div>
+      <div class="page-title">Hasil Analisis</div>
+      <div class="page-breadcrumb">
+        <span style="opacity:0.5">Korupsi IT Kemenkominfo</span>
+        <span style="opacity:0.4">›</span>
+        <span style="color:var(--text)">Analisis Prediksi</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="ai-badge"><div class="ai-dot"></div> Dianalisis AI · 7 sumber</div>
+      <button class="tb-btn">⬇ Ekspor PDF</button>
+    </div>
+  </div>
+
+  <!-- RESULT BANNER -->
+  <div class="result-banner">
+    <div class="banner-left">
+      <div class="banner-emoji">🔮</div>
+      <div>
+        <div class="banner-title">Analisis Prediksi — Korupsi IT Kemenkominfo</div>
+        <div class="banner-meta">
+          <span>Dianalisis 18 Mar 2024, 09.42 WIB</span>
+          <span class="banner-dot"></span>
+          <span>7 sumber · 3 tersangka · Rp 179 M</span>
+          <span class="banner-dot"></span>
+          <span>Model SEPIA v2.1</span>
+        </div>
+      </div>
+    </div>
+    <div class="banner-right">
+      <div class="score-pill">
+        <div>
+          <div class="score-label">Tingkat Risiko</div>
+          <div style="display:flex;align-items:flex-end;gap:3px">
+            <div class="score-val">8.4</div>
+            <div class="score-unit">/ 10</div>
+          </div>
+        </div>
+      </div>
+      <div class="score-pill">
+        <div>
+          <div class="score-label">Prediksi Vonis</div>
+          <div style="display:flex;align-items:flex-end;gap:3px">
+            <div class="score-val">12–15</div>
+            <div class="score-unit">thn</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT SCROLL -->
+  <div class="content-scroll">
+
+    <!-- SWOT -->
     <div>
-      <div class="page-eyebrow">Hasil Pemrosesan AI · 15 Mar 2026</div>
-      <div class="page-title">Korupsi Pengadaan IT<br>Kementerian Kominfo</div>
-      <div class="page-meta">Dianalisis dari 4 sumber · Llama 3 · Gemini 1.5 Pro</div>
+      <div class="sec-title">Analisis SWOT</div>
+      <div class="swot-grid">
+
+        <!-- STRENGTHS -->
+        <div class="swot-card">
+          <div class="swot-header">
+            <div class="swot-letter">S</div>
+            <div>
+              <div class="swot-card-title">Strengths — Kekuatan Kasus</div>
+              <div class="swot-card-sub">Faktor pendukung penuntutan</div>
+            </div>
+          </div>
+          <div class="swot-items">
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Bukti transfer keuangan langsung ke rekening terdakwa tersedia dalam dokumen bank yang disita</span></div>
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Hasil audit BPK menunjukkan selisih nilai kontrak 62% di atas harga pasar wajar</span></div>
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Dua saksi kunci bersedia memberikan keterangan sesuai berita acara pemeriksaan</span></div>
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Rekam jejak komunikasi elektronik (WhatsApp) menghubungkan ketiga terdakwa</span></div>
+          </div>
+        </div>
+
+        <!-- WEAKNESSES -->
+        <div class="swot-card">
+          <div class="swot-header">
+            <div class="swot-letter">W</div>
+            <div>
+              <div class="swot-card-title">Weaknesses — Kelemahan</div>
+              <div class="swot-card-sub">Celah dalam konstruksi kasus</div>
+            </div>
+          </div>
+          <div class="swot-items">
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Satu terdakwa utama masih dalam status DPO, menghambat kelengkapan berkas perkara</span></div>
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Dokumen kontrak asli sebagian hilang; hanya tersedia salinan digital yang dapat dipersoalkan otentisitasnya</span></div>
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Ketergantungan pada keterangan satu saksi mahkota yang memiliki riwayat keterlibatan</span></div>
+          </div>
+        </div>
+
+        <!-- OPPORTUNITIES -->
+        <div class="swot-card">
+          <div class="swot-header">
+            <div class="swot-letter">O</div>
+            <div>
+              <div class="swot-card-title">Opportunities — Peluang</div>
+              <div class="swot-card-sub">Faktor yang dapat dimanfaatkan</div>
+            </div>
+          </div>
+          <div class="swot-items">
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Momentum publik dan liputan media tinggi mendukung tekanan percepatan sidang</span></div>
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Potensi justice collaborator dari terdakwa kedua yang menunjukkan sinyal kooperatif</span></div>
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Mutual Legal Assistance (MLA) dengan Singapura dapat diaktifkan untuk penelusuran aset offshore</span></div>
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Preseden kasus e-KTP mempermudah konstruksi dakwaan penyertaan</span></div>
+          </div>
+        </div>
+
+        <!-- THREATS -->
+        <div class="swot-card">
+          <div class="swot-header">
+            <div class="swot-letter">T</div>
+            <div>
+              <div class="swot-card-title">Threats — Ancaman</div>
+              <div class="swot-card-sub">Risiko yang perlu dimitigasi</div>
+            </div>
+          </div>
+          <div class="swot-items">
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Upaya praperadilan berulang berpotensi menghambat proses dan menghabiskan sumber daya tim</span></div>
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Intervensi politik tidak dapat dikesampingkan mengingat posisi jabatan terdakwa utama</span></div>
+            <div class="swot-item"><div class="swot-item-dot"></div><span>Perpindahan aset ke yurisdiksi asing masih mungkin terjadi sebelum pemblokiran efektif</span></div>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div class="page-stats">
-      <div class="page-stat"><div class="page-stat-val">6</div><div class="page-stat-label">Aktor</div></div>
-      <div class="page-stat"><div class="page-stat-val">6</div><div class="page-stat-label">Kronologi</div></div>
-      <div class="page-stat"><div class="page-stat-val">5</div><div class="page-stat-label">Pasal</div></div>
-      <div class="page-stat"><div class="page-stat-val" style="color:#fcd34d;">89.4M</div><div class="page-stat-label">Kerugian</div></div>
+
+    <!-- 3 COL ANALYSIS -->
+    <div>
+      <div class="sec-title">Analisis Lanjutan</div>
+      <div class="three-col">
+
+        <!-- RISK ASSESSMENT -->
+        <div class="analysis-card">
+          <div class="analysis-card-head">
+            <div class="analysis-card-icon" style="background:#fef2f2">⚠️</div>
+            <div>
+              <div class="analysis-card-label">Penilaian Risiko</div>
+              <div class="analysis-card-sublabel">Berdasarkan pola historis 214 kasus</div>
+            </div>
+          </div>
+          <div class="analysis-card-body">
+            <div class="risk-meter">
+              <div class="risk-label-row"><span class="risk-name">Risiko Vonis Bebas</span><span class="risk-pct" style="color:#dc2626">18%</span></div>
+              <div class="risk-bar"><div class="risk-fill" style="width:18%;background:#dc2626"></div></div>
+            </div>
+            <div class="risk-meter">
+              <div class="risk-label-row"><span class="risk-name">Potensi Tersangka Baru</span><span class="risk-pct" style="color:#d97706">74%</span></div>
+              <div class="risk-bar"><div class="risk-fill" style="width:74%;background:#d97706"></div></div>
+            </div>
+            <div class="risk-meter">
+              <div class="risk-label-row"><span class="risk-name">Aset Dapat Dipulihkan</span><span class="risk-pct" style="color:#16a34a">61%</span></div>
+              <div class="risk-bar"><div class="risk-fill" style="width:61%;background:#16a34a"></div></div>
+            </div>
+            <div class="risk-meter">
+              <div class="risk-label-row"><span class="risk-name">Kemungkinan Banding</span><span class="risk-pct" style="color:#2563eb">88%</span></div>
+              <div class="risk-bar"><div class="risk-fill" style="width:88%;background:#2563eb"></div></div>
+            </div>
+            <div class="risk-meter" style="margin-bottom:0">
+              <div class="risk-label-row"><span class="risk-name">Estimasi Kerugian Akhir</span><span class="risk-pct" style="color:#7c3aed">Rp 211 M</span></div>
+              <div class="risk-bar"><div class="risk-fill" style="width:82%;background:#7c3aed"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="analysis-card">
+          <div class="analysis-card-head">
+            <div class="analysis-card-icon" style="background:#eff6ff">📅</div>
+            <div>
+              <div class="analysis-card-label">Kronologi Kasus</div>
+              <div class="analysis-card-sublabel">Rekonstruksi dari 7 sumber</div>
+            </div>
+          </div>
+          <div class="analysis-card-body">
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-left"><div class="tl-dot" style="color:#16a34a"></div><div class="tl-line"></div></div>
+                <div class="tl-content"><div class="tl-date">Jan 2021</div><div class="tl-text">Penandatanganan kontrak pengadaan BTS 4G antara Kemenkominfo dan konsorsium vendor</div></div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-left"><div class="tl-dot" style="color:#d97706"></div><div class="tl-line"></div></div>
+                <div class="tl-content"><div class="tl-date">Mar–Des 2022</div><div class="tl-text">Pencairan bertahap Rp 179 M; laporan realisasi fisik tidak sesuai progres aktual</div></div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-left"><div class="tl-dot" style="color:#dc2626"></div><div class="tl-line"></div></div>
+                <div class="tl-content"><div class="tl-date">Ags 2023</div><div class="tl-text">BPK merilis temuan audit: mark-up harga dan penggelembungan volume pekerjaan</div></div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-left"><div class="tl-dot" style="color:#7c3aed"></div><div class="tl-line"></div></div>
+                <div class="tl-content"><div class="tl-date">Feb 2024</div><div class="tl-text">Kejagung menetapkan 3 tersangka; satu melarikan diri, masuk DPO Interpol</div></div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-left"><div class="tl-dot" style="color:#0891b2"></div><div class="tl-line"></div></div>
+                <div class="tl-content"><div class="tl-date">Mar 2024</div><div class="tl-text">Sidang perdana; KPK ajukan permohonan pemblokiran aset Rp 40 M</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AKTOR -->
+        <div class="analysis-card">
+          <div class="analysis-card-head">
+            <div class="analysis-card-icon" style="background:#fdf4ff">👥</div>
+            <div>
+              <div class="analysis-card-label">Peta Aktor</div>
+              <div class="analysis-card-sublabel">Teridentifikasi dari dokumen</div>
+            </div>
+          </div>
+          <div class="analysis-card-body">
+            <div class="actor-list">
+              <div class="actor-item">
+                <div class="actor-avatar" style="background:#1a5c2e">AH</div>
+                <div><div class="actor-name">A. Hidayat</div><div class="actor-role">Pejabat Pembuat Komitmen</div></div>
+                <div class="actor-status status-tersangka">Tersangka</div>
+              </div>
+              <div class="actor-item">
+                <div class="actor-avatar" style="background:#1e6fa3">RS</div>
+                <div><div class="actor-name">R. Santoso</div><div class="actor-role">Direktur PT. Kharisma Tekno</div></div>
+                <div class="actor-status status-tersangka">Tersangka</div>
+              </div>
+              <div class="actor-item">
+                <div class="actor-avatar" style="background:#86198f">DW</div>
+                <div><div class="actor-name">D. Wibowo</div><div class="actor-role">Komisaris Utama Konsorsium</div></div>
+                <div class="actor-status status-dpo">DPO</div>
+              </div>
+              <div class="actor-item">
+                <div class="actor-avatar" style="background:#d97706">MF</div>
+                <div><div class="actor-name">M. Fauzi</div><div class="actor-role">Staf Administrasi Proyek</div></div>
+                <div class="actor-status status-saksi">Saksi</div>
+              </div>
+              <div class="actor-item">
+                <div class="actor-avatar" style="background:#374151">SP</div>
+                <div><div class="actor-name">S. Pratiwi</div><div class="actor-role">Konsultan Pengawas</div></div>
+                <div class="actor-status status-saksi">Saksi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
+
+    <!-- REKOMENDASI + CONFIDENCE -->
+    <div>
+      <div class="sec-title">Rekomendasi & Kepercayaan Analisis</div>
+      <div class="two-col">
+
+        <div class="analysis-card">
+          <div class="analysis-card-head">
+            <div class="analysis-card-icon" style="background:#f0f7f2">✅</div>
+            <div>
+              <div class="analysis-card-label">Rekomendasi Tindak Lanjut</div>
+              <div class="analysis-card-sublabel">Disusun berdasarkan temuan analisis</div>
+            </div>
+          </div>
+          <div class="analysis-card-body">
+            <div class="rekomendasi-list">
+              <div class="reko-item">
+                <div class="reko-num">01</div>
+                <div>
+                  <div class="reko-title">Aktifkan MLA dengan Singapura Segera</div>
+                  <div class="reko-desc">Penelusuran aset DW di rekening SGD perlu dilakukan sebelum aset dipindahkan ke yurisdiksi ketiga.</div>
+                  <span class="reko-priority prio-high">Prioritas Tinggi</span>
+                </div>
+              </div>
+              <div class="reko-item">
+                <div class="reko-num">02</div>
+                <div>
+                  <div class="reko-title">Ajukan Pendekatan Justice Collaborator ke RS</div>
+                  <div class="reko-desc">Terdakwa RS menunjukkan sinyal kooperatif; status JC dapat membuka fakta persidangan lebih luas.</div>
+                  <span class="reko-priority prio-high">Prioritas Tinggi</span>
+                </div>
+              </div>
+              <div class="reko-item">
+                <div class="reko-num">03</div>
+                <div>
+                  <div class="reko-title">Perkuat Autentikasi Dokumen Digital</div>
+                  <div class="reko-desc">Lakukan forensik digital pada salinan kontrak untuk menutup celah yang dapat dieksploitasi tim pengacara.</div>
+                  <span class="reko-priority prio-med">Prioritas Sedang</span>
+                </div>
+              </div>
+              <div class="reko-item">
+                <div class="reko-num">04</div>
+                <div>
+                  <div class="reko-title">Koordinasi dengan PPATK untuk Aliran Dana</div>
+                  <div class="reko-desc">Petakan seluruh aliran dana ke pihak ketiga guna mengidentifikasi potensi tersangka tambahan.</div>
+                  <span class="reko-priority prio-med">Prioritas Sedang</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONFIDENCE -->
+        <div class="analysis-card">
+          <div class="analysis-card-head">
+            <div class="analysis-card-icon" style="background:#fefce8">📊</div>
+            <div>
+              <div class="analysis-card-label">Kepercayaan Analisis</div>
+              <div class="analysis-card-sublabel">Validasi model terhadap data</div>
+            </div>
+          </div>
+          <div class="analysis-card-body">
+            <div class="confidence-wrap">
+              <div class="conf-ring">
+                <svg viewBox="0 0 100 100" width="110" height="110">
+                  <circle class="conf-ring-bg" cx="50" cy="50" r="45"/>
+                  <circle class="conf-ring-fill" cx="50" cy="50" r="45"/>
+                </svg>
+                <div class="conf-center">
+                  <div class="conf-pct">80%</div>
+                  <div class="conf-sub">Akurasi</div>
+                </div>
+              </div>
+              <div class="conf-labels" style="padding: 0 4px;">
+                <div>
+                  <div class="conf-label-row"><span class="conf-label-name">Kelengkapan data</span><span class="conf-label-val">85%</span></div>
+                  <div class="conf-bar-sm"><div class="conf-fill-sm" style="width:85%"></div></div>
+                </div>
+                <div>
+                  <div class="conf-label-row"><span class="conf-label-name">Konsistensi sumber</span><span class="conf-label-val">78%</span></div>
+                  <div class="conf-bar-sm"><div class="conf-fill-sm" style="width:78%"></div></div>
+                </div>
+                <div>
+                  <div class="conf-label-row"><span class="conf-label-name">Kualitas dokumen</span><span class="conf-label-val">72%</span></div>
+                  <div class="conf-bar-sm"><div class="conf-fill-sm" style="width:72%"></div></div>
+                </div>
+                <div>
+                  <div class="conf-label-row"><span class="conf-label-name">Kedalaman analisis</span><span class="conf-label-val">91%</span></div>
+                  <div class="conf-bar-sm"><div class="conf-fill-sm" style="width:91%"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
+  <!-- END CONTENT SCROLL -->
+
+  <!-- FAB DISTRIBUTE -->
+  <a class="fab-distribute" href="distribusi.html">
+    <span class="fab-icon">📤</span>
+    Distribusi Laporan
+  </a>
+
 </div>
 
-<div class="content">
-
-  <!-- AI SUMMARY -->
-  <div style="margin-bottom:18px;">
-    <div class="ai-summary">
-      <div class="ai-summary-label">✦ Ringkasan AI</div>
-      <div class="ai-summary-text">Berdasarkan analisis 4 sumber, kasus ini melibatkan <strong>skema korupsi sistematis</strong> dalam pengadaan IT senilai Rp 179 miliar di Kementerian Kominfo. Tiga tersangka utama diduga berkolusi untuk melakukan markup anggaran sejak 2022. Tingkat risiko dinilai <strong>sangat tinggi</strong> dengan kerugian negara terverifikasi sebesar Rp 89,4 miliar.</div>
-    </div>
-  </div>
-
-  <!-- 3 CARDS ROW -->
-  <div class="analisis-grid three" style="margin-bottom:18px;">
-    <div class="a-card">
-      <div class="a-card-header">
-        <div class="a-card-title"><div class="a-card-icon">⚠</div>Skor Risiko</div>
-        <span class="risk-badge risk-high"><span class="risk-dot high"></span>Tinggi</span>
-      </div>
-      <div class="a-card-body">
-        <div style="text-align:center;margin-bottom:14px;">
-          <div style="font-size:42px;font-weight:700;color:#b91c1c;line-height:1;">87</div>
-          <div style="font-size:11px;color:var(--text-muted);">dari 100</div>
-        </div>
-        <div class="score-row"><div class="score-label">Kerugian negara</div><div class="score-track"><div class="score-fill" style="width:89%;background:#b91c1c;"></div></div><div class="score-val" style="color:#b91c1c;">89%</div></div>
-        <div class="score-row"><div class="score-label">Jumlah tersangka</div><div class="score-track"><div class="score-fill" style="width:60%;background:#d97706;"></div></div><div class="score-val" style="color:#d97706;">60%</div></div>
-        <div class="score-row"><div class="score-label">Kompleksitas kasus</div><div class="score-track"><div class="score-fill" style="width:75%;background:var(--green);"></div></div><div class="score-val" style="color:var(--green);">75%</div></div>
-        <div class="score-row"><div class="score-label">Bukti teridentifikasi</div><div class="score-track"><div class="score-fill" style="width:92%;background:var(--green);"></div></div><div class="score-val" style="color:var(--green);">92%</div></div>
-      </div>
-    </div>
-
-    <div class="a-card">
-      <div class="a-card-header">
-        <div class="a-card-title"><div class="a-card-icon">📋</div>Status Perkara</div>
-        <span class="risk-badge risk-med"><span class="risk-dot med"></span>Penyidikan</span>
-      </div>
-      <div class="a-card-body">
-        <div class="timeline">
-          <div class="tl-item"><div class="tl-left"><div class="tl-dot done">✓</div></div><div class="tl-right"><div class="tl-date">Mar 2022</div><div class="tl-event">Pengadaan disetujui</div><div class="tl-desc">Dirjen Aptika mengesahkan anggaran Rp 179M</div></div></div>
-          <div class="tl-item"><div class="tl-left"><div class="tl-dot done">✓</div></div><div class="tl-right"><div class="tl-date">Des 2022</div><div class="tl-event">Kontrak diselesaikan</div><div class="tl-desc">BA serah terima ditandatangani secara fiktif</div></div></div>
-          <div class="tl-item"><div class="tl-left"><div class="tl-dot done">✓</div></div><div class="tl-right"><div class="tl-date">Feb 2023</div><div class="tl-event">Pelaporan ke KPK</div><div class="tl-desc">Staf keuangan melapor secara anonim</div></div></div>
-          <div class="tl-item"><div class="tl-left"><div class="tl-dot">→</div></div><div class="tl-right"><div class="tl-date">Jan 2024</div><div class="tl-event">Penetapan tersangka</div><div class="tl-desc">3 tersangka resmi ditahan Kejagung</div></div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="a-card">
-      <div class="a-card-header">
-        <div class="a-card-title"><div class="a-card-icon">⚖</div>Pasal Disangkakan</div>
-        <span class="a-card-badge">5 pasal</span>
-      </div>
-      <div class="a-card-body">
-        <div class="pasal-grid">
-          <div class="pasal-item utama"><div class="pasal-code">Ps. 2 (1)</div><div class="pasal-desc">UU Tipikor — korupsi merugikan negara</div></div>
-          <div class="pasal-item utama"><div class="pasal-code">Ps. 3</div><div class="pasal-desc">UU Tipikor — penyalahgunaan wewenang</div></div>
-          <div class="pasal-item"><div class="pasal-code">Ps. 55 KUHP</div><div class="pasal-desc">Turut serta melakukan tindak pidana</div></div>
-          <div class="pasal-item"><div class="pasal-code">Ps. 18</div><div class="pasal-desc">UU Tipikor — uang pengganti kerugian</div></div>
-          <div class="pasal-item" style="grid-column:span 2;"><div class="pasal-code">Ps. 374 KUHP</div><div class="pasal-desc">Penggelapan dalam jabatan publik</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AKTOR TABLE -->
-  <div class="analisis-grid full">
-    <div class="a-card">
-      <div class="a-card-header">
-        <div class="a-card-title"><div class="a-card-icon">👤</div>Daftar Aktor Terlibat</div>
-        <span class="a-card-badge">6 entitas</span>
-      </div>
-      <div class="a-card-body" style="padding:0;">
-        <table class="etable">
-          <thead><tr><th>Nama / Entitas</th><th>Peran</th><th>Jabatan</th><th>Keterlibatan</th><th>Risiko</th></tr></thead>
-          <tbody>
-            <tr><td style="font-weight:500;">Budi Hartono</td><td><span class="role-pill tersangka">Tersangka</span></td><td>Mantan Dirjen Aptika</td><td>Pengambil keputusan pengadaan</td><td><span class="risk-badge risk-high" style="font-size:10px;padding:2px 8px;"><span class="risk-dot high"></span>Tinggi</span></td></tr>
-            <tr><td style="font-weight:500;">PT Solusi Prima</td><td><span class="role-pill tersangka">Tersangka</span></td><td>Kontraktor Swasta</td><td>Pemenang tender, markup biaya</td><td><span class="risk-badge risk-high" style="font-size:10px;padding:2px 8px;"><span class="risk-dot high"></span>Tinggi</span></td></tr>
-            <tr><td style="font-weight:500;">Eko Prasetyo</td><td><span class="role-pill tersangka">Tersangka</span></td><td>Pejabat Teknis</td><td>Penandatangan BA fiktif</td><td><span class="risk-badge risk-med" style="font-size:10px;padding:2px 8px;"><span class="risk-dot med"></span>Sedang</span></td></tr>
-            <tr><td style="font-weight:500;">Negara / APBN</td><td><span class="role-pill korban">Korban</span></td><td>—</td><td>Kerugian Rp 89,4 miliar</td><td>—</td></tr>
-            <tr><td style="font-weight:500;">Rina Susanti</td><td><span class="role-pill saksi">Saksi</span></td><td>Staf Keuangan</td><td>Pelapor awal ke KPK</td><td><span class="risk-badge risk-low" style="font-size:10px;padding:2px 8px;"><span class="risk-dot low"></span>Rendah</span></td></tr>
-            <tr><td style="font-weight:500;">Tim Kejagung</td><td><span class="role-pill penyidik">Penyidik</span></td><td>Kejaksaan Agung RI</td><td>Penanggung jawab penyidikan</td><td>—</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- SWOT -->
-  <div class="analisis-grid full" style="margin-top:18px;">
-    <div class="a-card">
-      <div class="a-card-header">
-        <div class="a-card-title"><div class="a-card-icon">⊞</div>Analisis SWOT Kasus</div>
-        <span class="a-card-badge">AI Generated</span>
-      </div>
-      <div class="a-card-body" style="padding:0;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
-
-          <div style="padding:18px 20px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-              <div style="width:28px;height:28px;border-radius:8px;background:#f0f7f2;display:flex;align-items:center;justify-content:center;font-size:13px;">💪</div>
-              <div><div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:0.06em;">STRENGTH</div><div style="font-size:10px;color:var(--text-muted);">Kekuatan Penuntutan</div></div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:var(--green);font-weight:700;flex-shrink:0;">S1</span><span>Bukti digital berupa dokumen pengadaan dan berita acara fiktif tersedia lengkap dan dapat diverifikasi</span></div>
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:var(--green);font-weight:700;flex-shrink:0;">S2</span><span>Terdapat saksi internal (staf keuangan) yang bersedia memberikan keterangan kepada penyidik</span></div>
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:var(--green);font-weight:700;flex-shrink:0;">S3</span><span>Audit BPK telah mengkonfirmasi adanya selisih anggaran senilai Rp 89,4 miliar</span></div>
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:var(--green);font-weight:700;flex-shrink:0;">S4</span><span>Tiga tersangka telah ditahan dan tidak dapat mempengaruhi jalannya penyidikan</span></div>
-            </div>
-          </div>
-
-          <div style="padding:18px 20px;border-bottom:1px solid var(--border);">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-              <div style="width:28px;height:28px;border-radius:8px;background:#fef2f2;display:flex;align-items:center;justify-content:center;font-size:13px;">⚠️</div>
-              <div><div style="font-size:11px;font-weight:700;color:#b91c1c;letter-spacing:0.06em;">WEAKNESS</div><div style="font-size:10px;color:var(--text-muted);">Kelemahan Kasus</div></div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#b91c1c;font-weight:700;flex-shrink:0;">W1</span><span>Pelapor utama (Rina Susanti) melaporkan secara anonim, validasi identitas masih perlu dikuatkan</span></div>
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#b91c1c;font-weight:700;flex-shrink:0;">W2</span><span>Jejak aliran dana ke rekening pihak ketiga belum sepenuhnya tertelusuri oleh PPATK</span></div>
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#b91c1c;font-weight:700;flex-shrink:0;">W3</span><span>Dokumen teknis spesifikasi sistem yang diklaim diserahkan sulit diverifikasi oleh ahli independen</span></div>
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#b91c1c;font-weight:700;flex-shrink:0;">W4</span><span>Proses penyidikan berlangsung lambat akibat kompleksitas dokumen lintas kementerian</span></div>
-            </div>
-          </div>
-
-          <div style="padding:18px 20px;border-right:1px solid var(--border);">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-              <div style="width:28px;height:28px;border-radius:8px;background:#eff6ff;display:flex;align-items:center;justify-content:center;font-size:13px;">🎯</div>
-              <div><div style="font-size:11px;font-weight:700;color:#1e40af;letter-spacing:0.06em;">OPPORTUNITY</div><div style="font-size:10px;color:var(--text-muted);">Peluang Penguatan</div></div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#1e40af;font-weight:700;flex-shrink:0;">O1</span><span>Kolaborasi dengan KPK memungkinkan akses ke data pengawasan pengadaan nasional yang lebih luas</span></div>
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#1e40af;font-weight:700;flex-shrink:0;">O2</span><span>Momentum reformasi birokrasi membuka peluang penerapan sistem e-procurement yang lebih transparan</span></div>
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#1e40af;font-weight:700;flex-shrink:0;">O3</span><span>Testimoni Rina Susanti dapat diperkuat dengan bukti forensik digital dari email dan sistem keuangan</span></div>
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#1e40af;font-weight:700;flex-shrink:0;">O4</span><span>Tuntutan publik yang tinggi terhadap transparansi mendukung percepatan penyelesaian perkara</span></div>
-            </div>
-          </div>
-
-          <div style="padding:18px 20px;">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-              <div style="width:28px;height:28px;border-radius:8px;background:#fffbeb;display:flex;align-items:center;justify-content:center;font-size:13px;">🔥</div>
-              <div><div style="font-size:11px;font-weight:700;color:#92400e;letter-spacing:0.06em;">THREAT</div><div style="font-size:10px;color:var(--text-muted);">Ancaman & Hambatan</div></div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#92400e;font-weight:700;flex-shrink:0;">T1</span><span>Kemungkinan intervensi politik dari pihak yang memiliki kepentingan atas jalannya perkara ini</span></div>
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#92400e;font-weight:700;flex-shrink:0;">T2</span><span>Potensi intimidasi terhadap saksi kunci yang belum mendapatkan perlindungan resmi dari LPSK</span></div>
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#92400e;font-weight:700;flex-shrink:0;">T3</span><span>Tersangka memiliki kuasa hukum kuat yang dapat mengajukan praperadilan untuk menggugurkan status tersangka</span></div>
-              <div style="display:flex;gap:8px;font-size:12px;color:var(--text);line-height:1.5;"><span style="color:#92400e;font-weight:700;flex-shrink:0;">T4</span><span>Risiko barang bukti digital hilang atau dimanipulasi jika server belum disita secara menyeluruh</span></div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
 </body>
 </html>
