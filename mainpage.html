@@ -7,451 +7,191 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --green: #1a5c2e;
-  --green-2: #2e7d4a;
-  --green-light: #f0f7f2;
-  --green-mid: #ddeee4;
-  --green-border: #b6d9c3;
-  --text: #1a1a1a;
-  --text-muted: #6b7280;
-  --border: #e5e7eb;
-  --bg: #ffffff;
-  --bg-secondary: #f9fafb;
-  --bg-tertiary: #f3f4f6;
-  --red: #b91c1c;
-  --amber: #d97706;
-  --blue: #1e6fa3;
-  --radius: 10px;
-  --radius-sm: 6px;
+  --green: #1a5c2e; --green-2: #2e7d4a; --green-light: #f0f7f2;
+  --green-mid: #ddeee4; --green-border: #b6d9c3;
+  --text: #1a1a1a; --text-muted: #6b7280; --border: #e5e7eb;
+  --bg: #ffffff; --bg-secondary: #f9fafb; --bg-tertiary: #f3f4f6;
+  --red: #b91c1c; --amber: #d97706; --blue: #1e6fa3;
   --nav-width: 220px;
-}
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg-tertiary);
-  color: var(--text);
-  height: 100vh;
-  display: flex;
-  overflow: hidden;
-}
+  --ideologi: #7c3aed;
+  --ideologi-light: #f5f3ff;
+  --ideologi-border: #ddd6fe;
 
-/* ─── LEFT SIDEBAR ─── */
-.sidenav {
-  width: var(--nav-width);
-  background: var(--green);
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  overflow: hidden;
-}
+  --politik: #1e6fa3;
+  --politik-light: #eff6ff;
+  --politik-border: #bfdbfe;
 
-.sidenav-brand {
-  padding: 22px 20px 18px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-.brand-logo {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: #fff;
-}
-.brand-sub {
-  font-size: 10px;
-  color: rgba(255,255,255,0.5);
-  margin-top: 2px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
+  --sosbud: #d97706;
+  --sosbud-light: #fffbeb;
+  --sosbud-border: #fde68a;
 
-.sidenav-section {
-  padding: 18px 12px 8px;
+  --hankam: #b91c1c;
+  --hankam-light: #fef2f2;
+  --hankam-border: #fecaca;
 }
-.sidenav-label {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.4);
-  padding: 0 8px;
-  margin-bottom: 6px;
-}
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-bottom: 2px;
-  text-decoration: none;
-  transition: background 0.12s;
-  border: 1px solid transparent;
-  color: rgba(255,255,255,0.72);
-  font-size: 13px;
-  font-weight: 500;
-}
-.nav-item:hover {
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-}
-.nav-item.active {
-  background: rgba(255,255,255,0.14);
-  border-color: rgba(255,255,255,0.18);
-  color: #fff;
-}
-.nav-item .nav-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  flex-shrink: 0;
-  background: rgba(255,255,255,0.1);
-}
-.nav-item.active .nav-icon {
-  background: rgba(255,255,255,0.2);
-}
+body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
+
+/* ── SIDENAV ── */
+.sidenav { width: var(--nav-width); background: var(--green); display: flex; flex-direction: column; flex-shrink: 0; }
+.sidenav-brand { padding: 22px 20px 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.brand-logo { font-size: 18px; font-weight: 700; letter-spacing: 0.14em; color: #fff; }
+.brand-sub { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+.sidenav-section { padding: 18px 12px 8px; }
+.sidenav-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); padding: 0 8px; margin-bottom: 6px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 2px; text-decoration: none; transition: background 0.12s; border: 1px solid transparent; color: rgba(255,255,255,0.72); font-size: 13px; font-weight: 500; }
+.nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-item.active { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.18); color: #fff; }
+.nav-item .nav-icon { width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: rgba(255,255,255,0.1); }
+.nav-item.active .nav-icon { background: rgba(255,255,255,0.2); }
 .nav-item-text { flex: 1; }
-.nav-item-badge {
-  font-size: 10px;
-  background: rgba(255,255,255,0.2);
-  color: #fff;
-  padding: 2px 7px;
-  border-radius: 20px;
-}
-
-.sidenav-divider {
-  height: 1px;
-  background: rgba(255,255,255,0.08);
-  margin: 10px 12px;
-}
-
-.sidenav-bottom {
-  margin-top: auto;
-  padding: 14px 12px;
-  border-top: 1px solid rgba(255,255,255,0.1);
-}
-.user-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-}
+.nav-item-badge { font-size: 10px; background: rgba(255,255,255,0.2); color: #fff; padding: 2px 7px; border-radius: 20px; }
+.sidenav-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 10px 12px; }
+.sidenav-bottom { margin-top: auto; padding: 14px 12px; border-top: 1px solid rgba(255,255,255,0.1); }
+.user-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; cursor: pointer; }
 .user-row:hover { background: rgba(255,255,255,0.1); }
-.user-avatar {
-  width: 32px; height: 32px; border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  color: #fff; font-size: 12px; font-weight: 600;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.2); color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .user-name { font-size: 12px; font-weight: 500; color: #fff; }
 .user-role { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 1px; }
 
-/* ─── MAIN AREA ─── */
-.main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+/* ── MAIN ── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 
-/* TOP BAR */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  height: 56px;
-  background: #fff;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 56px; background: #fff; border-bottom: 1px solid var(--border); flex-shrink: 0; }
 .topbar-left { display: flex; align-items: center; gap: 12px; }
-.page-title { font-size: 15px; font-weight: 600; color: var(--text); }
-.page-breadcrumb {
-  font-size: 12px;
-  color: var(--text-muted);
-  display: flex; align-items: center; gap: 5px;
-}
+.page-title { font-size: 15px; font-weight: 600; }
+.topbar-date { font-size: 12px; color: var(--text-muted); }
 .topbar-right { display: flex; align-items: center; gap: 8px; }
-.tb-btn {
-  padding: 7px 14px; font-size: 12px;
-  border: 1px solid var(--border);
-  border-radius: 20px; background: #fff;
-  color: var(--text-muted); cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: all 0.12s;
-}
+.tb-btn { padding: 7px 14px; font-size: 12px; border: 1px solid var(--border); border-radius: 20px; background: #fff; color: var(--text-muted); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.12s; }
 .tb-btn:hover { border-color: var(--green-border); color: var(--green); background: var(--green-light); }
-.tb-btn.primary {
-  background: var(--green); color: #fff; border-color: var(--green);
-}
+.tb-btn.primary { background: var(--green); color: #fff; border-color: var(--green); }
 .tb-btn.primary:hover { background: #14482a; }
+.notif-dot { position: relative; }
+.notif-dot::after { content:''; position:absolute; top:6px; right:12px; width:6px; height:6px; border-radius:50%; background:#ef4444; border:1.5px solid #fff; }
 
-/* DATE RANGE CHIP */
-.date-chip {
-  display: flex; align-items: center; gap: 6px;
-  padding: 6px 12px; font-size: 12px;
-  border: 1px solid var(--border); border-radius: 20px;
-  background: var(--bg-secondary); color: var(--text-muted); cursor: pointer;
-}
+/* ── SCROLLABLE CONTENT ── */
+.content { flex: 1; overflow-y: auto; padding: 20px 24px 32px; display: flex; flex-direction: column; gap: 18px; }
 
-/* ─── DASHBOARD CONTENT ─── */
-.dashboard-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
+/* ── SUMMARY STAT ROW ── */
+.stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.stat-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; transition: box-shadow 0.15s; }
+.stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.stat-label { font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
+.stat-value { font-size: 22px; font-weight: 700; line-height: 1; }
+.stat-sub { font-size: 10px; color: var(--text-muted); margin-top: 3px; }
+.stat-sub .up { color: #16a34a; }
+.stat-sub .down { color: var(--red); }
 
-/* STAT CARDS ROW */
-.stat-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-}
-.stat-card {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-  position: relative;
-  overflow: hidden;
-}
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--accent, var(--green));
-  border-radius: var(--radius) var(--radius) 0 0;
-}
-.stat-card.red::before { --accent: #b91c1c; }
-.stat-card.amber::before { --accent: #d97706; }
-.stat-card.blue::before { --accent: #1e6fa3; }
-.stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-.stat-val { font-size: 26px; font-weight: 600; color: var(--text); line-height: 1; margin-bottom: 6px; font-family: 'DM Mono', monospace; }
-.stat-val.red { color: var(--red); }
-.stat-change { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--green-2); }
-.stat-change.down { color: var(--red); }
-.stat-icon {
-  position: absolute; top: 14px; right: 14px;
-  width: 36px; height: 36px; border-radius: 8px;
-  background: var(--green-light);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
-}
-.stat-card.red .stat-icon { background: #fef2f2; }
-.stat-card.amber .stat-icon { background: #fffbeb; }
-.stat-card.blue .stat-icon { background: #eff6ff; }
+/* ── SECTION HEADING ── */
+.section-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+.section-heading h2 { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; }
+.section-heading a { font-size: 12px; color: var(--green); text-decoration: none; }
 
-/* CHARTS GRID */
-.charts-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 14px;
-}
-.charts-grid-full {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 14px;
-}
-.chart-card {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
-}
-.chart-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-.chart-title { font-size: 13px; font-weight: 600; color: var(--text); }
-.chart-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-.chart-badge {
-  font-size: 10px;
-  padding: 3px 9px;
-  border-radius: 20px;
-  background: var(--green-light);
-  color: var(--green);
-  border: 1px solid var(--green-border);
-  white-space: nowrap;
-}
-.chart-badge.amber { background: #fffbeb; color: #92400e; border-color: #fcd34d; }
-.chart-badge.blue { background: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
+/* ── CATEGORY GRID ── */
+.cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
 
-/* TABLE */
-.table-card {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.table-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border);
-}
-.table-card-title { font-size: 13px; font-weight: 600; }
-.table-search {
-  display: flex; align-items: center; gap: 7px;
-  padding: 7px 12px;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  font-size: 12px; color: var(--text-muted); background: var(--bg-secondary);
-  cursor: pointer;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 12px;
-}
-thead th {
-  text-align: left;
-  padding: 10px 14px;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--text-muted);
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
-  font-weight: 500;
-}
-tbody tr {
-  border-bottom: 1px solid var(--border);
-  transition: background 0.1s;
-  cursor: pointer;
-}
-tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: var(--green-light); }
-tbody td { padding: 10px 14px; color: var(--text); vertical-align: middle; }
-.td-muted { color: var(--text-muted) !important; }
-.td-mono { font-family: 'DM Mono', monospace; font-size: 11px; }
+.cat-card { background: #fff; border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden; transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s; cursor: pointer; }
+.cat-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.08); transform: translateY(-2px); }
 
-/* BADGE */
-.badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 10px; padding: 3px 9px; border-radius: 20px;
-  font-weight: 500;
-}
-.badge.tersangka { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
-.badge.sidik { background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; }
-.badge.tuntut { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
-.badge.inkracht { background: var(--green-light); color: var(--green); border: 1px solid var(--green-border); }
-.dot { width: 5px; height: 5px; border-radius: 50%; }
-.dot.red { background: #b91c1c; }
-.dot.amber { background: #d97706; }
-.dot.blue { background: #1e6fa3; }
-.dot.green { background: var(--green); }
+.cat-card.ideologi:hover { border-color: var(--ideologi-border); }
+.cat-card.politik:hover  { border-color: var(--politik-border); }
+.cat-card.sosbud:hover   { border-color: var(--sosbud-border); }
+.cat-card.hankam:hover   { border-color: var(--hankam-border); }
 
-/* MINI CHART ON TABLE ROW */
-.trend-spark { display: flex; align-items: flex-end; gap: 2px; height: 22px; }
-.trend-spark span { width: 4px; border-radius: 2px; background: var(--green-mid); }
+.cat-stripe { height: 5px; }
+.cat-card.ideologi .cat-stripe { background: var(--ideologi); }
+.cat-card.politik  .cat-stripe { background: var(--politik); }
+.cat-card.sosbud   .cat-stripe { background: var(--sosbud); }
+.cat-card.hankam   .cat-stripe { background: var(--hankam); }
 
-/* BOTTOM ROW */
-.bottom-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
+.cat-body { padding: 16px 18px 14px; }
 
-/* ACTIVITY FEED */
-.activity-item {
-  display: flex; gap: 12px; align-items: flex-start;
-  padding: 10px 0; border-bottom: 1px solid var(--border);
-}
-.activity-item:last-child { border-bottom: none; }
-.activity-icon {
-  width: 32px; height: 32px; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; flex-shrink: 0; background: var(--green-light);
-}
-.activity-icon.red { background: #fef2f2; }
-.activity-icon.amber { background: #fffbeb; }
-.activity-icon.blue { background: #eff6ff; }
-.activity-text { font-size: 12px; color: var(--text); line-height: 1.5; }
-.activity-text strong { font-weight: 600; }
-.activity-time { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+.cat-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
+.cat-icon-wrap { display: flex; align-items: center; gap: 10px; }
+.cat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.cat-card.ideologi .cat-icon { background: var(--ideologi-light); }
+.cat-card.politik  .cat-icon { background: var(--politik-light); }
+.cat-card.sosbud   .cat-icon { background: var(--sosbud-light); }
+.cat-card.hankam   .cat-icon { background: var(--hankam-light); }
 
-/* QUICK ACTIONS */
-.quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.qa-btn {
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 14px; border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--bg-secondary);
-  cursor: pointer; text-decoration: none;
-  transition: all 0.12s; color: var(--text);
-}
-.qa-btn:hover { border-color: var(--green-border); background: var(--green-light); color: var(--green); }
-.qa-icon { font-size: 18px; flex-shrink: 0; }
-.qa-label { font-size: 12px; font-weight: 500; }
-.qa-sub { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
-.qa-btn:hover .qa-sub { color: var(--green); opacity: 0.7; }
+.cat-name { font-size: 15px; font-weight: 700; }
+.cat-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; line-height: 1.5; }
+
+/* RISK BADGE */
+.risk-badge { padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; white-space: nowrap; }
+.risk-high   { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.risk-med    { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.risk-low    { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+
+/* STATS ROW INSIDE CARD */
+.cat-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+.cat-stat { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }
+.cat-stat-label { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
+.cat-stat-value { font-size: 16px; font-weight: 700; }
+.cat-card.ideologi .cat-stat-value { color: var(--ideologi); }
+.cat-card.politik  .cat-stat-value { color: var(--politik); }
+.cat-card.sosbud   .cat-stat-value { color: var(--sosbud); }
+.cat-card.hankam   .cat-stat-value { color: var(--hankam); }
+
+/* MINI BAR CHART */
+.mini-chart { margin-bottom: 12px; }
+.mini-chart-label { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; }
+.bar-rows { display: flex; flex-direction: column; gap: 5px; }
+.bar-row { display: flex; align-items: center; gap: 8px; }
+.bar-row-label { font-size: 10px; color: var(--text-muted); width: 52px; flex-shrink: 0; text-align: right; }
+.bar-track { flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 99px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 99px; transition: width 0.8s cubic-bezier(.4,0,.2,1); }
+.bar-val { font-size: 10px; color: var(--text-muted); font-family: 'DM Mono', monospace; width: 22px; flex-shrink: 0; }
+
+/* RECENT ITEMS */
+.recent-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+.recent-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; }
+.recent-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.cat-card.ideologi .recent-dot { background: var(--ideologi); }
+.cat-card.politik  .recent-dot { background: var(--politik); }
+.cat-card.sosbud   .recent-dot { background: var(--sosbud); }
+.cat-card.hankam   .recent-dot { background: var(--hankam); }
+.recent-text { font-size: 11px; color: var(--text); flex: 1; line-height: 1.45; }
+.recent-time { font-size: 10px; color: var(--text-muted); white-space: nowrap; font-family: 'DM Mono', monospace; }
+
+/* CARD FOOTER */
+.cat-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border); }
+.cat-footer-meta { font-size: 11px; color: var(--text-muted); }
+.cat-footer-meta strong { color: var(--text); }
+.cat-cta { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; padding: 5px 12px; border-radius: 20px; text-decoration: none; }
+.cat-card.ideologi .cat-cta { color: var(--ideologi); background: var(--ideologi-light); border: 1px solid var(--ideologi-border); }
+.cat-card.politik  .cat-cta { color: var(--politik);  background: var(--politik-light);  border: 1px solid var(--politik-border); }
+.cat-card.sosbud   .cat-cta { color: var(--sosbud);   background: var(--sosbud-light);   border: 1px solid var(--sosbud-border); }
+.cat-card.hankam   .cat-cta { color: var(--hankam);   background: var(--hankam-light);   border: 1px solid var(--hankam-border); }
 </style>
 </head>
 <body>
 
-<!-- LEFT NAV -->
+<!-- SIDENAV -->
 <nav class="sidenav">
   <div class="sidenav-brand">
     <div class="brand-logo">SEPIA</div>
     <div class="brand-sub">Sistem Analitik Hukum</div>
   </div>
-
   <div class="sidenav-section">
     <div class="sidenav-label">Menu Utama</div>
-
-  <a class="nav-item" href="datapool.html">
-      <div class="nav-icon">📋</div>
-      <div class="nav-item-text">RKI</div>
-    </a>
-
-    <a class="nav-item" href="#">
-      <div class="nav-icon">🗄️</div>
-      <div class="nav-item-text">Data Pool</div>
-    </a>
-
-    <a class="nav-item" href="#" onclick="alert('Halaman Personalisasi')">
-      <div class="nav-icon">🎨</div>
-      <div class="nav-item-text">Personalisasi</div>
-    </a>
-
-    <a class="nav-item" href="#" onclick="alert('Halaman Daily Report')">
-      <div class="nav-icon">📅</div>
-      <div class="nav-item-text">Daily Report</div>
-      <span class="nav-item-badge">!</span>
-    </a>
+    <a class="nav-item active" href="dashboard.html"><div class="nav-icon">📊</div><div class="nav-item-text">Dashboard</div></a>
+    <a class="nav-item" href="datapool.html"><div class="nav-icon">📋</div><div class="nav-item-text">RKI</div><span class="nav-item-badge">3</span></a>
+    <a class="nav-item" href="#"><div class="nav-icon">🗄️</div><div class="nav-item-text">Data Pool</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">🎨</div><div class="nav-item-text">Personalisasi</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">📅</div><div class="nav-item-text">Daily Report</div><span class="nav-item-badge">!</span></a>
   </div>
-
-
+  <div class="sidenav-divider"></div>
   <div class="sidenav-section">
     <div class="sidenav-label">Sistem</div>
-    <a class="nav-item" href="#">
-      <div class="nav-icon">⚙️</div>
-      <div class="nav-item-text">Settings</div>
-    </a>
+    <a class="nav-item" href="#"><div class="nav-icon">⚙️</div><div class="nav-item-text">Settings</div></a>
   </div>
-
   <div class="sidenav-bottom">
     <div class="user-row">
       <div class="user-avatar">CR</div>
-      <div>
-        <div class="user-name">C. Rasyid</div>
-        <div class="user-role">Analis Senior</div>
-      </div>
+      <div><div class="user-name">C. Rasyid</div><div class="user-role">Analis Senior</div></div>
     </div>
   </div>
 </nav>
@@ -459,327 +199,284 @@ tbody td { padding: 10px 14px; color: var(--text); vertical-align: middle; }
 <!-- MAIN -->
 <div class="main">
 
-  <!-- TOP BAR -->
+  <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-left">
       <div class="page-title">Dashboard</div>
-      <div class="page-breadcrumb">
-        <span>SEPIA</span>
-        <span style="opacity:0.4">›</span>
-        <span style="color:var(--text)">Ringkasan Aktif</span>
-      </div>
+      <div class="topbar-date" id="topbar-date"></div>
     </div>
     <div class="topbar-right">
-      <div class="date-chip">📅 Jan – Jun 2024</div>
+      <button class="tb-btn notif-dot">🔔 Notifikasi</button>
       <button class="tb-btn">⬇ Ekspor</button>
-      <button class="tb-btn primary">+ Kasus Baru</button>
+      <button class="tb-btn primary">+ Isu Baru</button>
     </div>
   </div>
 
-  <!-- DASHBOARD CONTENT -->
-  <div class="dashboard-content">
+  <!-- CONTENT -->
+  <div class="content">
 
-    <!-- STAT CARDS -->
+    <!-- SUMMARY STATS -->
     <div class="stat-row">
       <div class="stat-card">
-        <div class="stat-icon">⚖️</div>
-        <div class="stat-label">Total Kasus Aktif</div>
-        <div class="stat-val">147</div>
-        <div class="stat-change">↑ 12% dari bulan lalu</div>
+        <div class="stat-icon" style="background:#f5f3ff">🧠</div>
+        <div>
+          <div class="stat-label">Total Isu Aktif</div>
+          <div class="stat-value">142</div>
+          <div class="stat-sub"><span class="up">↑ 8</span> minggu ini</div>
+        </div>
       </div>
-      <div class="stat-card red">
-        <div class="stat-icon">🚨</div>
-        <div class="stat-label">Kerugian Negara</div>
-        <div class="stat-val red">2,4T</div>
-        <div class="stat-change down">↑ 8% YTD</div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#fef2f2">🚨</div>
+        <div>
+          <div class="stat-label">Risiko Tinggi</div>
+          <div class="stat-value" style="color:#b91c1c">24</div>
+          <div class="stat-sub"><span class="down">↑ 3</span> dari kemarin</div>
+        </div>
       </div>
-      <div class="stat-card amber">
-        <div class="stat-icon">⏳</div>
-        <div class="stat-label">Penyidikan Berjalan</div>
-        <div class="stat-val">83</div>
-        <div class="stat-change" style="color:var(--amber)">· 56% dari total kasus</div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#eff6ff">📄</div>
+        <div>
+          <div class="stat-label">Laporan Dibuat</div>
+          <div class="stat-value">67</div>
+          <div class="stat-sub"><span class="up">↑ 12</span> bulan ini</div>
+        </div>
       </div>
-      <div class="stat-card blue">
-        <div class="stat-icon">✅</div>
-        <div class="stat-label">Inkracht / Selesai</div>
-        <div class="stat-val">29</div>
-        <div class="stat-change" style="color:var(--blue)">↑ 4 kasus baru bulan ini</div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#f0f7f2">🔍</div>
+        <div>
+          <div class="stat-label">Analisis Diproses</div>
+          <div class="stat-value">318</div>
+          <div class="stat-sub">sejak <span style="font-weight:500">Jan 2026</span></div>
+        </div>
       </div>
     </div>
 
-    <!-- CHARTS ROW 1 -->
-    <div class="charts-grid">
-      <div class="chart-card">
-        <div class="chart-header">
-          <div>
-            <div class="chart-title">Tren Kasus per Bulan</div>
-            <div class="chart-sub">Januari – Juni 2024 · semua kategori</div>
-          </div>
-          <div class="chart-badge">+18% vs 2023</div>
-        </div>
-        <div style="position:relative;height:200px"><canvas id="barChart"></canvas></div>
-      </div>
-
-      <div class="chart-card">
-        <div class="chart-header">
-          <div>
-            <div class="chart-title">Distribusi Kategori</div>
-            <div class="chart-sub">Berdasarkan jumlah kasus</div>
-          </div>
-          <div class="chart-badge amber">6 kategori</div>
-        </div>
-        <div style="position:relative;height:200px"><canvas id="pieChart"></canvas></div>
-      </div>
+    <!-- CATEGORY CARDS -->
+    <div class="section-heading">
+      <h2>Kategori Pemantauan</h2>
+      <a href="#">Lihat semua →</a>
     </div>
 
-    <!-- CHARTS ROW 2 -->
-    <div class="charts-grid-full">
-      <div class="chart-card">
-        <div class="chart-header">
-          <div>
-            <div class="chart-title">Aktor Paling Sering Terlibat</div>
-            <div class="chart-sub">Top 6 berdasarkan frekuensi</div>
+    <div class="cat-grid">
+
+      <!-- ① IDEOLOGI -->
+      <div class="cat-card ideologi">
+        <div class="cat-stripe"></div>
+        <div class="cat-body">
+          <div class="cat-header">
+            <div class="cat-icon-wrap">
+              <div class="cat-icon">🧠</div>
+              <div>
+                <div class="cat-name">Ideologi</div>
+                <div class="cat-desc">Radikalisme, ekstremisme, separatisme</div>
+              </div>
+            </div>
+            <span class="risk-badge risk-high">● TINGGI</span>
           </div>
-          <div class="chart-badge blue">6 bulan</div>
+
+          <div class="cat-stats">
+            <div class="cat-stat"><div class="cat-stat-label">Total Isu</div><div class="cat-stat-value">38</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Baru Minggu Ini</div><div class="cat-stat-value">5</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Aktor Terlacak</div><div class="cat-stat-value">19</div></div>
+          </div>
+
+          <div class="mini-chart">
+            <div class="mini-chart-label">Distribusi sub-kategori</div>
+            <div class="bar-rows">
+              <div class="bar-row"><span class="bar-row-label">Radikalisme</span><div class="bar-track"><div class="bar-fill" style="width:78%;background:#7c3aed"></div></div><span class="bar-val">78%</span></div>
+              <div class="bar-row"><span class="bar-row-label">Separatisme</span><div class="bar-track"><div class="bar-fill" style="width:54%;background:#a78bfa"></div></div><span class="bar-val">54%</span></div>
+              <div class="bar-row"><span class="bar-row-label">Ekstremisme</span><div class="bar-track"><div class="bar-fill" style="width:41%;background:#c4b5fd"></div></div><span class="bar-val">41%</span></div>
+            </div>
+          </div>
+
+          <div class="recent-list">
+            <div class="recent-item">
+              <div class="recent-dot"></div>
+              <div class="recent-text">Penyebaran konten radikalisme via platform terenkripsi meningkat di Jawa Timur</div>
+              <div class="recent-time">2j lalu</div>
+            </div>
+            <div class="recent-item">
+              <div class="recent-dot"></div>
+              <div class="recent-text">Kelompok separatis baru teridentifikasi di wilayah perbatasan Papua</div>
+              <div class="recent-time">1h lalu</div>
+            </div>
+          </div>
+
+          <div class="cat-footer">
+            <div class="cat-footer-meta">Diperbarui <strong>hari ini</strong></div>
+            <a class="cat-cta" href="#">Buka Kategori →</a>
+          </div>
         </div>
-        <div style="position:relative;height:160px"><canvas id="aktorChart"></canvas></div>
       </div>
 
-      <div class="chart-card">
-        <div class="chart-header">
-          <div>
-            <div class="chart-title">Kerugian per Kategori</div>
-            <div class="chart-sub">Estimasi total (Rp Miliar)</div>
+      <!-- ② POLITIK -->
+      <div class="cat-card politik">
+        <div class="cat-stripe"></div>
+        <div class="cat-body">
+          <div class="cat-header">
+            <div class="cat-icon-wrap">
+              <div class="cat-icon">🏛️</div>
+              <div>
+                <div class="cat-name">Politik</div>
+                <div class="cat-desc">Stabilitas, konflik elektoral, intervensi asing</div>
+              </div>
+            </div>
+            <span class="risk-badge risk-med">● SEDANG</span>
+          </div>
+
+          <div class="cat-stats">
+            <div class="cat-stat"><div class="cat-stat-label">Total Isu</div><div class="cat-stat-value">45</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Baru Minggu Ini</div><div class="cat-stat-value">9</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Aktor Terlacak</div><div class="cat-stat-value">31</div></div>
+          </div>
+
+          <div class="mini-chart">
+            <div class="mini-chart-label">Distribusi sub-kategori</div>
+            <div class="bar-rows">
+              <div class="bar-row"><span class="bar-row-label">Elektoral</span><div class="bar-track"><div class="bar-fill" style="width:82%;background:#1e6fa3"></div></div><span class="bar-val">82%</span></div>
+              <div class="bar-row"><span class="bar-row-label">Intervensi</span><div class="bar-track"><div class="bar-fill" style="width:47%;background:#60a5fa"></div></div><span class="bar-val">47%</span></div>
+              <div class="bar-row"><span class="bar-row-label">Oposisi</span><div class="bar-track"><div class="bar-fill" style="width:33%;background:#93c5fd"></div></div><span class="bar-val">33%</span></div>
+            </div>
+          </div>
+
+          <div class="recent-list">
+            <div class="recent-item">
+              <div class="recent-dot"></div>
+              <div class="recent-text">Indikasi kampanye disinformasi menjelang Pilkada 2026 di 4 provinsi</div>
+              <div class="recent-time">5j lalu</div>
+            </div>
+            <div class="recent-item">
+              <div class="recent-dot"></div>
+              <div class="recent-text">Pertemuan aktor asing dengan figur oposisi terpantau di Jakarta</div>
+              <div class="recent-time">1h lalu</div>
+            </div>
+          </div>
+
+          <div class="cat-footer">
+            <div class="cat-footer-meta">Diperbarui <strong>3 jam lalu</strong></div>
+            <a class="cat-cta" href="#">Buka Kategori →</a>
           </div>
         </div>
-        <div style="position:relative;height:160px"><canvas id="kerugianChart"></canvas></div>
       </div>
 
-      <div class="chart-card">
-        <div class="chart-header">
-          <div>
-            <div class="chart-title">Status Perkara</div>
-            <div class="chart-sub">Distribusi tahap saat ini</div>
+      <!-- ③ SOSIAL BUDAYA -->
+      <div class="cat-card sosbud">
+        <div class="cat-stripe"></div>
+        <div class="cat-body">
+          <div class="cat-header">
+            <div class="cat-icon-wrap">
+              <div class="cat-icon">🤝</div>
+              <div>
+                <div class="cat-name">Sosial Budaya</div>
+                <div class="cat-desc">Konflik SARA, hoaks, ketegangan komunal</div>
+              </div>
+            </div>
+            <span class="risk-badge risk-med">● SEDANG</span>
+          </div>
+
+          <div class="cat-stats">
+            <div class="cat-stat"><div class="cat-stat-label">Total Isu</div><div class="cat-stat-value">34</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Baru Minggu Ini</div><div class="cat-stat-value">6</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Aktor Terlacak</div><div class="cat-stat-value">22</div></div>
+          </div>
+
+          <div class="mini-chart">
+            <div class="mini-chart-label">Distribusi sub-kategori</div>
+            <div class="bar-rows">
+              <div class="bar-row"><span class="bar-row-label">Hoaks/SARA</span><div class="bar-track"><div class="bar-fill" style="width:70%;background:#d97706"></div></div><span class="bar-val">70%</span></div>
+              <div class="bar-row"><span class="bar-row-label">Komunal</span><div class="bar-track"><div class="bar-fill" style="width:50%;background:#fbbf24"></div></div><span class="bar-val">50%</span></div>
+              <div class="bar-row"><span class="bar-row-label">Budaya</span><div class="bar-track"><div class="bar-fill" style="width:28%;background:#fde68a"></div></div><span class="bar-val">28%</span></div>
+            </div>
+          </div>
+
+          <div class="recent-list">
+            <div class="recent-item">
+              <div class="recent-dot"></div>
+              <div class="recent-text">Ketegangan antarumat beragama terpantau meningkat pasca-insiden di Sulawesi Tengah</div>
+              <div class="recent-time">6j lalu</div>
+            </div>
+            <div class="recent-item">
+              <div class="recent-dot"></div>
+              <div class="recent-text">Narasi hoaks soal kebijakan pemerintah viral di TikTok & Telegram</div>
+              <div class="recent-time">2h lalu</div>
+            </div>
+          </div>
+
+          <div class="cat-footer">
+            <div class="cat-footer-meta">Diperbarui <strong>6 jam lalu</strong></div>
+            <a class="cat-cta" href="#">Buka Kategori →</a>
           </div>
         </div>
-        <div style="position:relative;height:160px"><canvas id="statusChart"></canvas></div>
       </div>
+
+      <!-- ④ HANKAM -->
+      <div class="cat-card hankam">
+        <div class="cat-stripe"></div>
+        <div class="cat-body">
+          <div class="cat-header">
+            <div class="cat-icon-wrap">
+              <div class="cat-icon">🛡️</div>
+              <div>
+                <div class="cat-name">Hankam</div>
+                <div class="cat-desc">Ancaman siber, pertahanan, keamanan nasional</div>
+              </div>
+            </div>
+            <span class="risk-badge risk-high">● TINGGI</span>
+          </div>
+
+          <div class="cat-stats">
+            <div class="cat-stat"><div class="cat-stat-label">Total Isu</div><div class="cat-stat-value">25</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Baru Minggu Ini</div><div class="cat-stat-value">4</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Aktor Terlacak</div><div class="cat-stat-value">14</div></div>
+          </div>
+
+          <div class="mini-chart">
+            <div class="mini-chart-label">Distribusi sub-kategori</div>
+            <div class="bar-rows">
+              <div class="bar-row"><span class="bar-row-label">Siber</span><div class="bar-track"><div class="bar-fill" style="width:85%;background:#b91c1c"></div></div><span class="bar-val">85%</span></div>
+              <div class="bar-row"><span class="bar-row-label">Terorisme</span><div class="bar-track"><div class="bar-fill" style="width:45%;background:#f87171"></div></div><span class="bar-val">45%</span></div>
+              <div class="bar-row"><span class="bar-row-label">Perbatasan</span><div class="bar-track"><div class="bar-fill" style="width:30%;background:#fca5a5"></div></div><span class="bar-val">30%</span></div>
+            </div>
+          </div>
+
+          <div class="recent-list">
+            <div class="recent-item">
+              <div class="recent-dot"></div>
+              <div class="recent-text">Serangan siber terhadap infrastruktur BSSN terdeteksi, asal negara belum terkonfirmasi</div>
+              <div class="recent-time">1j lalu</div>
+            </div>
+            <div class="recent-item">
+              <div class="recent-dot"></div>
+              <div class="recent-text">Peningkatan aktivitas vessel asing di perairan ZEE Natuna Utara</div>
+              <div class="recent-time">4j lalu</div>
+            </div>
+          </div>
+
+          <div class="cat-footer">
+            <div class="cat-footer-meta">Diperbarui <strong>1 jam lalu</strong></div>
+            <a class="cat-cta" href="#">Buka Kategori →</a>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div><!-- end .content -->
+</div><!-- end .main -->
 
-    <!-- TABLE + ACTIVITY -->
-    <div class="bottom-row">
-
-      <!-- KASUS TERBARU TABLE -->
-      <div class="table-card">
-        <div class="table-card-header">
-          <div class="chart-title">Kasus Terbaru</div>
-          <div class="table-search">🔍 &nbsp;Filter...</div>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Judul Kasus</th>
-              <th>Kategori</th>
-              <th>Kerugian</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div style="font-weight:500;color:var(--text);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Korupsi IT Kemenkominfo</div>
-                <div class="td-muted" style="font-size:10px">Kejagung · 5 hari lalu</div>
-              </td>
-              <td><span class="badge tersangka">Korupsi</span></td>
-              <td class="td-mono">Rp 89,4 M</td>
-              <td><span class="badge sidik"><span class="dot amber"></span>Penyidikan</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div style="font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Dana Desa Sumut — 12 Desa</div>
-                <div class="td-muted" style="font-size:10px">Kejati Sumut · 2 hari lalu</div>
-              </td>
-              <td><span class="badge sidik" style="background:#fce7f3;color:#9d174d;border-color:#f9a8d4">Penggelapan</span></td>
-              <td class="td-mono">Rp 14,2 M</td>
-              <td><span class="badge sidik"><span class="dot amber"></span>Penyidikan</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div style="font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">TPPU Ekspor Ilegal Sawit</div>
-                <div class="td-muted" style="font-size:10px">Kejagung · 1 minggu lalu</div>
-              </td>
-              <td><span class="badge tuntut" style="background:#ede9fe;color:#5b21b6;border-color:#c4b5fd">TPPU</span></td>
-              <td class="td-mono">Rp 430 M</td>
-              <td><span class="badge tuntut"><span class="dot blue"></span>Penuntutan</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div style="font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Suap Perizinan Tambang Kalsel</div>
-                <div class="td-muted" style="font-size:10px">KPK · 2 minggu lalu</div>
-              </td>
-              <td><span class="badge tersangka">Korupsi</span></td>
-              <td class="td-mono">Rp 22 M</td>
-              <td><span class="badge inkracht"><span class="dot green"></span>Inkracht</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div style="font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Gratifikasi Disdik Jawa Barat</div>
-                <div class="td-muted" style="font-size:10px">Kejati Jabar · 3 minggu lalu</div>
-              </td>
-              <td><span class="badge sidik" style="background:#ecfdf5;color:#065f46;border-color:#a7f3d0">Gratifikasi</span></td>
-              <td class="td-mono">Rp 8,9 M</td>
-              <td><span class="badge sidik"><span class="dot amber"></span>Penyidikan</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- RIGHT COLUMN: ACTIVITY + QUICK ACTIONS -->
-      <div style="display:flex;flex-direction:column;gap:14px">
-
-        <!-- ACTIVITY FEED -->
-        <div class="chart-card" style="flex:1">
-          <div class="chart-header" style="margin-bottom:8px">
-            <div>
-              <div class="chart-title">Aktivitas Terkini</div>
-              <div class="chart-sub">Update sistem hari ini</div>
-            </div>
-            <div class="chart-badge">Live</div>
-          </div>
-          <div>
-            <div class="activity-item">
-              <div class="activity-icon red">🚨</div>
-              <div>
-                <div class="activity-text"><strong>Tersangka baru</strong> ditetapkan pada kasus Kominfo — Ahmad Fauzi</div>
-                <div class="activity-time">08:42 · Hari ini</div>
-              </div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon amber">📋</div>
-              <div>
-                <div class="activity-text"><strong>Dakwaan diunggah</strong> — Tipikor Dana Desa Sumut (PDF 3.2 MB)</div>
-                <div class="activity-time">07:15 · Hari ini</div>
-              </div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon blue">🔍</div>
-              <div>
-                <div class="activity-text"><strong>Laporan RKI</strong> untuk Mei 2024 siap ditinjau oleh tim analis</div>
-                <div class="activity-time">Kemarin · 16:30</div>
-              </div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon">✅</div>
-              <div>
-                <div class="activity-text"><strong>Kasus inkracht</strong> — Suap Perizinan Tambang Kalsel selesai</div>
-                <div class="activity-time">Kemarin · 11:05</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-       
-
-      </div>
-    </div>
-
-  </div><!-- /dashboard-content -->
-</div><!-- /main -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-Chart.defaults.font.family = "'DM Sans', sans-serif";
-Chart.defaults.color = '#6b7280';
-const G = '#1a5c2e', G2 = '#2e8a4a', G3 = '#5bb07a', G4 = '#86c99e', G5 = '#c5e8d0', G6 = '#e1f0e7';
+  // Tanggal di topbar
+  const d = new Date();
+  const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+  document.getElementById('topbar-date').textContent = d.toLocaleDateString('id-ID', opts);
 
-// BAR CHART - Tren Kasus
-new Chart(document.getElementById('barChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
-    datasets: [
-      { label: 'Korupsi',     data: [14,18,16,22,20,26], backgroundColor: G,  borderRadius: 4 },
-      { label: 'Penggelapan', data: [7, 9, 12, 9, 14, 13], backgroundColor: G3, borderRadius: 4 },
-      { label: 'TPPU',        data: [3, 5, 6, 10, 8, 12],  backgroundColor: G5, borderRadius: 4 },
-    ]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, boxWidth: 10, padding: 10 } } },
-    scales: {
-      x: { grid: { display: false }, stacked: true, ticks: { font: { size: 10 } } },
-      y: { grid: { color: '#f0f0f0' }, stacked: true, ticks: { font: { size: 10 }, stepSize: 10 } }
-    }
-  }
-});
-
-// DONUT - Distribusi Kategori
-new Chart(document.getElementById('pieChart'), {
-  type: 'doughnut',
-  data: {
-    labels: ['Korupsi', 'Penggelapan', 'TPPU', 'Penipuan', 'Gratifikasi', 'Lainnya'],
-    datasets: [{ data: [38, 22, 16, 12, 8, 4], backgroundColor: [G, G2, G3, G4, G5, '#d1fae5'], borderWidth: 2, borderColor: '#fff' }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false, cutout: '60%',
-    plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, boxWidth: 10, padding: 8 } } }
-  }
-});
-
-// HORIZONTAL BAR - Aktor
-new Chart(document.getElementById('aktorChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Budi H.', 'PT Solusi', 'Eko P.', 'Ahmad F.', 'Rina S.', 'Hendra W.'],
-    datasets: [{ data: [14, 11, 9, 7, 5, 4], backgroundColor: [G, G, G2, G2, G3, G4], borderRadius: 4 }]
-  },
-  options: {
-    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: {
-      x: { grid: { color: '#f0f0f0' }, ticks: { font: { size: 10 } } },
-      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
-    }
-  }
-});
-
-// BAR - Kerugian per Kategori
-new Chart(document.getElementById('kerugianChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Korupsi', 'TPPU', 'Penggelapan', 'Penipuan', 'Gratifikasi'],
-    datasets: [{
-      data: [1420, 430, 280, 160, 52],
-      backgroundColor: [G, G2, G3, G4, G5],
-      borderRadius: 4
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: {
-      x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 30 } },
-      y: { grid: { color: '#f0f0f0' }, ticks: { font: { size: 9 }, callback: v => 'Rp '+v+'M' } }
-    }
-  }
-});
-
-// PIE - Status Perkara
-new Chart(document.getElementById('statusChart'), {
-  type: 'doughnut',
-  data: {
-    labels: ['Penyidikan', 'Penuntutan', 'Persidangan', 'Inkracht', 'Penyelidikan'],
-    datasets: [{
-      data: [56, 18, 12, 20, 8],
-      backgroundColor: ['#d97706', '#1e6fa3', '#9d174d', G, '#6b7280'],
-      borderWidth: 2, borderColor: '#fff'
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false, cutout: '60%',
-    plugins: { legend: { position: 'bottom', labels: { font: { size: 9 }, boxWidth: 9, padding: 7 } } }
-  }
-});
+  // Animasi bar chart saat halaman load
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.bar-fill').forEach(el => {
+      const w = el.style.width;
+      el.style.width = '0';
+      setTimeout(() => { el.style.width = w; }, 100);
+    });
+  });
 </script>
 </body>
 </html>

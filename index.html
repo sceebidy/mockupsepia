@@ -26,11 +26,51 @@
     border-bottom: 1px solid #f0f0f0;
   }
   .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  /* LOGO KOMPONEN — ganti isi .logo-mark dan .logo-text sesuai aset kamu */
+  .logo-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: #1a5c2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    /* 
+      ── CARA GANTI KE GAMBAR ──────────────────────────────────────
+      Hapus background & svg di bawah, lalu tambahkan:
+      background: url('logo.png') center/cover no-repeat;
+      ─────────────────────────────────────────────────────────────
+    */
+  }
+  .logo-mark svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .logo-text {
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.12em;
     color: #1a1a1a;
+    /*
+      ── CARA GANTI KE GAMBAR WORDMARK ────────────────────────────
+      Hapus elemen .logo-text dari HTML dan gunakan:
+      <img src="wordmark.svg" alt="SEPIA" height="20" />
+      ─────────────────────────────────────────────────────────────
+    */
   }
+
   .nav-links {
     display: flex;
     gap: 32px;
@@ -77,6 +117,52 @@
     justify-content: center;
     text-align: center;
     padding: 80px 48px 60px;
+  }
+
+  /* HERO LOGO — lebih besar, berdiri sendiri */
+  .hero-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .hero-logo-mark {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    background: #1a5c2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(26,92,46,0.18);
+    /*
+      ── CARA GANTI KE GAMBAR ──────────────────────────────────────
+      Hapus background & svg di bawah, lalu tambahkan:
+      background: url('logo.png') center/cover no-repeat;
+      ─────────────────────────────────────────────────────────────
+    */
+  }
+  .hero-logo-mark svg {
+    width: 36px;
+    height: 36px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .hero-logo-label {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: #aaa;
+    text-transform: uppercase;
+    /*
+      ── CARA SEMBUNYIKAN LABEL ────────────────────────────────────
+      Jika sudah punya wordmark, hapus elemen ini dari HTML.
+      ─────────────────────────────────────────────────────────────
+    */
   }
 
   .hero h1 {
@@ -174,8 +260,44 @@
 </head>
 <body>
 
+<!-- ═══════════════════════════════════════════════════════════
+     NAV BAR
+     Logo di kiri: .logo-mark (ikon) + .logo-text (nama)
+     Ganti konten .logo-mark dengan <img> jika sudah punya file logo
+════════════════════════════════════════════════════════════ -->
+<nav>
+  <a class="nav-brand" href="#">
+    <img src="logo.png" alt="SEPIA" height="72" />
+    </div>
+    <span class="logo-text">SEPIA</span>
+  </a>
 
+  <nav class="nav-links">
+    <!-- tambah link navigasi di sini jika perlu -->
+  </nav>
+
+  <div class="nav-cta">
+    <button class="btn-outline">Masuk</button>
+    <button class="btn-dark">Daftar Gratis</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+     Logo besar di atas heading: .hero-logo-mark + .hero-logo-label
+     Ganti konten .hero-logo-mark dengan <img> jika sudah punya file logo
+════════════════════════════════════════════════════════════ -->
 <div class="hero">
+
+  <div class="hero-logo">
+    <div class="hemarkro-logo-">
+
+    </div>
+    <span class="hero-logo-label">SEPIA</span>
+    <!-- Jika sudah punya wordmark, ganti baris di atas dengan:
+         <img src="wordmark.svg" alt="SEPIA" height="20" /> -->
+  </div>
+
   <h1>Analisis <span class="gradient-word">SEPIA</span></h1>
 
   <p>
@@ -183,9 +305,9 @@
   </p>
 
   <div class="hero-buttons">
-   <button class="btn-hero-dark" onclick="window.location.href='login2.html'">
-  Masuk ke SEPIA
-</button>
+    <button class="btn-hero-dark" onclick="window.location.href='login2.html'">
+      Masuk ke SEPIA
+    </button>
     <button class="btn-hero-outline">Daftar Gratis</button>
   </div>
 
