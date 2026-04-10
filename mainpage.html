@@ -3,191 +3,645 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=1280" />
-<title>SEPIA — Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<title>SEPIA — Dashboard Analitik</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --green: #1a5c2e; --green-2: #2e7d4a; --green-light: #f0f7f2;
-  --green-mid: #ddeee4; --green-border: #b6d9c3;
-  --text: #1a1a1a; --text-muted: #6b7280; --border: #e5e7eb;
-  --bg: #ffffff; --bg-secondary: #f9fafb; --bg-tertiary: #f3f4f6;
-  --red: #b91c1c; --amber: #d97706; --blue: #1e6fa3;
-  --nav-width: 220px;
+  --green:        #0d4f2e;
+  --green-2:      #1a6b3f;
+  --green-3:      #2e8a55;
+  --green-light:  #edfaf3;
+  --green-mid:    #c6edd9;
+  --green-border: #8fd4b1;
 
-  --ideologi: #7c3aed;
-  --ideologi-light: #f5f3ff;
-  --ideologi-border: #ddd6fe;
+  --text:         #0f172a;
+  --text-muted:   #64748b;
+  --text-faint:   #94a3b8;
+  --border:       #e2e8f0;
+  --border-light: #f1f5f9;
+  --bg:           #ffffff;
+  --bg-2:         #f8fafc;
+  --bg-3:         #f1f5f9;
 
-  --politik: #1e6fa3;
-  --politik-light: #eff6ff;
-  --politik-border: #bfdbfe;
+  /* category palette */
+  --c-ideologi:       #6d28d9;
+  --c-ideologi-l:     #f5f3ff;
+  --c-ideologi-b:     #ddd6fe;
+  --c-ideologi-glow:  rgba(109,40,217,0.12);
 
-  --sosbud: #d97706;
-  --sosbud-light: #fffbeb;
-  --sosbud-border: #fde68a;
+  --c-politik:        #0369a1;
+  --c-politik-l:      #f0f9ff;
+  --c-politik-b:      #bae6fd;
+  --c-politik-glow:   rgba(3,105,161,0.12);
 
-  --hankam: #b91c1c;
-  --hankam-light: #fef2f2;
-  --hankam-border: #fecaca;
+  --c-ekonomi:        #047857;
+  --c-ekonomi-l:      #ecfdf5;
+  --c-ekonomi-b:      #a7f3d0;
+  --c-ekonomi-glow:   rgba(4,120,87,0.12);
+
+  --c-sosbud:         #b45309;
+  --c-sosbud-l:       #fffbeb;
+  --c-sosbud-b:       #fde68a;
+  --c-sosbud-glow:    rgba(180,83,9,0.12);
+
+  --c-hankam:         #be123c;
+  --c-hankam-l:       #fff1f2;
+  --c-hankam-b:       #fecdd3;
+  --c-hankam-glow:    rgba(190,18,60,0.12);
+
+  --c-profil:         #0f766e;
+  --c-profil-l:       #f0fdfa;
+  --c-profil-b:       #99f6e4;
+  --c-profil-glow:    rgba(15,118,110,0.12);
+
+  --nav-width: 230px;
+  --topbar-h:  56px;
 }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
 
-/* ── SIDENAV ── */
-.sidenav { width: var(--nav-width); background: var(--green); display: flex; flex-direction: column; flex-shrink: 0; }
-.sidenav-brand { padding: 22px 20px 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-.brand-logo { font-size: 18px; font-weight: 700; letter-spacing: 0.14em; color: #fff; }
-.brand-sub { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
-.sidenav-section { padding: 18px 12px 8px; }
-.sidenav-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); padding: 0 8px; margin-bottom: 6px; }
-.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 2px; text-decoration: none; transition: background 0.12s; border: 1px solid transparent; color: rgba(255,255,255,0.72); font-size: 13px; font-weight: 500; }
-.nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
-.nav-item.active { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.18); color: #fff; }
-.nav-item .nav-icon { width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: rgba(255,255,255,0.1); }
-.nav-item.active .nav-icon { background: rgba(255,255,255,0.2); }
+html, body { height: 100%; }
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg-3);
+  color: var(--text);
+  display: flex;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+/* ═══════════════════════════════════ SIDENAV */
+.sidenav {
+  width: var(--nav-width);
+  background: var(--green);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.sidenav::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+.sidenav::after {
+  content: '';
+  position: absolute;
+  bottom: 80px; left: -80px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+  pointer-events: none;
+}
+
+.sidenav-brand {
+  padding: 22px 20px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+}
+.brand-logo {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #fff;
+}
+.brand-sub {
+  font-size: 9.5px;
+  color: rgba(255,255,255,0.45);
+  margin-top: 3px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.brand-pulse {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  margin-left: 6px;
+  vertical-align: middle;
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:0.5; transform:scale(0.8); }
+}
+
+.sidenav-section { padding: 16px 12px 6px; }
+.sidenav-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.35);
+  padding: 0 8px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 11px;
+  border-radius: 9px;
+  cursor: pointer;
+  margin-bottom: 2px;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+  border: 1px solid transparent;
+  color: rgba(255,255,255,0.65);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+.nav-item:hover { background: rgba(255,255,255,0.09); color: #fff; }
+.nav-item.active {
+  background: rgba(255,255,255,0.13);
+  border-color: rgba(255,255,255,0.16);
+  color: #fff;
+}
+.nav-icon {
+  width: 28px; height: 28px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.08);
+}
+.nav-item.active .nav-icon { background: rgba(255,255,255,0.18); }
 .nav-item-text { flex: 1; }
-.nav-item-badge { font-size: 10px; background: rgba(255,255,255,0.2); color: #fff; padding: 2px 7px; border-radius: 20px; }
-.sidenav-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 10px 12px; }
-.sidenav-bottom { margin-top: auto; padding: 14px 12px; border-top: 1px solid rgba(255,255,255,0.1); }
-.user-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; cursor: pointer; }
-.user-row:hover { background: rgba(255,255,255,0.1); }
-.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.2); color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.user-name { font-size: 12px; font-weight: 500; color: #fff; }
-.user-role { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+.nav-badge {
+  font-size: 9px;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.nav-badge.alert { background: #ef4444; }
+.sidenav-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 8px 12px; }
+.sidenav-bottom {
+  margin-top: auto;
+  padding: 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.user-row:hover { background: rgba(255,255,255,0.08); }
+.user-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.user-name { font-size: 11.5px; font-weight: 600; color: #fff; }
+.user-role { font-size: 9.5px; color: rgba(255,255,255,0.45); margin-top: 1px; }
 
-/* ── MAIN ── */
-.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+/* ═══════════════════════════════════ MAIN */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
 
-.topbar { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 56px; background: #fff; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-.topbar-left { display: flex; align-items: center; gap: 12px; }
-.page-title { font-size: 15px; font-weight: 600; }
-.topbar-date { font-size: 12px; color: var(--text-muted); }
-.topbar-right { display: flex; align-items: center; gap: 8px; }
-.tb-btn { padding: 7px 14px; font-size: 12px; border: 1px solid var(--border); border-radius: 20px; background: #fff; color: var(--text-muted); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.12s; }
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: var(--topbar-h);
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  gap: 12px;
+}
+.topbar-left { display: flex; align-items: center; gap: 14px; }
+.page-title { font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em; }
+.topbar-date {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  background: var(--bg-3);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.topbar-right { display: flex; align-items: center; gap: 6px; }
+.tb-btn {
+  padding: 7px 13px;
+  font-size: 11.5px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  font-weight: 500;
+  transition: all 0.13s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 .tb-btn:hover { border-color: var(--green-border); color: var(--green); background: var(--green-light); }
-.tb-btn.primary { background: var(--green); color: #fff; border-color: var(--green); }
-.tb-btn.primary:hover { background: #14482a; }
-.notif-dot { position: relative; }
-.notif-dot::after { content:''; position:absolute; top:6px; right:12px; width:6px; height:6px; border-radius:50%; background:#ef4444; border:1.5px solid #fff; }
+.tb-btn.primary {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.tb-btn.primary:hover { background: var(--green-2); }
+.notif-wrap { position: relative; }
+.notif-wrap::after {
+  content: '';
+  position: absolute;
+  top: 5px; right: 10px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 1.5px solid #fff;
+}
 
-/* ── SCROLLABLE CONTENT ── */
-.content { flex: 1; overflow-y: auto; padding: 20px 24px 32px; display: flex; flex-direction: column; gap: 18px; }
+/* ═══════════════════════════════════ SCROLLABLE CONTENT */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.content::-webkit-scrollbar { width: 5px; }
+.content::-webkit-scrollbar-track { background: transparent; }
+.content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
 
-/* ── SUMMARY STAT ROW ── */
-.stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.stat-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; transition: box-shadow 0.15s; }
-.stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
-.stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.stat-label { font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
-.stat-value { font-size: 22px; font-weight: 700; line-height: 1; }
-.stat-sub { font-size: 10px; color: var(--text-muted); margin-top: 3px; }
-.stat-sub .up { color: #16a34a; }
-.stat-sub .down { color: var(--red); }
+/* ═══════════════════════════════════ SUMMARY STATS */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+.stat-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  transition: box-shadow 0.18s, transform 0.18s;
+  cursor: default;
+}
+.stat-card:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+  transform: translateY(-1px);
+}
+.stat-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.stat-icon {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.stat-trend {
+  font-size: 10px;
+  padding: 3px 7px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+.trend-up   { background: #dcfce7; color: #15803d; }
+.trend-down { background: #fef2f2; color: #dc2626; }
+.trend-neu  { background: var(--bg-3); color: var(--text-muted); }
+.stat-value { font-size: 26px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+.stat-label { font-size: 10.5px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+.stat-bar-wrap {
+  margin-top: 10px;
+  height: 3px;
+  background: var(--bg-3);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+}
 
-/* ── SECTION HEADING ── */
-.section-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
-.section-heading h2 { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; }
-.section-heading a { font-size: 12px; color: var(--green); text-decoration: none; }
+/* ═══════════════════════════════════ SECTION HEADER */
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.section-head h2 {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.section-head a {
+  font-size: 11.5px;
+  color: var(--green-2);
+  text-decoration: none;
+  font-weight: 500;
+}
 
-/* ── CATEGORY GRID ── */
-.cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+/* ═══════════════════════════════════ CAT GRID */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
 
-.cat-card { background: #fff; border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden; transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s; cursor: pointer; }
-.cat-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.08); transform: translateY(-2px); }
+/* ── BASE CAT CARD */
+.cat-card {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+.cat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.09); }
 
-.cat-card.ideologi:hover { border-color: var(--ideologi-border); }
-.cat-card.politik:hover  { border-color: var(--politik-border); }
-.cat-card.sosbud:hover   { border-color: var(--sosbud-border); }
-.cat-card.hankam:hover   { border-color: var(--hankam-border); }
+/* stripe */
+.cat-stripe { height: 4px; flex-shrink: 0; }
 
-.cat-stripe { height: 5px; }
-.cat-card.ideologi .cat-stripe { background: var(--ideologi); }
-.cat-card.politik  .cat-stripe { background: var(--politik); }
-.cat-card.sosbud   .cat-stripe { background: var(--sosbud); }
-.cat-card.hankam   .cat-stripe { background: var(--hankam); }
+/* body */
+.cat-body { padding: 16px 18px 14px; flex: 1; display: flex; flex-direction: column; gap: 13px; }
 
-.cat-body { padding: 16px 18px 14px; }
+/* header */
+.cat-header { display: flex; align-items: flex-start; justify-content: space-between; }
+.cat-title-row { display: flex; align-items: center; gap: 11px; }
+.cat-icon {
+  width: 42px; height: 42px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.cat-name { font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em; }
+.cat-desc { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; line-height: 1.45; }
 
-.cat-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
-.cat-icon-wrap { display: flex; align-items: center; gap: 10px; }
-.cat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-.cat-card.ideologi .cat-icon { background: var(--ideologi-light); }
-.cat-card.politik  .cat-icon { background: var(--politik-light); }
-.cat-card.sosbud   .cat-icon { background: var(--sosbud-light); }
-.cat-card.hankam   .cat-icon { background: var(--hankam-light); }
+/* risk badge */
+.risk-badge {
+  padding: 4px 9px;
+  border-radius: 20px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.risk-high   { background: #fef2f2; color: #be123c; border-color: #fecdd3; }
+.risk-med    { background: #fffbeb; color: #a16207; border-color: #fde68a; }
+.risk-low    { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
 
-.cat-name { font-size: 15px; font-weight: 700; }
-.cat-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; line-height: 1.5; }
+/* stats mini row */
+.cat-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.cat-stat {
+  background: var(--bg-2);
+  border: 1px solid var(--border-light);
+  border-radius: 9px;
+  padding: 8px 10px;
+}
+.cat-stat-label { font-size: 9.5px; color: var(--text-faint); margin-bottom: 2px; font-weight: 500; }
+.cat-stat-value {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-family: 'JetBrains Mono', monospace;
+}
 
-/* RISK BADGE */
-.risk-badge { padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; white-space: nowrap; }
-.risk-high   { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
-.risk-med    { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
-.risk-low    { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+/* donut chart area */
+.cat-viz { display: flex; align-items: center; gap: 14px; }
+.donut-wrap { flex-shrink: 0; position: relative; width: 72px; height: 72px; }
+.donut-wrap svg { width: 72px; height: 72px; transform: rotate(-90deg); }
+.donut-center-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.donut-center-val { font-size: 14px; font-weight: 800; font-family: 'JetBrains Mono', monospace; line-height: 1; }
+.donut-center-sub { font-size: 8px; color: var(--text-faint); margin-top: 1px; font-weight: 500; }
 
-/* STATS ROW INSIDE CARD */
-.cat-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
-.cat-stat { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }
-.cat-stat-label { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
-.cat-stat-value { font-size: 16px; font-weight: 700; }
-.cat-card.ideologi .cat-stat-value { color: var(--ideologi); }
-.cat-card.politik  .cat-stat-value { color: var(--politik); }
-.cat-card.sosbud   .cat-stat-value { color: var(--sosbud); }
-.cat-card.hankam   .cat-stat-value { color: var(--hankam); }
+/* bar list beside donut */
+.bar-list { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.bar-item { display: flex; flex-direction: column; gap: 2px; }
+.bar-item-top { display: flex; align-items: center; justify-content: space-between; }
+.bar-item-label { font-size: 10px; color: var(--text-muted); font-weight: 500; }
+.bar-item-val {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+.bar-track { height: 5px; background: var(--bg-3); border-radius: 99px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 99px; transition: width 1s cubic-bezier(.4,0,.2,1); }
 
-/* MINI BAR CHART */
-.mini-chart { margin-bottom: 12px; }
-.mini-chart-label { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; }
-.bar-rows { display: flex; flex-direction: column; gap: 5px; }
-.bar-row { display: flex; align-items: center; gap: 8px; }
-.bar-row-label { font-size: 10px; color: var(--text-muted); width: 52px; flex-shrink: 0; text-align: right; }
-.bar-track { flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 99px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 99px; transition: width 0.8s cubic-bezier(.4,0,.2,1); }
-.bar-val { font-size: 10px; color: var(--text-muted); font-family: 'DM Mono', monospace; width: 22px; flex-shrink: 0; }
+/* sparkline trend */
+.sparkline-section {}
+.spark-label { font-size: 9.5px; color: var(--text-faint); margin-bottom: 6px; font-weight: 500; display: flex; justify-content: space-between; }
+.sparkline-wrap svg { width: 100%; height: 36px; }
 
-/* RECENT ITEMS */
-.recent-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
-.recent-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; }
-.recent-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
-.cat-card.ideologi .recent-dot { background: var(--ideologi); }
-.cat-card.politik  .recent-dot { background: var(--politik); }
-.cat-card.sosbud   .recent-dot { background: var(--sosbud); }
-.cat-card.hankam   .recent-dot { background: var(--hankam); }
-.recent-text { font-size: 11px; color: var(--text); flex: 1; line-height: 1.45; }
-.recent-time { font-size: 10px; color: var(--text-muted); white-space: nowrap; font-family: 'DM Mono', monospace; }
+/* recent */
+.recent-list { display: flex; flex-direction: column; gap: 5px; }
+.recent-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 10px;
+  background: var(--bg-2);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  transition: border-color 0.13s;
+}
+.recent-item:hover { border-color: var(--border); }
+.recent-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.recent-text { font-size: 10.5px; color: var(--text); flex: 1; line-height: 1.5; font-weight: 400; }
+.recent-time {
+  font-size: 9.5px;
+  color: var(--text-faint);
+  white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
+}
 
-/* CARD FOOTER */
-.cat-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border); }
-.cat-footer-meta { font-size: 11px; color: var(--text-muted); }
-.cat-footer-meta strong { color: var(--text); }
-.cat-cta { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; padding: 5px 12px; border-radius: 20px; text-decoration: none; }
-.cat-card.ideologi .cat-cta { color: var(--ideologi); background: var(--ideologi-light); border: 1px solid var(--ideologi-border); }
-.cat-card.politik  .cat-cta { color: var(--politik);  background: var(--politik-light);  border: 1px solid var(--politik-border); }
-.cat-card.sosbud   .cat-cta { color: var(--sosbud);   background: var(--sosbud-light);   border: 1px solid var(--sosbud-border); }
-.cat-card.hankam   .cat-cta { color: var(--hankam);   background: var(--hankam-light);   border: 1px solid var(--hankam-border); }
+/* card footer */
+.cat-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-light);
+  margin-top: auto;
+}
+.cat-footer-meta { font-size: 10.5px; color: var(--text-faint); }
+.cat-footer-meta strong { color: var(--text-muted); }
+.cat-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 7px;
+  text-decoration: none;
+  transition: opacity 0.13s;
+  border: 1px solid transparent;
+}
+.cat-cta:hover { opacity: 0.8; }
+
+/* ── per-category theming */
+/* IDEOLOGI */
+.c-ideologi .cat-stripe      { background: linear-gradient(90deg, var(--c-ideologi), #9333ea); }
+.c-ideologi .cat-icon        { background: var(--c-ideologi-l); }
+.c-ideologi .cat-stat-value  { color: var(--c-ideologi); }
+.c-ideologi .cat-cta         { color: var(--c-ideologi); background: var(--c-ideologi-l); border-color: var(--c-ideologi-b); }
+.c-ideologi:hover            { border-color: var(--c-ideologi-b); box-shadow: 0 12px 40px var(--c-ideologi-glow); }
+.c-ideologi .recent-dot      { background: var(--c-ideologi); }
+
+/* POLITIK */
+.c-politik .cat-stripe      { background: linear-gradient(90deg, var(--c-politik), #0ea5e9); }
+.c-politik .cat-icon        { background: var(--c-politik-l); }
+.c-politik .cat-stat-value  { color: var(--c-politik); }
+.c-politik .cat-cta         { color: var(--c-politik); background: var(--c-politik-l); border-color: var(--c-politik-b); }
+.c-politik:hover            { border-color: var(--c-politik-b); box-shadow: 0 12px 40px var(--c-politik-glow); }
+.c-politik .recent-dot      { background: var(--c-politik); }
+
+/* EKONOMI */
+.c-ekonomi .cat-stripe      { background: linear-gradient(90deg, var(--c-ekonomi), #10b981); }
+.c-ekonomi .cat-icon        { background: var(--c-ekonomi-l); }
+.c-ekonomi .cat-stat-value  { color: var(--c-ekonomi); }
+.c-ekonomi .cat-cta         { color: var(--c-ekonomi); background: var(--c-ekonomi-l); border-color: var(--c-ekonomi-b); }
+.c-ekonomi:hover            { border-color: var(--c-ekonomi-b); box-shadow: 0 12px 40px var(--c-ekonomi-glow); }
+.c-ekonomi .recent-dot      { background: var(--c-ekonomi); }
+
+/* SOSBUD */
+.c-sosbud .cat-stripe      { background: linear-gradient(90deg, var(--c-sosbud), #f59e0b); }
+.c-sosbud .cat-icon        { background: var(--c-sosbud-l); }
+.c-sosbud .cat-stat-value  { color: var(--c-sosbud); }
+.c-sosbud .cat-cta         { color: var(--c-sosbud); background: var(--c-sosbud-l); border-color: var(--c-sosbud-b); }
+.c-sosbud:hover            { border-color: var(--c-sosbud-b); box-shadow: 0 12px 40px var(--c-sosbud-glow); }
+.c-sosbud .recent-dot      { background: var(--c-sosbud); }
+
+/* HANKAM */
+.c-hankam .cat-stripe      { background: linear-gradient(90deg, var(--c-hankam), #f43f5e); }
+.c-hankam .cat-icon        { background: var(--c-hankam-l); }
+.c-hankam .cat-stat-value  { color: var(--c-hankam); }
+.c-hankam .cat-cta         { color: var(--c-hankam); background: var(--c-hankam-l); border-color: var(--c-hankam-b); }
+.c-hankam:hover            { border-color: var(--c-hankam-b); box-shadow: 0 12px 40px var(--c-hankam-glow); }
+.c-hankam .recent-dot      { background: var(--c-hankam); }
+
+/* PROFIL TOKOH */
+.c-profil .cat-stripe      { background: linear-gradient(90deg, var(--c-profil), #14b8a6); }
+.c-profil .cat-icon        { background: var(--c-profil-l); }
+.c-profil .cat-stat-value  { color: var(--c-profil); }
+.c-profil .cat-cta         { color: var(--c-profil); background: var(--c-profil-l); border-color: var(--c-profil-b); }
+.c-profil:hover            { border-color: var(--c-profil-b); box-shadow: 0 12px 40px var(--c-profil-glow); }
+.c-profil .recent-dot      { background: var(--c-profil); }
+
+/* profil card special: avatar list */
+.profil-list { display: flex; flex-direction: column; gap: 6px; }
+.profil-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  background: var(--bg-2);
+  border: 1px solid var(--border-light);
+  border-radius: 9px;
+  transition: border-color 0.13s;
+}
+.profil-row:hover { border-color: var(--c-profil-b); }
+.profil-av {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.profil-info { flex: 1; min-width: 0; }
+.profil-name { font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.profil-meta { font-size: 9.5px; color: var(--text-faint); }
+.profil-risk { flex-shrink: 0; }
+
+/* ═══════════════════════════════════ ANIMATIONS */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.stat-card  { animation: fadeInUp 0.4s ease both; }
+.stat-card:nth-child(1) { animation-delay: 0.05s; }
+.stat-card:nth-child(2) { animation-delay: 0.10s; }
+.stat-card:nth-child(3) { animation-delay: 0.15s; }
+.stat-card:nth-child(4) { animation-delay: 0.20s; }
+.stat-card:nth-child(5) { animation-delay: 0.25s; }
+
+.cat-card { animation: fadeInUp 0.45s ease both; }
+.cat-card:nth-child(1) { animation-delay: 0.15s; }
+.cat-card:nth-child(2) { animation-delay: 0.22s; }
+.cat-card:nth-child(3) { animation-delay: 0.29s; }
+.cat-card:nth-child(4) { animation-delay: 0.36s; }
+.cat-card:nth-child(5) { animation-delay: 0.43s; }
+.cat-card:nth-child(6) { animation-delay: 0.50s; }
 </style>
 </head>
 <body>
 
-<!-- SIDENAV -->
+<!-- ══ SIDENAV ══ -->
 <nav class="sidenav">
   <div class="sidenav-brand">
-    <div class="brand-logo">SEPIA</div>
-    <div class="brand-sub">Sistem Analitik Hukum</div>
+    <div class="brand-logo">SEPIA <span class="brand-pulse"></span></div>
+    <div class="brand-sub">Sistem Analitik Intelijen</div>
   </div>
+
   <div class="sidenav-section">
     <div class="sidenav-label">Menu Utama</div>
-    <a class="nav-item active" href="dashboard.html"><div class="nav-icon">📊</div><div class="nav-item-text">Dashboard</div></a>
-    <a class="nav-item" href="datapool.html"><div class="nav-icon">📋</div><div class="nav-item-text">RKI</div><span class="nav-item-badge">3</span></a>
+    <a class="nav-item active" href="#"><div class="nav-icon">📊</div><div class="nav-item-text">Dashboard</div></a>
+    <a class="nav-item" href="datapool.html"><div class="nav-icon">📋</div><div class="nav-item-text">RKI</div><span class="nav-badge">3</span></a>
     <a class="nav-item" href="#"><div class="nav-icon">🗄️</div><div class="nav-item-text">Data Pool</div></a>
     <a class="nav-item" href="#"><div class="nav-icon">🎨</div><div class="nav-item-text">Personalisasi</div></a>
-    <a class="nav-item" href="#"><div class="nav-icon">📅</div><div class="nav-item-text">Daily Report</div><span class="nav-item-badge">!</span></a>
+    <a class="nav-item" href="#"><div class="nav-icon">📅</div><div class="nav-item-text">Daily Report</div><span class="nav-badge alert">!</span></a>
   </div>
+
   <div class="sidenav-divider"></div>
+
   <div class="sidenav-section">
     <div class="sidenav-label">Sistem</div>
     <a class="nav-item" href="#"><div class="nav-icon">⚙️</div><div class="nav-item-text">Settings</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon">🔒</div><div class="nav-item-text">Akses & Izin</div></a>
   </div>
+
   <div class="sidenav-bottom">
     <div class="user-row">
       <div class="user-avatar">CR</div>
@@ -196,63 +650,84 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
   </div>
 </nav>
 
-<!-- MAIN -->
+<!-- ══ MAIN ══ -->
 <div class="main">
 
   <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-left">
-      <div class="page-title">Dashboard</div>
+      <div class="page-title">Dashboard Pemantauan</div>
       <div class="topbar-date" id="topbar-date"></div>
     </div>
     <div class="topbar-right">
-      <button class="tb-btn notif-dot">🔔 Notifikasi</button>
+      <div class="notif-wrap">
+        <button class="tb-btn">🔔 Notifikasi</button>
+      </div>
       <button class="tb-btn">⬇ Ekspor</button>
-      <button class="tb-btn primary">+ Isu Baru</button>
+      <button class="tb-btn primary">＋ Isu Baru</button>
     </div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
 
-    <!-- SUMMARY STATS -->
+    <!-- ══ SUMMARY STATS ══ -->
     <div class="stat-row">
+
       <div class="stat-card">
-        <div class="stat-icon" style="background:#f5f3ff">🧠</div>
-        <div>
-          <div class="stat-label">Total Isu Aktif</div>
-          <div class="stat-value">142</div>
-          <div class="stat-sub"><span class="up">↑ 8</span> minggu ini</div>
+        <div class="stat-card-top">
+          <div class="stat-icon" style="background:#f5f3ff">🧠</div>
+          <span class="stat-trend trend-up">↑ 8</span>
         </div>
+        <div class="stat-value">142</div>
+        <div class="stat-label">Total Isu Aktif</div>
+        <div class="stat-bar-wrap"><div class="stat-bar-fill" data-w="71" style="width:0%;background:#6d28d9"></div></div>
       </div>
+
       <div class="stat-card">
-        <div class="stat-icon" style="background:#fef2f2">🚨</div>
-        <div>
-          <div class="stat-label">Risiko Tinggi</div>
-          <div class="stat-value" style="color:#b91c1c">24</div>
-          <div class="stat-sub"><span class="down">↑ 3</span> dari kemarin</div>
+        <div class="stat-card-top">
+          <div class="stat-icon" style="background:#fef2f2">🚨</div>
+          <span class="stat-trend trend-down">↑ 3</span>
         </div>
+        <div class="stat-value" style="color:#be123c">24</div>
+        <div class="stat-label">Risiko Tinggi</div>
+        <div class="stat-bar-wrap"><div class="stat-bar-fill" data-w="42" style="width:0%;background:#be123c"></div></div>
       </div>
+
       <div class="stat-card">
-        <div class="stat-icon" style="background:#eff6ff">📄</div>
-        <div>
-          <div class="stat-label">Laporan Dibuat</div>
-          <div class="stat-value">67</div>
-          <div class="stat-sub"><span class="up">↑ 12</span> bulan ini</div>
+        <div class="stat-card-top">
+          <div class="stat-icon" style="background:#f0f9ff">📄</div>
+          <span class="stat-trend trend-up">↑ 12</span>
         </div>
+        <div class="stat-value">67</div>
+        <div class="stat-label">Laporan Dibuat</div>
+        <div class="stat-bar-wrap"><div class="stat-bar-fill" data-w="56" style="width:0%;background:#0369a1"></div></div>
       </div>
+
       <div class="stat-card">
-        <div class="stat-icon" style="background:#f0f7f2">🔍</div>
-        <div>
-          <div class="stat-label">Analisis Diproses</div>
-          <div class="stat-value">318</div>
-          <div class="stat-sub">sejak <span style="font-weight:500">Jan 2026</span></div>
+        <div class="stat-card-top">
+          <div class="stat-icon" style="background:#ecfdf5">🔍</div>
+          <span class="stat-trend trend-neu">—</span>
         </div>
+        <div class="stat-value">318</div>
+        <div class="stat-label">Analisis Diproses</div>
+        <div class="stat-bar-wrap"><div class="stat-bar-fill" data-w="85" style="width:0%;background:#047857"></div></div>
       </div>
+
+      <div class="stat-card">
+        <div class="stat-card-top">
+          <div class="stat-icon" style="background:#f0fdfa">👤</div>
+          <span class="stat-trend trend-up">↑ 4</span>
+        </div>
+        <div class="stat-value">87</div>
+        <div class="stat-label">Tokoh Dipantau</div>
+        <div class="stat-bar-wrap"><div class="stat-bar-fill" data-w="63" style="width:0%;background:#0f766e"></div></div>
+      </div>
+
     </div>
 
-    <!-- CATEGORY CARDS -->
-    <div class="section-heading">
+    <!-- ══ CATEGORY CARDS ══ -->
+    <div class="section-head">
       <h2>Kategori Pemantauan</h2>
       <a href="#">Lihat semua →</a>
     </div>
@@ -260,15 +735,15 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
     <div class="cat-grid">
 
       <!-- ① IDEOLOGI -->
-      <div class="cat-card ideologi">
+      <div class="cat-card c-ideologi">
         <div class="cat-stripe"></div>
         <div class="cat-body">
           <div class="cat-header">
-            <div class="cat-icon-wrap">
+            <div class="cat-title-row">
               <div class="cat-icon">🧠</div>
               <div>
                 <div class="cat-name">Ideologi</div>
-                <div class="cat-desc">Radikalisme, ekstremisme, separatisme</div>
+                <div class="cat-desc">Radikalisme · Ekstremisme · Separatisme</div>
               </div>
             </div>
             <span class="risk-badge risk-high">● TINGGI</span>
@@ -276,23 +751,62 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
 
           <div class="cat-stats">
             <div class="cat-stat"><div class="cat-stat-label">Total Isu</div><div class="cat-stat-value">38</div></div>
-            <div class="cat-stat"><div class="cat-stat-label">Baru Minggu Ini</div><div class="cat-stat-value">5</div></div>
-            <div class="cat-stat"><div class="cat-stat-label">Aktor Terlacak</div><div class="cat-stat-value">19</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Minggu Ini</div><div class="cat-stat-value">5</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Aktor</div><div class="cat-stat-value">19</div></div>
           </div>
 
-          <div class="mini-chart">
-            <div class="mini-chart-label">Distribusi sub-kategori</div>
-            <div class="bar-rows">
-              <div class="bar-row"><span class="bar-row-label">Radikalisme</span><div class="bar-track"><div class="bar-fill" style="width:78%;background:#7c3aed"></div></div><span class="bar-val">78%</span></div>
-              <div class="bar-row"><span class="bar-row-label">Separatisme</span><div class="bar-track"><div class="bar-fill" style="width:54%;background:#a78bfa"></div></div><span class="bar-val">54%</span></div>
-              <div class="bar-row"><span class="bar-row-label">Ekstremisme</span><div class="bar-track"><div class="bar-fill" style="width:41%;background:#c4b5fd"></div></div><span class="bar-val">41%</span></div>
+          <div class="cat-viz">
+            <div class="donut-wrap">
+              <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="36" cy="36" r="28" stroke="#f1f5f9" stroke-width="8"/>
+                <circle cx="36" cy="36" r="28" stroke="#6d28d9" stroke-width="8"
+                  stroke-dasharray="176 176" stroke-dashoffset="44" stroke-linecap="round"/>
+                <circle cx="36" cy="36" r="28" stroke="#a78bfa" stroke-width="8"
+                  stroke-dasharray="80 176" stroke-dashoffset="-132" stroke-linecap="round" opacity="0.6"/>
+                <circle cx="36" cy="36" r="28" stroke="#ddd6fe" stroke-width="8"
+                  stroke-dasharray="50 176" stroke-dashoffset="-212" stroke-linecap="round" opacity="0.4"/>
+              </svg>
+              <div class="donut-center-label">
+                <div class="donut-center-val" style="color:#6d28d9">78%</div>
+                <div class="donut-center-sub">Rad.</div>
+              </div>
+            </div>
+            <div class="bar-list">
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Radikalisme</span><span class="bar-item-val">78%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="78" style="width:0%;background:#6d28d9"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Separatisme</span><span class="bar-item-val">54%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="54" style="width:0%;background:#a78bfa"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Ekstremisme</span><span class="bar-item-val">41%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="41" style="width:0%;background:#ddd6fe"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sparkline-section">
+            <div class="spark-label"><span>Tren 7 hari</span><span style="color:#6d28d9;font-weight:600">▲ +21%</span></div>
+            <div class="sparkline-wrap">
+              <svg viewBox="0 0 200 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="grad-ideologi" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#6d28d9" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="#6d28d9" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,28 L28,24 L57,20 L85,22 L113,15 L142,10 L170,12 L200,6" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M0,28 L28,24 L57,20 L85,22 L113,15 L142,10 L170,12 L200,6 L200,36 L0,36Z" fill="url(#grad-ideologi)"/>
+              </svg>
             </div>
           </div>
 
           <div class="recent-list">
             <div class="recent-item">
               <div class="recent-dot"></div>
-              <div class="recent-text">Penyebaran konten radikalisme via platform terenkripsi meningkat di Jawa Timur</div>
+              <div class="recent-text">Penyebaran konten radikal via platform terenkripsi meningkat di Jawa Timur</div>
               <div class="recent-time">2j lalu</div>
             </div>
             <div class="recent-item">
@@ -310,15 +824,15 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
       </div>
 
       <!-- ② POLITIK -->
-      <div class="cat-card politik">
+      <div class="cat-card c-politik">
         <div class="cat-stripe"></div>
         <div class="cat-body">
           <div class="cat-header">
-            <div class="cat-icon-wrap">
+            <div class="cat-title-row">
               <div class="cat-icon">🏛️</div>
               <div>
                 <div class="cat-name">Politik</div>
-                <div class="cat-desc">Stabilitas, konflik elektoral, intervensi asing</div>
+                <div class="cat-desc">Stabilitas · Elektoral · Intervensi Asing</div>
               </div>
             </div>
             <span class="risk-badge risk-med">● SEDANG</span>
@@ -326,16 +840,55 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
 
           <div class="cat-stats">
             <div class="cat-stat"><div class="cat-stat-label">Total Isu</div><div class="cat-stat-value">45</div></div>
-            <div class="cat-stat"><div class="cat-stat-label">Baru Minggu Ini</div><div class="cat-stat-value">9</div></div>
-            <div class="cat-stat"><div class="cat-stat-label">Aktor Terlacak</div><div class="cat-stat-value">31</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Minggu Ini</div><div class="cat-stat-value">9</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Aktor</div><div class="cat-stat-value">31</div></div>
           </div>
 
-          <div class="mini-chart">
-            <div class="mini-chart-label">Distribusi sub-kategori</div>
-            <div class="bar-rows">
-              <div class="bar-row"><span class="bar-row-label">Elektoral</span><div class="bar-track"><div class="bar-fill" style="width:82%;background:#1e6fa3"></div></div><span class="bar-val">82%</span></div>
-              <div class="bar-row"><span class="bar-row-label">Intervensi</span><div class="bar-track"><div class="bar-fill" style="width:47%;background:#60a5fa"></div></div><span class="bar-val">47%</span></div>
-              <div class="bar-row"><span class="bar-row-label">Oposisi</span><div class="bar-track"><div class="bar-fill" style="width:33%;background:#93c5fd"></div></div><span class="bar-val">33%</span></div>
+          <div class="cat-viz">
+            <div class="donut-wrap">
+              <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="36" cy="36" r="28" stroke="#f1f5f9" stroke-width="8"/>
+                <circle cx="36" cy="36" r="28" stroke="#0369a1" stroke-width="8"
+                  stroke-dasharray="188 176" stroke-dashoffset="0" stroke-linecap="round"/>
+                <circle cx="36" cy="36" r="28" stroke="#38bdf8" stroke-width="8"
+                  stroke-dasharray="72 176" stroke-dashoffset="-138" stroke-linecap="round" opacity="0.55"/>
+                <circle cx="36" cy="36" r="28" stroke="#bae6fd" stroke-width="8"
+                  stroke-dasharray="44 176" stroke-dashoffset="-210" stroke-linecap="round" opacity="0.4"/>
+              </svg>
+              <div class="donut-center-label">
+                <div class="donut-center-val" style="color:#0369a1">82%</div>
+                <div class="donut-center-sub">Elek.</div>
+              </div>
+            </div>
+            <div class="bar-list">
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Elektoral</span><span class="bar-item-val">82%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="82" style="width:0%;background:#0369a1"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Intervensi</span><span class="bar-item-val">47%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="47" style="width:0%;background:#38bdf8"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Oposisi</span><span class="bar-item-val">33%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="33" style="width:0%;background:#bae6fd"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sparkline-section">
+            <div class="spark-label"><span>Tren 7 hari</span><span style="color:#0369a1;font-weight:600">▲ +14%</span></div>
+            <div class="sparkline-wrap">
+              <svg viewBox="0 0 200 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="grad-politik" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#0369a1" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="#0369a1" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,22 L28,20 L57,18 L85,14 L113,16 L142,8 L170,11 L200,5" fill="none" stroke="#0369a1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M0,22 L28,20 L57,18 L85,14 L113,16 L142,8 L170,11 L200,5 L200,36 L0,36Z" fill="url(#grad-politik)"/>
+              </svg>
             </div>
           </div>
 
@@ -359,16 +912,105 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
         </div>
       </div>
 
-      <!-- ③ SOSIAL BUDAYA -->
-      <div class="cat-card sosbud">
+      <!-- ③ EKONOMI -->
+      <div class="cat-card c-ekonomi">
         <div class="cat-stripe"></div>
         <div class="cat-body">
           <div class="cat-header">
-            <div class="cat-icon-wrap">
+            <div class="cat-title-row">
+              <div class="cat-icon">📈</div>
+              <div>
+                <div class="cat-name">Ekonomi</div>
+                <div class="cat-desc">Keuangan · Korupsi · Investasi Asing</div>
+              </div>
+            </div>
+            <span class="risk-badge risk-med">● SEDANG</span>
+          </div>
+
+          <div class="cat-stats">
+            <div class="cat-stat"><div class="cat-stat-label">Total Isu</div><div class="cat-stat-value">29</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Minggu Ini</div><div class="cat-stat-value">7</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Aktor</div><div class="cat-stat-value">23</div></div>
+          </div>
+
+          <div class="cat-viz">
+            <div class="donut-wrap">
+              <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="36" cy="36" r="28" stroke="#f1f5f9" stroke-width="8"/>
+                <circle cx="36" cy="36" r="28" stroke="#047857" stroke-width="8"
+                  stroke-dasharray="160 176" stroke-dashoffset="16" stroke-linecap="round"/>
+                <circle cx="36" cy="36" r="28" stroke="#10b981" stroke-width="8"
+                  stroke-dasharray="90 176" stroke-dashoffset="-144" stroke-linecap="round" opacity="0.6"/>
+                <circle cx="36" cy="36" r="28" stroke="#a7f3d0" stroke-width="8"
+                  stroke-dasharray="40 176" stroke-dashoffset="-234" stroke-linecap="round" opacity="0.4"/>
+              </svg>
+              <div class="donut-center-label">
+                <div class="donut-center-val" style="color:#047857">65%</div>
+                <div class="donut-center-sub">Kor.</div>
+              </div>
+            </div>
+            <div class="bar-list">
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Korupsi</span><span class="bar-item-val">65%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="65" style="width:0%;background:#047857"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Investasi</span><span class="bar-item-val">52%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="52" style="width:0%;background:#10b981"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Pencucian</span><span class="bar-item-val">29%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="29" style="width:0%;background:#a7f3d0"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sparkline-section">
+            <div class="spark-label"><span>Tren 7 hari</span><span style="color:#047857;font-weight:600">▼ −5%</span></div>
+            <div class="sparkline-wrap">
+              <svg viewBox="0 0 200 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="grad-ekonomi" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#047857" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="#047857" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,10 L28,14 L57,12 L85,16 L113,18 L142,22 L170,20 L200,24" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M0,10 L28,14 L57,12 L85,16 L113,18 L142,22 L170,20 L200,24 L200,36 L0,36Z" fill="url(#grad-ekonomi)"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="recent-list">
+            <div class="recent-item">
+              <div class="recent-dot"></div>
+              <div class="recent-text">Dugaan aliran dana ilegal ke rekening yayasan terkait proyek infrastruktur Kalimantan</div>
+              <div class="recent-time">3j lalu</div>
+            </div>
+            <div class="recent-item">
+              <div class="recent-dot"></div>
+              <div class="recent-text">Investasi asing di sektor strategis pertambangan tanpa izin lengkap terdeteksi</div>
+              <div class="recent-time">2h lalu</div>
+            </div>
+          </div>
+
+          <div class="cat-footer">
+            <div class="cat-footer-meta">Diperbarui <strong>2 jam lalu</strong></div>
+            <a class="cat-cta" href="#">Buka Kategori →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ④ SOSIAL BUDAYA -->
+      <div class="cat-card c-sosbud">
+        <div class="cat-stripe"></div>
+        <div class="cat-body">
+          <div class="cat-header">
+            <div class="cat-title-row">
               <div class="cat-icon">🤝</div>
               <div>
                 <div class="cat-name">Sosial Budaya</div>
-                <div class="cat-desc">Konflik SARA, hoaks, ketegangan komunal</div>
+                <div class="cat-desc">Konflik SARA · Hoaks · Ketegangan Komunal</div>
               </div>
             </div>
             <span class="risk-badge risk-med">● SEDANG</span>
@@ -376,23 +1018,62 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
 
           <div class="cat-stats">
             <div class="cat-stat"><div class="cat-stat-label">Total Isu</div><div class="cat-stat-value">34</div></div>
-            <div class="cat-stat"><div class="cat-stat-label">Baru Minggu Ini</div><div class="cat-stat-value">6</div></div>
-            <div class="cat-stat"><div class="cat-stat-label">Aktor Terlacak</div><div class="cat-stat-value">22</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Minggu Ini</div><div class="cat-stat-value">6</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Aktor</div><div class="cat-stat-value">22</div></div>
           </div>
 
-          <div class="mini-chart">
-            <div class="mini-chart-label">Distribusi sub-kategori</div>
-            <div class="bar-rows">
-              <div class="bar-row"><span class="bar-row-label">Hoaks/SARA</span><div class="bar-track"><div class="bar-fill" style="width:70%;background:#d97706"></div></div><span class="bar-val">70%</span></div>
-              <div class="bar-row"><span class="bar-row-label">Komunal</span><div class="bar-track"><div class="bar-fill" style="width:50%;background:#fbbf24"></div></div><span class="bar-val">50%</span></div>
-              <div class="bar-row"><span class="bar-row-label">Budaya</span><div class="bar-track"><div class="bar-fill" style="width:28%;background:#fde68a"></div></div><span class="bar-val">28%</span></div>
+          <div class="cat-viz">
+            <div class="donut-wrap">
+              <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="36" cy="36" r="28" stroke="#f1f5f9" stroke-width="8"/>
+                <circle cx="36" cy="36" r="28" stroke="#b45309" stroke-width="8"
+                  stroke-dasharray="172 176" stroke-dashoffset="4" stroke-linecap="round"/>
+                <circle cx="36" cy="36" r="28" stroke="#f59e0b" stroke-width="8"
+                  stroke-dasharray="86 176" stroke-dashoffset="-136" stroke-linecap="round" opacity="0.6"/>
+                <circle cx="36" cy="36" r="28" stroke="#fde68a" stroke-width="8"
+                  stroke-dasharray="40 176" stroke-dashoffset="-222" stroke-linecap="round" opacity="0.4"/>
+              </svg>
+              <div class="donut-center-label">
+                <div class="donut-center-val" style="color:#b45309">70%</div>
+                <div class="donut-center-sub">Hoaks</div>
+              </div>
+            </div>
+            <div class="bar-list">
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Hoaks/SARA</span><span class="bar-item-val">70%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="70" style="width:0%;background:#b45309"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Komunal</span><span class="bar-item-val">50%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="50" style="width:0%;background:#f59e0b"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Budaya</span><span class="bar-item-val">28%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="28" style="width:0%;background:#fde68a"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sparkline-section">
+            <div class="spark-label"><span>Tren 7 hari</span><span style="color:#b45309;font-weight:600">▲ +9%</span></div>
+            <div class="sparkline-wrap">
+              <svg viewBox="0 0 200 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="grad-sosbud" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#b45309" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="#b45309" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,26 L28,22 L57,24 L85,19 L113,17 L142,14 L170,15 L200,10" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M0,26 L28,22 L57,24 L85,19 L113,17 L142,14 L170,15 L200,10 L200,36 L0,36Z" fill="url(#grad-sosbud)"/>
+              </svg>
             </div>
           </div>
 
           <div class="recent-list">
             <div class="recent-item">
               <div class="recent-dot"></div>
-              <div class="recent-text">Ketegangan antarumat beragama terpantau meningkat pasca-insiden di Sulawesi Tengah</div>
+              <div class="recent-text">Ketegangan antarumat beragama meningkat pasca-insiden di Sulawesi Tengah</div>
               <div class="recent-time">6j lalu</div>
             </div>
             <div class="recent-item">
@@ -409,16 +1090,16 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
         </div>
       </div>
 
-      <!-- ④ HANKAM -->
-      <div class="cat-card hankam">
+      <!-- ⑤ HANKAM -->
+      <div class="cat-card c-hankam">
         <div class="cat-stripe"></div>
         <div class="cat-body">
           <div class="cat-header">
-            <div class="cat-icon-wrap">
+            <div class="cat-title-row">
               <div class="cat-icon">🛡️</div>
               <div>
                 <div class="cat-name">Hankam</div>
-                <div class="cat-desc">Ancaman siber, pertahanan, keamanan nasional</div>
+                <div class="cat-desc">Siber · Terorisme · Pertahanan Nasional</div>
               </div>
             </div>
             <span class="risk-badge risk-high">● TINGGI</span>
@@ -426,16 +1107,55 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
 
           <div class="cat-stats">
             <div class="cat-stat"><div class="cat-stat-label">Total Isu</div><div class="cat-stat-value">25</div></div>
-            <div class="cat-stat"><div class="cat-stat-label">Baru Minggu Ini</div><div class="cat-stat-value">4</div></div>
-            <div class="cat-stat"><div class="cat-stat-label">Aktor Terlacak</div><div class="cat-stat-value">14</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Minggu Ini</div><div class="cat-stat-value">4</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Aktor</div><div class="cat-stat-value">14</div></div>
           </div>
 
-          <div class="mini-chart">
-            <div class="mini-chart-label">Distribusi sub-kategori</div>
-            <div class="bar-rows">
-              <div class="bar-row"><span class="bar-row-label">Siber</span><div class="bar-track"><div class="bar-fill" style="width:85%;background:#b91c1c"></div></div><span class="bar-val">85%</span></div>
-              <div class="bar-row"><span class="bar-row-label">Terorisme</span><div class="bar-track"><div class="bar-fill" style="width:45%;background:#f87171"></div></div><span class="bar-val">45%</span></div>
-              <div class="bar-row"><span class="bar-row-label">Perbatasan</span><div class="bar-track"><div class="bar-fill" style="width:30%;background:#fca5a5"></div></div><span class="bar-val">30%</span></div>
+          <div class="cat-viz">
+            <div class="donut-wrap">
+              <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="36" cy="36" r="28" stroke="#f1f5f9" stroke-width="8"/>
+                <circle cx="36" cy="36" r="28" stroke="#be123c" stroke-width="8"
+                  stroke-dasharray="193 176" stroke-dashoffset="-17" stroke-linecap="round"/>
+                <circle cx="36" cy="36" r="28" stroke="#f43f5e" stroke-width="8"
+                  stroke-dasharray="70 176" stroke-dashoffset="-140" stroke-linecap="round" opacity="0.55"/>
+                <circle cx="36" cy="36" r="28" stroke="#fecdd3" stroke-width="8"
+                  stroke-dasharray="38 176" stroke-dashoffset="-210" stroke-linecap="round" opacity="0.4"/>
+              </svg>
+              <div class="donut-center-label">
+                <div class="donut-center-val" style="color:#be123c">85%</div>
+                <div class="donut-center-sub">Siber</div>
+              </div>
+            </div>
+            <div class="bar-list">
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Siber</span><span class="bar-item-val">85%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="85" style="width:0%;background:#be123c"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Terorisme</span><span class="bar-item-val">45%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="45" style="width:0%;background:#f43f5e"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-top"><span class="bar-item-label">Perbatasan</span><span class="bar-item-val">30%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-w="30" style="width:0%;background:#fecdd3"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sparkline-section">
+            <div class="spark-label"><span>Tren 7 hari</span><span style="color:#be123c;font-weight:600">▲ +31%</span></div>
+            <div class="sparkline-wrap">
+              <svg viewBox="0 0 200 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="grad-hankam" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#be123c" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="#be123c" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,30 L28,26 L57,28 L85,22 L113,18 L142,12 L170,8 L200,4" fill="none" stroke="#be123c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M0,30 L28,26 L57,28 L85,22 L113,18 L142,12 L170,8 L200,4 L200,36 L0,36Z" fill="url(#grad-hankam)"/>
+              </svg>
             </div>
           </div>
 
@@ -459,24 +1179,102 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
         </div>
       </div>
 
+      <!-- ⑥ PROFILING TOKOH -->
+      <div class="cat-card c-profil">
+        <div class="cat-stripe"></div>
+        <div class="cat-body">
+          <div class="cat-header">
+            <div class="cat-title-row">
+              <div class="cat-icon">👤</div>
+              <div>
+                <div class="cat-name">Profiling Tokoh</div>
+                <div class="cat-desc">Jaringan · Afiliasi · Riwayat Aktivitas</div>
+              </div>
+            </div>
+            <span class="risk-badge risk-low">● PANTAU</span>
+          </div>
+
+          <div class="cat-stats">
+            <div class="cat-stat"><div class="cat-stat-label">Total Profil</div><div class="cat-stat-value">87</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Baru Bulan Ini</div><div class="cat-stat-value">11</div></div>
+            <div class="cat-stat"><div class="cat-stat-label">Jaringan</div><div class="cat-stat-value">34</div></div>
+          </div>
+
+          <!-- Profil tokoh list -->
+          <div>
+            <div class="spark-label" style="margin-bottom:8px"><span style="font-size:9.5px;color:var(--text-faint);font-weight:500;">Tokoh Prioritas Tinggi</span><span style="font-size:9.5px;color:var(--c-profil);font-weight:600">Lihat semua →</span></div>
+            <div class="profil-list">
+              <div class="profil-row">
+                <div class="profil-av" style="background:linear-gradient(135deg,#6d28d9,#9333ea)">AR</div>
+                <div class="profil-info">
+                  <div class="profil-name">Ahmad R.</div>
+                  <div class="profil-meta">Tokoh Ideologi · Jawa Timur</div>
+                </div>
+                <div class="profil-risk"><span class="risk-badge risk-high">TINGGI</span></div>
+              </div>
+              <div class="profil-row">
+                <div class="profil-av" style="background:linear-gradient(135deg,#0369a1,#0ea5e9)">BS</div>
+                <div class="profil-info">
+                  <div class="profil-name">Budi S.</div>
+                  <div class="profil-meta">Figur Politik · Jakarta</div>
+                </div>
+                <div class="profil-risk"><span class="risk-badge risk-med">SEDANG</span></div>
+              </div>
+              <div class="profil-row">
+                <div class="profil-av" style="background:linear-gradient(135deg,#be123c,#f43f5e)">DK</div>
+                <div class="profil-info">
+                  <div class="profil-name">D. Kurniawan</div>
+                  <div class="profil-meta">Aktor Siber · Tidak Diketahui</div>
+                </div>
+                <div class="profil-risk"><span class="risk-badge risk-high">TINGGI</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sparkline-section">
+            <div class="spark-label"><span>Profil Baru (30 hari)</span><span style="color:var(--c-profil);font-weight:600">▲ +11</span></div>
+            <div class="sparkline-wrap">
+              <svg viewBox="0 0 200 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="grad-profil" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#0f766e" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="#0f766e" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,28 L28,26 L57,22 L85,24 L113,18 L142,14 L170,16 L200,8" fill="none" stroke="#0f766e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M0,28 L28,26 L57,22 L85,24 L113,18 L142,14 L170,16 L200,8 L200,36 L0,36Z" fill="url(#grad-profil)"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="cat-footer">
+            <div class="cat-footer-meta">Diperbarui <strong>hari ini</strong></div>
+            <a class="cat-cta" href="#">Buka Kategori →</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div><!-- end .content -->
 </div><!-- end .main -->
 
 <script>
-  // Tanggal di topbar
-  const d = new Date();
-  const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
-  document.getElementById('topbar-date').textContent = d.toLocaleDateString('id-ID', opts);
+// Topbar date
+const d = new Date();
+document.getElementById('topbar-date').textContent =
+  d.toLocaleDateString('id-ID', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 
-  // Animasi bar chart saat halaman load
-  window.addEventListener('load', () => {
-    document.querySelectorAll('.bar-fill').forEach(el => {
-      const w = el.style.width;
-      el.style.width = '0';
-      setTimeout(() => { el.style.width = w; }, 100);
+// Animate bars on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.bar-fill[data-w]').forEach(el => {
+      el.style.width = el.dataset.w + '%';
     });
-  });
+    document.querySelectorAll('.stat-bar-fill[data-w]').forEach(el => {
+      el.style.width = el.dataset.w + '%';
+    });
+  }, 180);
+});
 </script>
 </body>
 </html>

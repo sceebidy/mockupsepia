@@ -17,7 +17,7 @@
 }
 body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
 
-/* ── SIDENAV (same as datapool) ── */
+/* ── SIDENAV ── */
 .sidenav { width: var(--nav-width); background: var(--green); display: flex; flex-direction: column; flex-shrink: 0; }
 .sidenav-brand { padding: 22px 20px 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
 .brand-logo { font-size: 18px; font-weight: 700; letter-spacing: 0.14em; color: #fff; }
@@ -109,6 +109,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
   overflow: hidden;
   transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
   cursor: pointer;
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 .section-card:hover {
   border-color: var(--green-border);
@@ -116,8 +119,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
   transform: translateY(-2px);
 }
 
-.section-card-stripe { height: 4px; }
+/* Per-card accent on hover */
+.section-card.blue:hover  { border-color: #bfdbfe; box-shadow: 0 6px 24px rgba(30,111,163,0.09); }
+.section-card.amber:hover { border-color: #fde68a; box-shadow: 0 6px 24px rgba(217,119,6,0.09); }
+.section-card.teal:hover  { border-color: #99f6e4; box-shadow: 0 6px 24px rgba(6,95,70,0.09); }
 
+.section-card-stripe { height: 4px; }
 .section-card-body { padding: 16px 20px 14px; }
 
 .section-card-top {
@@ -136,30 +143,17 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
 .section-card:hover .section-arrow { opacity: 1; transform: translateX(3px); }
 
 .section-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-.section-desc { font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
-
-/* MINI ITEMS PREVIEW */
-.section-preview { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
-.preview-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 6px 10px; border-radius: 7px;
-  background: var(--bg-secondary); border: 1px solid var(--border);
-}
-.preview-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.preview-label { font-size: 11px; color: var(--text); flex: 1; }
-.preview-val { font-size: 11px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+.section-desc { font-size: 11px; color: var(--text-muted); line-height: 1.6; }
 
 .section-footer {
   display: flex; align-items: center; justify-content: space-between;
-  padding-top: 10px; border-top: 1px solid var(--border);
+  padding-top: 10px; margin-top: 12px; border-top: 1px solid var(--border);
 }
 .section-count { font-size: 11px; color: var(--text-muted); }
 .section-count strong { color: var(--text); font-weight: 600; }
-.section-cta {
+.section-pill {
   display: inline-flex; align-items: center; gap: 5px;
-  font-size: 11px; font-weight: 500; color: var(--green);
-  padding: 5px 12px; border-radius: 20px;
-  border: 1px solid var(--green-border); background: var(--green-light);
+  font-size: 10.5px; font-weight: 600; padding: 4px 10px; border-radius: 20px;
 }
 </style>
 </head>
@@ -240,19 +234,25 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
   <div class="content">
     <div class="sections-grid">
 
-     <a class="section-card" href="folderdata.html" style="text-decoration:none; color:inherit; display:block;">
-  <div class="section-card-stripe" style="background:#1a5c2e"></div>
-  <div class="section-card-body">
-    <div class="section-card-top">
-      <div class="section-icon" style="background:#f0f7f2">🗂️</div>
-      <div class="section-arrow">→</div>
-    </div>
-    <div class="section-title">Data</div>
-    <div class="section-desc">Semua sumber yang telah diunggah ke folder ini — dokumen, PDF, halaman web, dan spreadsheet yang menjadi basis analisis kasus.</div>
-  </div>
-</a>
+      <!-- DATA -->
+      <a class="section-card" href="folderdata.html">
+        <div class="section-card-stripe" style="background:#1a5c2e"></div>
+        <div class="section-card-body">
+          <div class="section-card-top">
+            <div class="section-icon" style="background:#f0f7f2">🗂️</div>
+            <div class="section-arrow">→</div>
+          </div>
+          <div class="section-title">Data</div>
+          <div class="section-desc">Semua sumber yang telah diunggah ke folder ini — dokumen, PDF, halaman web, dan spreadsheet yang menjadi basis analisis kasus.</div>
+          <div class="section-footer">
+            <div class="section-count"><strong>7</strong> sumber tersimpan</div>
+            <span class="section-pill" style="background:var(--green-light);color:var(--green);border:1px solid var(--green-border)">Buka →</span>
+          </div>
+        </div>
+      </a>
 
-      <div class="section-card">
+      <!-- ANALISIS PREDIKSI -->
+      <a class="section-card blue" href="analisis.html">
         <div class="section-card-stripe" style="background:#1e6fa3"></div>
         <div class="section-card-body">
           <div class="section-card-top">
@@ -261,10 +261,15 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
           </div>
           <div class="section-title">Analisis Prediksi</div>
           <div class="section-desc">Model AI mengevaluasi pola kasus, potensi tersangka tambahan, estimasi kerugian akhir, dan kemungkinan putusan berdasarkan data historis.</div>
+          <div class="section-footer">
+            <div class="section-count">Kepercayaan model <strong>84%</strong></div>
+            <span class="section-pill" style="background:#eff6ff;color:#1e6fa3;border:1px solid #bfdbfe">Buka →</span>
+          </div>
         </div>
-      </div>
+      </a>
 
-      <div class="section-card">
+      <!-- DISTRIBUSI -->
+      <a class="section-card amber" href="distribusi.html">
         <div class="section-card-stripe" style="background:#d97706"></div>
         <div class="section-card-body">
           <div class="section-card-top">
@@ -273,10 +278,15 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
           </div>
           <div class="section-title">Distribusi</div>
           <div class="section-desc">Kelola dan kirim laporan serta nota dinas ke instansi terkait — Kejagung, KPK, Kemenkopolhukam, dan lembaga pengawas lainnya.</div>
+          <div class="section-footer">
+            <div class="section-count"><strong>4</strong> kali dikirim · <strong>6</strong> instansi</div>
+            <span class="section-pill" style="background:#fffbeb;color:#b45309;border:1px solid #fde68a">Buka →</span>
+          </div>
         </div>
-      </div>
+      </a>
 
-      <div class="section-card">
+      <!-- LAPORAN -->
+      <a class="section-card teal" href="#">
         <div class="section-card-stripe" style="background:#065f46"></div>
         <div class="section-card-body">
           <div class="section-card-top">
@@ -285,8 +295,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color
           </div>
           <div class="section-title">Laporan</div>
           <div class="section-desc">Buat dan ekspor laporan analisis kasus secara lengkap — ringkasan eksekutif, kronologi, daftar aktor, pasal sangkaan, dan rekomendasi tindak lanjut.</div>
+          <div class="section-footer">
+            <div class="section-count"><strong>2</strong> laporan dibuat</div>
+            <span class="section-pill" style="background:#ecfdf5;color:#065f46;border:1px solid #99f6e4">Buka →</span>
+          </div>
         </div>
-      </div>
+      </a>
 
     </div>
   </div>
